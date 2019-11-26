@@ -290,9 +290,24 @@ module NLC_opt(
 	input wire [31:0] ch0_coeff_0
 	);
 	
-	NLC nlc_ch0(.clk(clk),.rst(reset),.srdyi(srdyi),.srdyo(ch0_srdyo),.x_lin(ch0_x_lin),.x_adc(ch0_x_adc),.recip_stdev(ch0_recip_stdev),
+	/*NLC nlc_ch0(.clk(clk),.rst(reset),.srdyi(srdyi),.srdyo(ch0_srdyo),.x_lin(ch0_x_lin),.x_adc(ch0_x_adc),.recip_stdev(ch0_recip_stdev),
 .neg_mean(ch0_neg_mean),.coeff_5(ch0_coeff_5),.coeff_4(ch0_coeff_4),.coeff_3(ch0_coeff_3),.coeff_2(ch0_coeff_2),.coeff_1(ch0_coeff_1),
-.coeff_0(ch0_coeff_0));
+.coeff_0(ch0_coeff_0));*/
+  
+  wire conv_srdyi;
+  wire [20:0] conv_input;
+  wire conv_srdyo;
+  wire multiplier_srdyi;
+  wire [31:0] multiplier_input_1;
+  wire [31:0] multiplier_input_2; // from controller
+  wire multiplier_srdyo;
+  wire adder_srdyi;
+  wire [31:0] adder_input_1;
+  wire [31:0] adder_input_2; // from controller
+  wire adder_srdyo;
+  
+  fp_to_smc_float conv(clk,rst,x_smc, x_adc, srdyo_conv, srdyi);
+  always@(posedge )
 
 
 endmodule
