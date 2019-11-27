@@ -358,6 +358,9 @@ module NLC_controller(
     case(norm_mul_cnt)
       0: next_mul_input_2 <= ch0_recip_stdev;
     endcase
+  end
+  
+  always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
   
 endmodule 
 	
