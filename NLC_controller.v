@@ -27,7 +27,7 @@ module NLC_controller(
   output reg [31:0] adder_input_2, //a_i, i=4->0
   input wire [31:0] adder_output,
   output reg adder_srdyi,
-  input wire adder_srdio,
+  input wire adder_srdyo,
   
   //IO ports for ch15
 	output wire [20:0] ch15_x_lin,
@@ -227,7 +227,7 @@ module NLC_controller(
 	/* Multiplier */
   reg [31:0] next_mul_input_1;
   reg [31:0] next_mul_input_2;
-  reg next_multiplier_srdyi;
+  reg next_mul_srdyi;
   
   /* Adder */
   reg [31:0] next_adder_input_1;
@@ -315,8 +315,8 @@ module NLC_controller(
   reg start_normalize_add = 0;
 
   always@(posedge conv_srdyo) begin
-    start_normalize <= 1;
-    next_multiplier_srdyi <= 1;
+    start_normalize_add <= 1;
+    next_adder_srdyi <= 1;
   end
   
   always@(*) begin
@@ -324,12 +324,26 @@ module NLC_controller(
     case(norm_add_cnt)
       0: next_adder_input_2 <= ch0_neg_mean;
       1: 
+    endcase
     next_multiplier_input <= conv_output;
   end
   
-  always@(posedge clk) if(start_normalize) norm_cnt <= norm_cnt + 1;
+  always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
   
   /* Normalization adder output, normalization multiplier input */
+  integer norm_mul_cnt = 0;
+  reg start_normalize_mul = 0;
+  
+  always@(posedge adder_srdyo) begin
+    start_normalize_mul <= 1;
+    next_mul_srdyi <= 1;
+  end
+  
+  always@(*) begin
+    next_mul_input_1 = adder_output;
+    case(norm_mul_cnt)
+      0: next_mul_input_2 <= ch0_recip_stdev;
+    endcase
   
 endmodule 
 	
