@@ -30,7 +30,6 @@ module NLC_controller(
   input wire adder_srdio,
   
   //IO ports for ch15
-  integer power_ch15,
 	output wire [20:0] ch15_x_lin,
 	input wire [20:0] ch15_x_adc, 
 	input wire [31:0] ch15_recip_stdev,
@@ -43,7 +42,6 @@ module NLC_controller(
 	input wire [31:0] ch15_coeff_0,
 
 	//IO ports for ch14
-	integer power_ch14,
 	output wire [20:0] ch14_x_lin,
 	input wire [20:0] ch14_x_adc,
 	input wire [31:0] ch14_recip_stdev,
@@ -56,7 +54,6 @@ module NLC_controller(
 	input wire [31:0] ch14_coeff_0,
 
 	//IO ports for ch13
-	integer power_ch13,
 	output wire [20:0] ch13_x_lin,
 	input wire [20:0] ch13_x_adc,
 	input wire [31:0] ch13_recip_stdev,
@@ -69,7 +66,6 @@ module NLC_controller(
 	input wire [31:0] ch13_coeff_0,
 
 	//IO ports for ch12
-	integer power_ch12,
 	output wire [20:0] ch12_x_lin,
 	input wire [20:0] ch12_x_adc,
 	input wire [31:0] ch12_recip_stdev,
@@ -82,7 +78,6 @@ module NLC_controller(
 	input wire [31:0] ch12_coeff_0,
 
 	//IO ports for ch11
-	integer power_ch11,
 	output wire [20:0] ch11_x_lin,
 	input wire [20:0] ch11_x_adc,
 	input wire [31:0] ch11_recip_stdev,
@@ -95,7 +90,6 @@ module NLC_controller(
 	input wire [31:0] ch11_coeff_0,
 
 	//IO ports for ch10
-	integer power_ch10,
 	output wire [20:0] ch10_x_lin,
 	input wire [20:0] ch10_x_adc,
 	input wire [31:0] ch10_recip_stdev,
@@ -108,7 +102,6 @@ module NLC_controller(
 	input wire [31:0] ch10_coeff_0,
 
 	//IO ports for ch5
-	integer power_ch9,
 	output wire [20:0] ch9_x_lin,
 	input wire [20:0] ch9_x_adc,
 	input wire [31:0] ch9_recip_stdev,
@@ -121,7 +114,6 @@ module NLC_controller(
 	input wire [31:0] ch9_coeff_0,
 
 	//IO ports for ch8
-	integer power_ch8,
 	output wire [20:0] ch8_x_lin,
 	input wire [20:0] ch8_x_adc,
 	input wire [31:0] ch8_recip_stdev,
@@ -134,7 +126,6 @@ module NLC_controller(
 	input wire [31:0] ch8_coeff_0,
 
 	//IO ports for ch7
-	integer power_ch7,
 	output wire [20:0] ch7_x_lin,
 	input wire [20:0] ch7_x_adc,
 	input wire [31:0] ch7_recip_stdev,
@@ -147,7 +138,6 @@ module NLC_controller(
 	input wire [31:0] ch7_coeff_0,
 
 	//IO ports for ch6
-	integer power_ch6,
 	output wire [20:0] ch6_x_lin,
 	input wire [20:0] ch6_x_adc,
 	input wire [31:0] ch6_recip_stdev,
@@ -160,7 +150,6 @@ module NLC_controller(
 	input wire [31:0] ch6_coeff_0,
 	
 	//IO ports for ch5
-	integer power_ch5,
 	output wire [20:0] ch5_x_lin, 
 	input wire [20:0] ch5_x_adc,
 	input wire [31:0] ch5_recip_stdev,
@@ -173,7 +162,6 @@ module NLC_controller(
 	input wire [31:0] ch5_coeff_0,
 	
 	//IO ports for ch4
-	integer power_ch4,
 	output wire [20:0] ch4_x_lin, 
 	input wire [20:0] ch4_x_adc,
 	input wire [31:0] ch4_recip_stdev,
@@ -186,7 +174,6 @@ module NLC_controller(
 	input wire [31:0] ch4_coeff_0,
 	
 	//IO ports for ch3
-	integer power_ch3,
 	output wire [20:0] ch3_x_lin, 
 	input wire [20:0] ch3_x_adc,
 	input wire [31:0] ch3_recip_stdev,
@@ -199,7 +186,6 @@ module NLC_controller(
 	input wire [31:0] ch3_coeff_0,
 	
 	//IO ports for ch2
-	integer power_ch2,
 	output wire [20:0] ch2_x_lin, 
 	input wire [20:0] ch2_x_adc,
 	input wire [31:0] ch2_recip_stdev,
@@ -212,7 +198,6 @@ module NLC_controller(
 	input wire [31:0] ch2_coeff_0,
 
 	//IO ports for ch1
-	integer power_ch1,
 	output wire [20:0] ch1_x_lin, 
 	input wire [20:0] ch1_x_adc,
 	input wire [31:0] ch1_recip_stdev,
@@ -225,7 +210,6 @@ module NLC_controller(
 	input wire [31:0] ch1_coeff_0,
 	
 	//IO ports for ch0
-	integer power_ch0,
 	output wire [20:0] ch0_x_lin, 
 	input wire [20:0] ch0_x_adc,
 	input wire [31:0] ch0_recip_stdev,
@@ -268,12 +252,11 @@ module NLC_controller(
   
   
   
- 
-  
+  integer clk_cnt;
   always@(posedge clk) begin
     if(rst) begin
       $display("Reset");
-      clk_cnt <= 0;
+      clk_cnt = 0;
     end
     else begin
       conv_srdyi <= next_conv_srdyi;
@@ -282,19 +265,22 @@ module NLC_controller(
       adder_input_2 <= next_adder_input;
       multiplier_srdyi <= next_multiplier_srdyi;
       multiplier_input_2 <= next_multiplier_input;
-      
     end
   end
   
 
-  /* Input, feed one per cycle */
-  integer clk_cnt = 0;
+  /* Converter input, feed one per cycle */
+  reg start_conv = 0;
+	integer conv_cnt = 0;
+	
   always@(posedge srdyi) begin
-    case(clk_cnt)
-      0: begin
-       next_conv_srdyi <= 1; // start conversion
-       next_conv_input <= ch0_x_adc;
-      end
+    start_conv <= 1;
+    next_conv_srdyi <= 1;
+  end
+  
+  always@(*) begin // FIXME: cluster these unsafe methods
+    case(conv_cnt)
+      0: next_conv_input <= ch0_x_adc;
       1: next_conv_input <= ch1_x_adc;
      2: next_conv_input <= ch2_x_adc;
      3: next_conv_input <= ch3_x_adc;
@@ -310,16 +296,29 @@ module NLC_controller(
      13: next_conv_input <= ch13_x_adc;
      14: next_conv_input <= ch14_x_adc;
      15: next_conv_input <= ch15_x_adc;
-    16: next_conv_srdyi <= 0; // stop the conversion
+    16: begin
+      next_conv_srdyi <= 0; // stop the conversion
+      start_conv <= 0;
+      conv_cnt = 0;
+    end
     endcase
   end
   
-  /* Output */
-  integer 
-  always@(posedge conv_srdyo) begin
-    
-  end
+  always@(posedge clk) if(start_conv) conv_cnt <= conv_cnt + 1;
+  
+  /* Converter output, normalization multiplication input */
+  integer norm_cnt = 0;
+  reg start_normalize = 0;
 
+  always@(posedge conv_srdyo) begin
+    start_normalize <= 0;
+    next_multiplier_srdyi <= 1;
+  end
+  
+  always@(*) next_multiplier_input <= conv_output;
+  
+  always@(posedge clk) if(start_normalize) norm_cnt <= norm_cnt + 1;
+  
   
 endmodule 
 	
