@@ -339,7 +339,7 @@ module NLC_controller(
       13: next_adder_input_2 <= ch13_neg_mean;
       14: next_adder_input_2 <= ch14_neg_mean;
       15: next_adder_input_2 <= ch15_neg_mean;
-    endcase
+    endcase//TODO: turn off adder until needed in main loop
   end
   
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
@@ -376,6 +376,24 @@ module NLC_controller(
   end
   
   always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
+  
+  /* Normalization multiplier output, main loop input */
+  integer order = 5;
+  integer ch = 0;
+  
+  always@(*) begin // TODO: find some way to trigger this
+    case(order)
+      5: begin
+        case(ch)
+          0: begin
+            next_mul_input_1 <= ch0_coeff_5;
+            next_mul_input_2 <= adder_result; // FIXME: may not be aligned correctly
+          end
+          1: begin
+            next_mul_input_1 <= ch0_
+          end
+      end
+  end
   
 endmodule 
 	
