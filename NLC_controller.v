@@ -254,10 +254,25 @@ module NLC_controller(
   reg [31:0] ch0_x_smc;
   
   
+  /* Converter input, feed one per cycle */
+  reg start_conv = 0;
+	integer conv_cnt = 0;
+	
+	/* Converter output, normalization adder input */
+  integer norm_add_cnt = 0;
+  reg start_normalize_add = 0;
+  
+  /* Normalization adder output, normalization multiplier input */
+  integer norm_mul_cnt = 0;
+  reg start_normalize_mul = 0;
+  
   
   integer clk_cnt;
   always@(posedge clk) begin
     if(rst) begin
+      conv_cnt = 0;
+      norm_add_cnt = 0;
+      norm_mul_cnt = 0;
       $display("Reset");
       clk_cnt = 0;
     end
@@ -273,10 +288,6 @@ module NLC_controller(
     end
   end
   
-
-  /* Converter input, feed one per cycle */
-  reg start_conv = 0;
-	integer conv_cnt = 0;
 	
   always@(posedge srdyi) begin
     start_conv <= 1;
@@ -302,18 +313,15 @@ module NLC_controller(
      14: next_conv_input <= ch14_x_adc;
      15: next_conv_input <= ch15_x_adc;
      16: begin
-      next_conv_srdyi <= 0; // stop the conversion
-      start_conv <= 0;
-      conv_cnt = 0;
-    end
+           next_conv_srdyi <= 0; // stop the conversion
+           start_conv <= 0;
+           conv_cnt = 0;
+         end
     endcase
   end
   
   always@(posedge clk) if(start_conv) conv_cnt <= conv_cnt + 1;
   
-  /* Converter output, normalization adder input */
-  integer norm_add_cnt = 0;
-  reg start_normalize_add = 0;
 
   always@(posedge conv_srdyo) begin
     start_normalize_add <= 1;
@@ -339,14 +347,14 @@ module NLC_controller(
       13: next_adder_input_2 <= ch13_neg_mean;
       14: next_adder_input_2 <= ch14_neg_mean;
       15: next_adder_input_2 <= ch15_neg_mean;
+      16: begin
+            next_adder_srdyi <= 0;
+          end
     endcase//TODO: turn off adder until needed in main loop
   end
   
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
   
-  /* Normalization adder output, normalization multiplier input */
-  integer norm_mul_cnt = 0;
-  reg start_normalize_mul = 0;
   
   always@(posedge adder_srdyo) begin
     start_normalize_mul <= 1;
@@ -383,15 +391,226 @@ module NLC_controller(
   
   always@(*) begin // TODO: find some way to trigger this
     case(order)
-      5: begin
-        next_mul_input_1 <= adder_output;
-        case(ch)
-          0: next_mul_input_1 <= ch0_coeff_5; // FIXME: may not be aligned correctly
-          1: next_mul_input_1 <= ch1_coeff_5;
-        endcase
-      end
+       5: begin
+             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_mul_input_1 <= ch0_coeff_5; 
+               1: next_mul_input_1 <= ch1_coeff_5;
+               2: next_mul_input_1 <= ch2_coeff_5; 
+               3: next_mul_input_1 <= ch3_coeff_5;
+               4: next_mul_input_1 <= ch4_coeff_5; 
+               5: next_mul_input_1 <= ch5_coeff_5;
+               6: next_mul_input_1 <= ch6_coeff_5; 
+               7: next_mul_input_1 <= ch7_coeff_5;
+               8: next_mul_input_1 <= ch8_coeff_5; 
+               9: next_mul_input_1 <= ch9_coeff_5;
+               10: next_mul_input_1 <= ch10_coeff_5; 
+               11: next_mul_input_1 <= ch11_coeff_5;
+               12: next_mul_input_1 <= ch12_coeff_5; 
+               13: next_mul_input_1 <= ch13_coeff_5;
+               14: next_mul_input_1 <= ch14_coeff_5; 
+               15: next_mul_input_1 <= ch15_coeff_5;
+             endcase
+           end
+        4: begin
+             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_mul_input_1 <= ch0_coeff_4; 
+               1: next_mul_input_1 <= ch1_coeff_4;
+               2: next_mul_input_1 <= ch2_coeff_4; 
+               3: next_mul_input_1 <= ch3_coeff_4;
+               4: next_mul_input_1 <= ch4_coeff_4; 
+               5: next_mul_input_1 <= ch5_coeff_4;
+               6: next_mul_input_1 <= ch6_coeff_4; 
+               7: next_mul_input_1 <= ch7_coeff_4;
+               8: next_mul_input_1 <= ch8_coeff_4; 
+               9: next_mul_input_1 <= ch9_coeff_4;
+               10: next_mul_input_1 <= ch10_coeff_4; 
+               11: next_mul_input_1 <= ch11_coeff_4;
+               12: next_mul_input_1 <= ch12_coeff_4; 
+               13: next_mul_input_1 <= ch13_coeff_4;
+               14: next_mul_input_1 <= ch14_coeff_4; 
+               15: next_mul_input_1 <= ch15_coeff_4;
+             endcase
+           end
+        3: begin
+             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_mul_input_1 <= ch0_coeff_3; 
+               1: next_mul_input_1 <= ch1_coeff_3;
+               2: next_mul_input_1 <= ch2_coeff_3; 
+               3: next_mul_input_1 <= ch3_coeff_3;
+               4: next_mul_input_1 <= ch4_coeff_3; 
+               5: next_mul_input_1 <= ch5_coeff_3;
+               6: next_mul_input_1 <= ch6_coeff_3; 
+               7: next_mul_input_1 <= ch7_coeff_3;
+               8: next_mul_input_1 <= ch8_coeff_3; 
+               9: next_mul_input_1 <= ch9_coeff_3;
+               10: next_mul_input_1 <= ch10_coeff_3; 
+               11: next_mul_input_1 <= ch11_coeff_3;
+               12: next_mul_input_1 <= ch12_coeff_3; 
+               13: next_mul_input_1 <= ch13_coeff_3;
+               14: next_mul_input_1 <= ch14_coeff_3; 
+               15: next_mul_input_1 <= ch15_coeff_3;
+             endcase
+           end
+        2: begin
+             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_mul_input_1 <= ch0_coeff_2; 
+               1: next_mul_input_1 <= ch1_coeff_2;
+               2: next_mul_input_1 <= ch2_coeff_2; 
+               3: next_mul_input_1 <= ch3_coeff_2;
+               4: next_mul_input_1 <= ch4_coeff_2; 
+               5: next_mul_input_1 <= ch5_coeff_2;
+               6: next_mul_input_1 <= ch6_coeff_2; 
+               7: next_mul_input_1 <= ch7_coeff_2;
+               8: next_mul_input_1 <= ch8_coeff_2; 
+               9: next_mul_input_1 <= ch9_coeff_2;
+               10: next_mul_input_1 <= ch10_coeff_2; 
+               11: next_mul_input_1 <= ch11_coeff_2;
+               12: next_mul_input_1 <= ch12_coeff_2; 
+               13: next_mul_input_1 <= ch13_coeff_2;
+               14: next_mul_input_1 <= ch14_coeff_2; 
+               15: next_mul_input_1 <= ch15_coeff_2;
+             endcase
+           end
+        1: begin
+             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_mul_input_1 <= ch0_coeff_1; 
+               1: next_mul_input_1 <= ch1_coeff_1;
+               2: next_mul_input_1 <= ch2_coeff_1; 
+               3: next_mul_input_1 <= ch3_coeff_1;
+               4: next_mul_input_1 <= ch4_coeff_1; 
+               5: next_mul_input_1 <= ch5_coeff_1;
+               6: next_mul_input_1 <= ch6_coeff_1 
+               7: next_mul_input_1 <= ch7_coeff_1;
+               8: next_mul_input_1 <= ch8_coeff_1; 
+               9: next_mul_input_1 <= ch9_coeff_1;
+               10: next_mul_input_1 <= ch10_coeff_1; 
+               11: next_mul_input_1 <= ch11_coeff_1;
+               12: next_mul_input_1 <= ch12_coeff_1; 
+               13: next_mul_input_1 <= ch13_coeff_1;
+               14: next_mul_input_1 <= ch14_coeff_1; 
+               15: next_mul_input_1 <= ch15_coeff_1; 
+               16: next_adder_srdyi <= 0;
+             endcase 
+           end
     endcase
   end
+  
+  always@(*) begin // TODO: find some way to trigger this
+    case(order)
+       4: begin
+             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_5; 
+               1: next_adder_input_1 <= ch1_coeff_5;
+               2: next_adder_input_1 <= ch2_coeff_5; 
+               3: next_adder_input_1 <= ch3_coeff_5;
+               4: next_adder_input_1 <= ch4_coeff_5; 
+               5: next_adder_input_1 <= ch5_coeff_5;
+               6: next_adder_input_1 <= ch6_coeff_5; 
+               7: next_adder_input_1 <= ch7_coeff_5;
+               8: next_adder_input_1 <= ch8_coeff_5; 
+               9: next_adder_input_1 <= ch9_coeff_5;
+               10: next_adder_input_1 <= ch10_coeff_5; 
+               11: next_adder_input_1 <= ch11_coeff_5;
+               12: next_adder_input_1 <= ch12_coeff_5; 
+               13: next_adder_input_1 <= ch13_coeff_5;
+               14: next_adder_input_1 <= ch14_coeff_5; 
+               15: next_adder_input_1 <= ch15_coeff_5;
+             endcase
+           end
+        3: begin
+             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_4; 
+               1: next_adder_input_1 <= ch1_coeff_4;
+               2: next_adder_input_1 <= ch2_coeff_4; 
+               3: next_adder_input_1 <= ch3_coeff_4;
+               4: next_adder_input_1 <= ch4_coeff_4; 
+               5: next_adder_input_1 <= ch5_coeff_4;
+               6: next_adder_input_1 <= ch6_coeff_4; 
+               7: next_adder_input_1 <= ch7_coeff_4;
+               8: next_adder_input_1 <= ch8_coeff_4; 
+               9: next_adder_input_1 <= ch9_coeff_4;
+               10: next_adder_input_1 <= ch10_coeff_4; 
+               11: next_adder_input_1 <= ch11_coeff_4;
+               12: next_adder_input_1 <= ch12_coeff_4; 
+               13: next_adder_input_1 <= ch13_coeff_4;
+               14: next_adder_input_1 <= ch14_coeff_4; 
+               15: next_adder_input_1 <= ch15_coeff_4;
+             endcase
+           end
+        2: begin
+             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_3; 
+               1: next_adder_input_1 <= ch1_coeff_3;
+               2: next_adder_input_1 <= ch2_coeff_3; 
+               3: next_adder_input_1 <= ch3_coeff_3;
+               4: next_adder_input_1 <= ch4_coeff_3; 
+               5: next_adder_input_1 <= ch5_coeff_3;
+               6: next_adder_input_1 <= ch6_coeff_3; 
+               7: next_adder_input_1 <= ch7_coeff_3;
+               8: next_adder_input_1 <= ch8_coeff_3; 
+               9: next_adder_input_1 <= ch9_coeff_3;
+               10: next_adder_input_1 <= ch10_coeff_3; 
+               11: next_adder_input_1 <= ch11_coeff_3;
+               12: next_adder_input_1 <= ch12_coeff_3; 
+               13: next_adder_input_1 <= ch13_coeff_3;
+               14: next_adder_input_1 <= ch14_coeff_3; 
+               15: next_adder_input_1 <= ch15_coeff_3;
+             endcase
+           end
+        1: begin
+             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_2; 
+               1: next_adder_input_1 <= ch1_coeff_2;
+               2: next_adder_input_1 <= ch2_coeff_2; 
+               3: next_adder_input_1 <= ch3_coeff_2;
+               4: next_adder_input_1 <= ch4_coeff_2; 
+               5: next_adder_input_1 <= ch5_coeff_2;
+               6: next_adder_input_1 <= ch6_coeff_2; 
+               7: next_adder_input_1 <= ch7_coeff_2;
+               8: next_adder_input_1 <= ch8_coeff_2; 
+               9: next_adder_input_1 <= ch9_coeff_2;
+               10: next_adder_input_1 <= ch10_coeff_2; 
+               11: next_adder_input_1 <= ch11_coeff_2;
+               12: next_adder_input_1 <= ch12_coeff_2; 
+               13: next_adder_input_1 <= ch13_coeff_2;
+               14: next_adder_input_1 <= ch14_coeff_2; 
+               15: next_adder_input_1 <= ch15_coeff_2;
+             endcase
+           end
+        0: begin
+             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_1; 
+               1: next_adder_input_1 <= ch1_coeff_1;
+               2: next_adder_input_1 <= ch2_coeff_1; 
+               3: next_adder_input_1 <= ch3_coeff_1;
+               4: next_adder_input_1 <= ch4_coeff_1; 
+               5: next_adder_input_1 <= ch5_coeff_1;
+               6: next_adder_input_1 <= ch6_coeff_1 
+               7: next_adder_input_1 <= ch7_coeff_1;
+               8: next_adder_input_1 <= ch8_coeff_1; 
+               9: next_adder_input_1 <= ch9_coeff_1;
+               10: next_adder_input_1 <= ch10_coeff_1; 
+               11: next_adder_input_1 <= ch11_coeff_1;
+               12: next_adder_input_1 <= ch12_coeff_1; 
+               13: next_adder_input_1 <= ch13_coeff_1;
+               14: next_adder_input_1 <= ch14_coeff_1; 
+               15: next_adder_input_1 <= ch15_coeff_1;
+             endcase 
+           end
+    endcase
+  end
+  
+  always@(posedge clk) if(start_normalize_mul) ch <= ch + 1;
   
 endmodule 
 	
