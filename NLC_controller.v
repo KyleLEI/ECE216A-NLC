@@ -267,7 +267,7 @@ module NLC_controller(
       adder_srdyi <= next_adder_srdyi;
       adder_input_1 <= next_adder_input_1;
       adder_input_2 <= next_adder_input_2;
-      multiplier_srdyi <= next_multiplier_srdyi;
+      multiplier_srdyi <= next_mul_srdyi;
       multiplier_input_1 <= next_mul_input_1;
       multiplier_input_2 <= next_mul_input_2;
     end
@@ -384,15 +384,13 @@ module NLC_controller(
   always@(*) begin // TODO: find some way to trigger this
     case(order)
       5: begin
+        next_mul_input_1 <= adder_output;
         case(ch)
-          0: begin
-            next_mul_input_1 <= ch0_coeff_5;
-            next_mul_input_2 <= adder_result; // FIXME: may not be aligned correctly
-          end
-          1: begin
-            next_mul_input_1 <= ch0_
-          end
+          0: next_mul_input_1 <= ch0_coeff_5; // FIXME: may not be aligned correctly
+          1: next_mul_input_1 <= ch1_coeff_5;
+        endcase
       end
+    endcase
   end
   
 endmodule 
