@@ -347,6 +347,7 @@ module NLC_controller(
   /* Normalization adder output, normalization multiplier input */
   integer norm_mul_cnt = 0;
   reg start_normalize_mul = 0;
+  reg norm_mul_complete = 0;
   
   always@(posedge adder_srdyo) begin
     start_normalize_mul <= 1;
@@ -373,6 +374,8 @@ module NLC_controller(
       14: next_mul_input_2 <= ch14_recip_stdev;
       15: next_mul_input_2 <= ch15_recip_stdev;
     endcase
+    if(norm_mul_cnt>15)
+      norm_mul_complete = 1;
   end
   
   always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
@@ -381,7 +384,8 @@ module NLC_controller(
   integer order = 5;
   integer ch = 0;
   
-  always@(*) begin // TODO: find some way to trigger this
+  /* Multiplication */
+  always@(posedge norm_mul_complete) begin
     case(order)
       5: begin
         next_mul_input_1 <= adder_output;
@@ -393,5 +397,16 @@ module NLC_controller(
     endcase
   end
   
+  /* Adder */
+  always@(*) begin // TODO: find some way to trigger this
+    case(order)
+      5: begin
+        next_adder_input_1 <= multiplier_output;
+        case(ch)
+          0: next_adder_input_2 <= ch0_coeff_4;
+        endcase
+      end
+    endcase
+  end
 endmodule 
 	
