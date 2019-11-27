@@ -357,6 +357,21 @@ module NLC_controller(
     next_mul_input_1 = adder_output;
     case(norm_mul_cnt)
       0: next_mul_input_2 <= ch0_recip_stdev;
+      1: next_mul_input_2 <= ch1_recip_stdev;
+      2: next_mul_input_2 <= ch2_recip_stdev;
+      3: next_mul_input_2 <= ch3_recip_stdev;
+      4: next_mul_input_2 <= ch4_recip_stdev;
+      5: next_mul_input_2 <= ch5_recip_stdev;
+      6: next_mul_input_2 <= ch6_recip_stdev;
+      7: next_mul_input_2 <= ch7_recip_stdev;
+      8: next_mul_input_2 <= ch8_recip_stdev;
+      9: next_mul_input_2 <= ch9_recip_stdev;
+      10: next_mul_input_2 <= ch10_recip_stdev;
+      11: next_mul_input_2 <= ch11_recip_stdev;
+      12: next_mul_input_2 <= ch12_recip_stdev;
+      13: next_mul_input_2 <= ch13_recip_stdev;
+      14: next_mul_input_2 <= ch14_recip_stdev;
+      15: next_mul_input_2 <= ch15_recip_stdev;
     endcase
   
 endmodule 
