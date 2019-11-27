@@ -294,19 +294,76 @@ module NLC_opt(
 .neg_mean(ch0_neg_mean),.coeff_5(ch0_coeff_5),.coeff_4(ch0_coeff_4),.coeff_3(ch0_coeff_3),.coeff_2(ch0_coeff_2),.coeff_1(ch0_coeff_1),
 .coeff_0(ch0_coeff_0));*/
   
-  wire conv_srdyi;
-  wire [20:0] conv_input;
-  wire conv_srdyo;
-  wire multiplier_srdyi;
-  wire [31:0] multiplier_input_1;
-  wire [31:0] multiplier_input_2; // from controller
-  wire multiplier_srdyo;
-  wire adder_srdyi;
-  wire [31:0] adder_input_1;
-  wire [31:0] adder_input_2; // from controller
-  wire adder_srdyo;
+  reg rst;
   
-  fp_to_smc_float conv(clk,rst,x_smc, x_adc, srdyo_conv, srdyi);
+  // Convert to smc
+  wire [31:0] x_smc;
+  reg [20:0] xi_fp_to_smc;
+  wire smc_srdyo;
+  reg smc_srdyi;
+  
+  // Convert to fp
+  reg [31:0] x_fp;
+  wire [20:0] xo_smc_to_fp;
+  wire fp_srdyo;
+  reg fp_srdyi;
+  
+  // Multiplier
+  reg [31:0] mul_xi;
+  reg [31:0] mul_yi; 
+  reg [31:0] mul_zo; // from controller
+  reg mul_srdyi; 
+  wire mul_srdyo;
+  
+  // Adder
+  reg [31:0] add_xi;
+  reg [31:0] add_yi; 
+  reg [31:0] add_zo; // from controller
+  reg add_srdyi; 
+  wire add_srdyo;
+  
+  //Convert input x_adc to smc
+  fp_to_smc_float conv_to_smc(
+        .clk(clk),
+        .GlobalReset(rst),
+        .y_o_portx(x_smc),
+        .x_i(xi_fp_to_smc),
+        .srdyo_o(smc_srdyo),
+        .srdyi_i(smc_srdyi)
+  );
+  
+  //Convert output x_lin to fp
+  smc_float_to_fp conv_to_fp(
+        .clk(clk),
+        .GlobalReset(rst),
+        .x_i_portx(x_fp),
+        .y_o(xo_smc_to_fp),
+        .srdyo_o(fp_srdyo),
+        .srdyi_i(fp_srdyi)
+  );
+  
+  // Instantiate multiplier
+  smc_float_multiplier multiply(
+	      .clk(clk),
+	      .GlobalReset(rst),
+	      .x_i_porty(mul_xi),
+	      .y_i_porty(mul_yi),
+	      .z_o_portx(mul_zo),
+	      .srdyi_i(mul_srdyi),
+	      .srdyo_o(mul_srdyo)
+  );
+  
+  // Instantiate adder
+  smc_float_adder add(
+	      .clk(clk),
+	      .GlobalReset(rst),
+	      .x_i_porty(mul_xi),
+	      .y_i_porty(mul_yi),
+	      .z_o_portx(mul_zo),
+	      .srdyi_i(add_srdyi),
+	      .srdyo_o(add_srdyo)
+  );
+  
   always@(posedge )
 
 
