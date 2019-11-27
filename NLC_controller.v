@@ -225,11 +225,13 @@ module NLC_controller(
   reg [20:0] next_conv_input;
   reg next_conv_srdyi;
 	/* Multiplier */
-  reg [31:0] next_multiplier_input;
+  reg [31:0] next_mul_input_1;
+  reg [31:0] next_mul_input_2;
   reg next_multiplier_srdyi;
   
   /* Adder */
-  reg [31:0] next_adder_input;
+  reg [31:0] next_adder_input_1;
+  reg [31:0] next_adder_input_2;
   reg next_adder_srdyi;
   
   /* IO */
@@ -262,9 +264,11 @@ module NLC_controller(
       conv_srdyi <= next_conv_srdyi;
       conv_input <= next_conv_input;
       adder_srdyi <= next_adder_srdyi;
-      adder_input_2 <= next_adder_input;
+      adder_input_1 <= next_adder_input_1;
+      adder_input_2 <= next_adder_input_2;
       multiplier_srdyi <= next_multiplier_srdyi;
-      multiplier_input_2 <= next_multiplier_input;
+      multiplier_input_1 <= next_mul_input_1;
+      multiplier_input_2 <= next_mul_input_2;
     end
   end
   
@@ -306,19 +310,26 @@ module NLC_controller(
   
   always@(posedge clk) if(start_conv) conv_cnt <= conv_cnt + 1;
   
-  /* Converter output, normalization multiplication input */
-  integer norm_cnt = 0;
-  reg start_normalize = 0;
+  /* Converter output, normalization adder input */
+  integer norm_add_cnt = 0;
+  reg start_normalize_add = 0;
 
   always@(posedge conv_srdyo) begin
-    start_normalize <= 0;
+    start_normalize <= 1;
     next_multiplier_srdyi <= 1;
   end
   
-  always@(*) next_multiplier_input <= conv_output;
+  always@(*) begin
+    next_adder_input_1 <= conv_output;
+    case(norm_add_cnt)
+      0: next_adder_input_2 <= ch0_neg_mean;
+      1: 
+    next_multiplier_input <= conv_output;
+  end
   
   always@(posedge clk) if(start_normalize) norm_cnt <= norm_cnt + 1;
   
+  /* Normalization adder output, normalization multiplier input */
   
 endmodule 
 	
