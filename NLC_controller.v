@@ -224,6 +224,7 @@ module NLC_controller(
 	/* Converter */
   reg [20:0] next_conv_input;
   reg next_conv_srdyi;
+  
 	/* Multiplier */
   reg [31:0] next_mul_input_1;
   reg [31:0] next_mul_input_2;
@@ -286,21 +287,21 @@ module NLC_controller(
     case(conv_cnt)
       0: next_conv_input <= ch0_x_adc;
       1: next_conv_input <= ch1_x_adc;
-     2: next_conv_input <= ch2_x_adc;
-     3: next_conv_input <= ch3_x_adc;
-     4: next_conv_input <= ch4_x_adc;
-     5: next_conv_input <= ch5_x_adc;
-     6: next_conv_input <= ch6_x_adc;
-     7: next_conv_input <= ch7_x_adc;
-     8: next_conv_input <= ch8_x_adc;
-     9: next_conv_input <= ch9_x_adc;
+      2: next_conv_input <= ch2_x_adc;
+      3: next_conv_input <= ch3_x_adc;
+      4: next_conv_input <= ch4_x_adc;
+      5: next_conv_input <= ch5_x_adc;
+      6: next_conv_input <= ch6_x_adc;
+      7: next_conv_input <= ch7_x_adc;
+      8: next_conv_input <= ch8_x_adc;
+      9: next_conv_input <= ch9_x_adc;
      10: next_conv_input <= ch10_x_adc;
      11: next_conv_input <= ch11_x_adc;
      12: next_conv_input <= ch12_x_adc;
      13: next_conv_input <= ch13_x_adc;
      14: next_conv_input <= ch14_x_adc;
      15: next_conv_input <= ch15_x_adc;
-    16: begin
+     16: begin
       next_conv_srdyi <= 0; // stop the conversion
       start_conv <= 0;
       conv_cnt = 0;
@@ -323,9 +324,22 @@ module NLC_controller(
     next_adder_input_1 <= conv_output;
     case(norm_add_cnt)
       0: next_adder_input_2 <= ch0_neg_mean;
-      1: 
+      1: next_adder_input_2 <= ch1_neg_mean;
+      2: next_adder_input_2 <= ch2_neg_mean;
+      3: next_adder_input_2 <= ch3_neg_mean;
+      4: next_adder_input_2 <= ch4_neg_mean;
+      5: next_adder_input_2 <= ch5_neg_mean;
+      6: next_adder_input_2 <= ch6_neg_mean;
+      7: next_adder_input_2 <= ch7_neg_mean;
+      8: next_adder_input_2 <= ch8_neg_mean;
+      9: next_adder_input_2 <= ch9_neg_mean;
+      10: next_adder_input_2 <= ch10_neg_mean;
+      11: next_adder_input_2 <= ch11_neg_mean;
+      12: next_adder_input_2 <= ch12_neg_mean;
+      13: next_adder_input_2 <= ch13_neg_mean;
+      14: next_adder_input_2 <= ch14_neg_mean;
+      15: next_adder_input_2 <= ch15_neg_mean;
     endcase
-    next_multiplier_input <= conv_output;
   end
   
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
