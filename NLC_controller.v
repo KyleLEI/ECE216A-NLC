@@ -356,8 +356,8 @@ module NLC_controller(
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
   
   /* Normalization adder output, normalization multiplier input */
-  integer norm_mul_cnt = 0;
-  reg start_normalize_mul = 0;
+  /*integer norm_mul_cnt = 0;
+  reg start_normalize_mul = 0;*/
   reg norm_mul_complete = 0;
   
   always@(posedge adder_srdyo) begin
@@ -491,7 +491,7 @@ module NLC_controller(
                3: next_mul_input_1 <= ch3_coeff_1;
                4: next_mul_input_1 <= ch4_coeff_1; 
                5: next_mul_input_1 <= ch5_coeff_1;
-               6: next_mul_input_1 <= ch6_coeff_1 
+               6: next_mul_input_1 <= ch6_coeff_1; 
                7: next_mul_input_1 <= ch7_coeff_1;
                8: next_mul_input_1 <= ch8_coeff_1; 
                9: next_mul_input_1 <= ch9_coeff_1;
@@ -602,7 +602,7 @@ module NLC_controller(
                3: next_adder_input_1 <= ch3_coeff_1;
                4: next_adder_input_1 <= ch4_coeff_1; 
                5: next_adder_input_1 <= ch5_coeff_1;
-               6: next_adder_input_1 <= ch6_coeff_1 
+               6: next_adder_input_1 <= ch6_coeff_1;
                7: next_adder_input_1 <= ch7_coeff_1;
                8: next_adder_input_1 <= ch8_coeff_1; 
                9: next_adder_input_1 <= ch9_coeff_1;
@@ -617,7 +617,16 @@ module NLC_controller(
     endcase
   end
   
-  always@(posedge clk) if(start_normalize_mul) ch <= ch + 1;
+  always@(posedge clk) if(norm_mul_complete) begin
+   ch = ch + 1;
+   if(ch > 15) begin
+     order = order - 1;
+     ch = 0;
+   end
+   if(order < 1) begin // STOP multiplier
+     multiplier_srdyi = 0;
+   end
+ end
   
 
 endmodule 
