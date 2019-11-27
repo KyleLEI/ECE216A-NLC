@@ -10,17 +10,20 @@ module NLC_controller(
   
   /* Data format converter */
   output reg [20:0] conv_input,
+  input reg [31:0] conv_output,
   output reg conv_srdyi,
   input wire conv_srdyo,
   
 
   /* Multiplier */
+  output reg [31:0] multiplier_input_1,
   output reg [31:0] multiplier_input_2, // a_5 at first, adder_input next
   input reg [31:0] multiplier_output,
   output reg multiplier_srdyi,
   input wire multiplier_srdyo,
   
   /* Adder */
+  output reg [31:0] adder_input_1,
   output reg [31:0] adder_input_2, //a_i, i=4->0
   input wire [31:0] adder_output,
   output reg adder_srdyi,
@@ -263,10 +266,7 @@ module NLC_controller(
   reg [31:0] ch1_x_smc;
   reg [31:0] ch0_x_smc;
   
-  integer clk_cnt = 0;
-  always@(posedge srdyi) begin
-    $display("Starting calculation");
-  end
+  
   
  
   
@@ -288,7 +288,8 @@ module NLC_controller(
   
 
   /* Input, feed one per cycle */
-  always@(*) begin
+  integer clk_cnt = 0;
+  always@(posedge srdyi) begin
     case(clk_cnt)
       0: begin
        next_conv_srdyi <= 1; // start conversion
@@ -313,8 +314,8 @@ module NLC_controller(
     endcase
   end
   
-
-  
+  /* Output */
+  integer 
   always@(posedge conv_srdyo) begin
     
   end
