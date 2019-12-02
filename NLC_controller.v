@@ -448,25 +448,143 @@ module NLC_controller(
   integer ch = 0;
   
   /* Multiplication */
-  always@(posedge norm_mul_complete) begin
+ always@(posedge norm_mul_complete) begin
     if(order == 5) begin
-      
       case(ch)
-                0: begin 
-                next_mul_input_1 <= ch0_coeff_5;
-                next_mul_input_2 = ch0_norm;
-                1:
-              end
-             endcase
+        0: begin 
+            next_mul_input_1 <= ch0_coeff_5;
+            next_mul_input_2 = ch0_norm;
            end
-         else begin
-          case(ch)
-              0: begin
-               next_mul_input_1 <= ch0_haz_reg;
-               next_mul_input_2 = ch0_norm;
-              1:
-        end
-    
+        1: begin 
+            next_mul_input_1 <= ch1_coeff_5;
+            next_mul_input_2 = ch1_norm;
+           end
+        2: begin 
+            next_mul_input_1 <= ch2_coeff_5;
+            next_mul_input_2 = ch2_norm;
+           end
+        3: begin 
+            next_mul_input_1 <= ch3_coeff_5;
+            next_mul_input_2 = ch3_norm;
+           end
+        4: begin 
+            next_mul_input_1 <= ch4_coeff_5;
+            next_mul_input_2 = ch4_norm;
+           end
+        5: begin 
+            next_mul_input_1 <= ch5_coeff_5;
+            next_mul_input_2 = ch5_norm;
+           end
+        6: begin 
+            next_mul_input_1 <= ch6_coeff_5;
+            next_mul_input_2 = ch6_norm;
+           end
+        7: begin 
+            next_mul_input_1 <= ch7_coeff_5;
+            next_mul_input_2 = ch7_norm;
+           end
+        8: begin 
+            next_mul_input_1 <= ch8_coeff_5;
+            next_mul_input_2 = ch8_norm;
+           end
+        9: begin 
+            next_mul_input_1 <= ch9_coeff_5;
+            next_mul_input_2 = ch9_norm;
+           end
+        10: begin 
+             next_mul_input_1 <= ch10_coeff_5;
+             next_mul_input_2 = ch10_norm;
+            end
+        11: begin 
+             next_mul_input_1 <= ch11_coeff_5;
+             next_mul_input_2 = ch11_norm;
+            end
+        12: begin 
+             next_mul_input_1 <= ch12_coeff_5;
+             next_mul_input_2 = ch12_norm;
+            end
+        13: begin 
+             next_mul_input_1 <= ch13_coeff_5;
+             next_mul_input_2 = ch13_norm;
+            end
+        14: begin 
+             next_mul_input_1 <= ch14_coeff_5;
+             next_mul_input_2 = ch14_norm;
+            end
+        15: begin 
+             next_mul_input_1 <= ch15_coeff_5;
+             next_mul_input_2 = ch15_norm;
+            end
+      endcase
+    end
+    else begin
+      case(ch)
+        0: begin
+            next_mul_input_1 <= ch0_haz_reg;
+            next_mul_input_2 = ch0_norm;
+           end
+        1: begin
+            next_mul_input_1 <= ch1_haz_reg;
+            next_mul_input_2 = ch1_norm;
+           end
+        2: begin
+            next_mul_input_1 <= ch2_haz_reg;
+            next_mul_input_2 = ch2_norm;
+           end
+        3: begin
+            next_mul_input_1 <= ch3_haz_reg;
+            next_mul_input_2 = ch3_norm;
+           end
+        4: begin
+            next_mul_input_1 <= ch4_haz_reg;
+            next_mul_input_2 = ch4_norm;
+           end
+        5: begin
+            next_mul_input_1 <= ch5_haz_reg;
+            next_mul_input_2 = ch5_norm;
+           end
+        6: begin
+            next_mul_input_1 <= ch6_haz_reg;
+            next_mul_input_2 = ch6_norm;
+           end
+        7: begin
+            next_mul_input_1 <= ch7_haz_reg;
+            next_mul_input_2 = ch7_norm;
+           end
+        8: begin
+            next_mul_input_1 <= ch8_haz_reg;
+            next_mul_input_2 = ch8_norm;
+           end
+        9: begin
+            next_mul_input_1 <= ch9_haz_reg;
+            next_mul_input_2 = ch9_norm;
+           end
+        10: begin
+             next_mul_input_1 <= ch10_haz_reg;
+             next_mul_input_2 = ch10_norm;
+            end
+        11: begin
+             next_mul_input_1 <= ch11_haz_reg;
+             next_mul_input_2 = ch11_norm;
+            end
+        12: begin
+             next_mul_input_1 <= ch12_haz_reg;
+             next_mul_input_2 = ch12_norm;
+            end
+        13: begin
+             next_mul_input_1 <= ch13_haz_reg;
+             next_mul_input_2 = ch13_norm;
+            end
+        14: begin
+             next_mul_input_1 <= ch14_haz_reg;
+             next_mul_input_2 = ch14_norm;
+            end
+        15: begin
+             next_mul_input_1 <= ch15_haz_reg;
+             next_mul_input_2 = ch15_norm;
+            end
+      endcase
+    end
   end
   
   
