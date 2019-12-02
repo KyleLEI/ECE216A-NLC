@@ -373,9 +373,58 @@ module NLC_controller(
   always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
   
   
-  /* Handle data hazard between normalizer multiplier and main loop multiplier */
-  reg start_haz_handling;
-  integer haz_cnt;
+  /* Store all normalized x */
+  reg [31:0] ch15_norm;
+  reg [31:0] ch14_norm;
+  reg [31:0] ch13_norm;
+  reg [31:0] ch12_norm;
+  reg [31:0] ch11_norm;
+  reg [31:0] ch10_norm;
+  reg [31:0] ch9_norm;
+  reg [31:0] ch8_norm;
+  reg [31:0] ch7_norm;
+  reg [31:0] ch6_norm;
+  reg [31:0] ch5_norm;
+  reg [31:0] ch4_norm;
+  reg [31:0] ch3_norm;
+  reg [31:0] ch2_norm;
+  reg [31:0] ch1_norm;
+  reg [31:0] ch0_norm;
+  
+  
+  reg start_store_norm;
+  integer store_cnt;
+  
+  
+  always@(posedge mul_srdyo) begin
+    start_store_norm <= 1;
+  end
+    
+  
+  /* Store multiplier results in registers for future use */
+  always@(*) begin
+    case(store_cnt)
+      0: ch0_norm <= multiplier_output;
+      1: ch1_norm <= multiplier_output;
+      2: ch2_norm <= multiplier_output;
+      3: ch3_norm <= multiplier_output;
+      4: ch4_norm <= multiplier_output;
+      5: ch5_norm <= multiplier_output;
+      6: ch6_norm <= multiplier_output;
+      7: ch7_norm <= multiplier_output;
+      8: ch8_norm <= multiplier_output;
+      9: ch9_norm <= multiplier_output;
+      10: ch10_norm <= multiplier_output;
+      11: ch11_norm <= multiplier_output;
+      12: ch12_norm <= multiplier_output;
+      13: ch13_norm <= multiplier_output;
+      14: ch14_norm <= multiplier_output;
+      15: ch15_norm <= multiplier_output;
+    endcase
+  end
+  
+  /* Handle structural hazard */
+  
   
   reg [31:0] ch15_haz_reg;
   reg [31:0] ch14_haz_reg;
@@ -394,150 +443,33 @@ module NLC_controller(
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
   
-  always@(posedge mul_srdyo) begin
-    start_haz_handling <= 1;
-  end
-    
-  
-  /* Store multiplier results in registers for future use */
-  always@(*) begin
-    case(haz_cnt)
-      0: ch0_haz_reg <= multiplier_output;
-      1: ch1_haz_reg <= multiplier_output;
-      2: ch2_haz_reg <= multiplier_output;
-      3: ch3_haz_reg <= multiplier_output;
-      4: ch4_haz_reg <= multiplier_output;
-      5: ch5_haz_reg <= multiplier_output;
-      6: ch6_haz_reg <= multiplier_output;
-      7: ch7_haz_reg <= multiplier_output;
-      8: ch8_haz_reg <= multiplier_output;
-      9: ch9_haz_reg <= multiplier_output;
-      10: ch10_haz_reg <= multiplier_output;
-      11: ch11_haz_reg <= multiplier_output;
-      12: ch12_haz_reg <= multiplier_output;
-      13: ch13_haz_reg <= multiplier_output;
-      14: ch14_haz_reg <= multiplier_output;
-      15: ch15_haz_reg <= multiplier_output;
-    endcase
-  end
-  
   /* Normalization multiplier output, main loop input */
   integer order = 5;
   integer ch = 0;
   
   /* Multiplication */
   always@(posedge norm_mul_complete) begin
-    case(order)
-       5: begin
-             case(ch)
-               0: begin
-                  next_mul_input_1 <= ch0_coeff_5; 
-                  next_mul_input_2 <= ch0_haz_reg;
-                end
-               1: next_mul_input_1 <= ch1_coeff_5;
-               2: next_mul_input_1 <= ch2_coeff_5; 
-               3: next_mul_input_1 <= ch3_coeff_5;
-               4: next_mul_input_1 <= ch4_coeff_5; 
-               5: next_mul_input_1 <= ch5_coeff_5;
-               6: next_mul_input_1 <= ch6_coeff_5; 
-               7: next_mul_input_1 <= ch7_coeff_5;
-               8: next_mul_input_1 <= ch8_coeff_5; 
-               9: next_mul_input_1 <= ch9_coeff_5;
-               10: next_mul_input_1 <= ch10_coeff_5; 
-               11: next_mul_input_1 <= ch11_coeff_5;
-               12: next_mul_input_1 <= ch12_coeff_5; 
-               13: next_mul_input_1 <= ch13_coeff_5;
-               14: next_mul_input_1 <= ch14_coeff_5; 
-               15: next_mul_input_1 <= ch15_coeff_5;
+    if(order == 5) begin
+      
+      case(ch)
+                0: begin 
+                next_mul_input_1 <= ch0_coeff_5;
+                next_mul_input_2 = ch0_norm;
+                1:
+              end
              endcase
            end
-        4: begin
-             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
-             case(ch)
-               0: next_mul_input_1 <= ch0_coeff_4; 
-               1: next_mul_input_1 <= ch1_coeff_4;
-               2: next_mul_input_1 <= ch2_coeff_4; 
-               3: next_mul_input_1 <= ch3_coeff_4;
-               4: next_mul_input_1 <= ch4_coeff_4; 
-               5: next_mul_input_1 <= ch5_coeff_4;
-               6: next_mul_input_1 <= ch6_coeff_4; 
-               7: next_mul_input_1 <= ch7_coeff_4;
-               8: next_mul_input_1 <= ch8_coeff_4; 
-               9: next_mul_input_1 <= ch9_coeff_4;
-               10: next_mul_input_1 <= ch10_coeff_4; 
-               11: next_mul_input_1 <= ch11_coeff_4;
-               12: next_mul_input_1 <= ch12_coeff_4; 
-               13: next_mul_input_1 <= ch13_coeff_4;
-               14: next_mul_input_1 <= ch14_coeff_4; 
-               15: next_mul_input_1 <= ch15_coeff_4;
-             endcase
-           end
-        3: begin
-             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
-             case(ch)
-               0: next_mul_input_1 <= ch0_coeff_3; 
-               1: next_mul_input_1 <= ch1_coeff_3;
-               2: next_mul_input_1 <= ch2_coeff_3; 
-               3: next_mul_input_1 <= ch3_coeff_3;
-               4: next_mul_input_1 <= ch4_coeff_3; 
-               5: next_mul_input_1 <= ch5_coeff_3;
-               6: next_mul_input_1 <= ch6_coeff_3; 
-               7: next_mul_input_1 <= ch7_coeff_3;
-               8: next_mul_input_1 <= ch8_coeff_3; 
-               9: next_mul_input_1 <= ch9_coeff_3;
-               10: next_mul_input_1 <= ch10_coeff_3; 
-               11: next_mul_input_1 <= ch11_coeff_3;
-               12: next_mul_input_1 <= ch12_coeff_3; 
-               13: next_mul_input_1 <= ch13_coeff_3;
-               14: next_mul_input_1 <= ch14_coeff_3; 
-               15: next_mul_input_1 <= ch15_coeff_3;
-             endcase
-           end
-        2: begin
-             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
-             case(ch)
-               0: next_mul_input_1 <= ch0_coeff_2; 
-               1: next_mul_input_1 <= ch1_coeff_2;
-               2: next_mul_input_1 <= ch2_coeff_2; 
-               3: next_mul_input_1 <= ch3_coeff_2;
-               4: next_mul_input_1 <= ch4_coeff_2; 
-               5: next_mul_input_1 <= ch5_coeff_2;
-               6: next_mul_input_1 <= ch6_coeff_2; 
-               7: next_mul_input_1 <= ch7_coeff_2;
-               8: next_mul_input_1 <= ch8_coeff_2; 
-               9: next_mul_input_1 <= ch9_coeff_2;
-               10: next_mul_input_1 <= ch10_coeff_2; 
-               11: next_mul_input_1 <= ch11_coeff_2;
-               12: next_mul_input_1 <= ch12_coeff_2; 
-               13: next_mul_input_1 <= ch13_coeff_2;
-               14: next_mul_input_1 <= ch14_coeff_2; 
-               15: next_mul_input_1 <= ch15_coeff_2;
-             endcase
-           end
-        1: begin
-             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
-             case(ch)
-               0: next_mul_input_1 <= ch0_coeff_1; 
-               1: next_mul_input_1 <= ch1_coeff_1;
-               2: next_mul_input_1 <= ch2_coeff_1; 
-               3: next_mul_input_1 <= ch3_coeff_1;
-               4: next_mul_input_1 <= ch4_coeff_1; 
-               5: next_mul_input_1 <= ch5_coeff_1;
-               6: next_mul_input_1 <= ch6_coeff_1; 
-               7: next_mul_input_1 <= ch7_coeff_1;
-               8: next_mul_input_1 <= ch8_coeff_1; 
-               9: next_mul_input_1 <= ch9_coeff_1;
-               10: next_mul_input_1 <= ch10_coeff_1; 
-               11: next_mul_input_1 <= ch11_coeff_1;
-               12: next_mul_input_1 <= ch12_coeff_1; 
-               13: next_mul_input_1 <= ch13_coeff_1;
-               14: next_mul_input_1 <= ch14_coeff_1; 
-               15: next_mul_input_1 <= ch15_coeff_1; 
-               16: next_adder_srdyi <= 0;
-             endcase 
-           end
-    endcase
+         else begin
+          case(ch)
+              0: begin
+               next_mul_input_1 <= ch0_haz_reg;
+               next_mul_input_2 = ch0_norm;
+              1:
+        end
+    
   end
+  
+  
   
   always@(*) begin // TODO: find some way to trigger this
     case(order)
