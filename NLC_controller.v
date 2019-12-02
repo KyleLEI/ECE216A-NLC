@@ -403,21 +403,21 @@ module NLC_controller(
   always@(*) begin
     case(haz_cnt)
       0: ch0_haz_reg <= multiplier_output;
-      1: next_mul_input_2 <= ch1_recip_stdev;
-      2: next_mul_input_2 <= ch2_recip_stdev;
-      3: next_mul_input_2 <= ch3_recip_stdev;
-      4: next_mul_input_2 <= ch4_recip_stdev;
-      5: next_mul_input_2 <= ch5_recip_stdev;
-      6: next_mul_input_2 <= ch6_recip_stdev;
-      7: next_mul_input_2 <= ch7_recip_stdev;
-      8: next_mul_input_2 <= ch8_recip_stdev;
-      9: next_mul_input_2 <= ch9_recip_stdev;
-      10: next_mul_input_2 <= ch10_recip_stdev;
-      11: next_mul_input_2 <= ch11_recip_stdev;
-      12: next_mul_input_2 <= ch12_recip_stdev;
-      13: next_mul_input_2 <= ch13_recip_stdev;
-      14: next_mul_input_2 <= ch14_recip_stdev;
-      15: next_mul_input_2 <= ch15_recip_stdev;
+      1: ch1_haz_reg <= multiplier_output;
+      2: ch2_haz_reg <= multiplier_output;
+      3: ch3_haz_reg <= multiplier_output;
+      4: ch4_haz_reg <= multiplier_output;
+      5: ch5_haz_reg <= multiplier_output;
+      6: ch6_haz_reg <= multiplier_output;
+      7: ch7_haz_reg <= multiplier_output;
+      8: ch8_haz_reg <= multiplier_output;
+      9: ch9_haz_reg <= multiplier_output;
+      10: ch10_haz_reg <= multiplier_output;
+      11: ch11_haz_reg <= multiplier_output;
+      12: ch12_haz_reg <= multiplier_output;
+      13: ch13_haz_reg <= multiplier_output;
+      14: ch14_haz_reg <= multiplier_output;
+      15: ch15_haz_reg <= multiplier_output;
     endcase
   end
   
