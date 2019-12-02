@@ -739,6 +739,30 @@ module NLC_controller(
    end
  end
   
+  /* Convert back to FP - output */
+  
+  reg conv_2_start;
+  integer conv_2_cnt;
+  
+  always@(*) begin
+    case(conv_2_cnt)
+      0: ch0_x_lin <= conv_2_output;
+      1: ch1_x_lin <= conv_2_output;
+      2: ch2_x_lin <= conv_2_output;
+      3: ch3_x_lin <= conv_2_output;
+      4: ch4_x_lin <= conv_2_output;
+      5: ch5_x_lin <= conv_2_output;
+      6: ch6_x_lin <= conv_2_output;
+      7: ch7_x_lin <= conv_2_output;
+      8: ch8_x_lin <= conv_2_output;
+      9: ch9_x_lin <= conv_2_output;
+      10: ch10_x_lin <= conv_2_output;
+      11: ch11_x_lin <= conv_2_output;
+      12: ch12_x_lin <= conv_2_output;
+      13: ch13_x_lin <= conv_2_output;
+      14: ch14_x_lin <= conv_2_output;
+      15: ch15_x_lin <= conv_2_output;
+  end
 
 endmodule 
 	
