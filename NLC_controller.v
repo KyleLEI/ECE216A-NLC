@@ -425,7 +425,6 @@ module NLC_controller(
   
   /* Handle structural hazard */
   
-  
   reg [31:0] ch15_haz_reg;
   reg [31:0] ch14_haz_reg;
   reg [31:0] ch13_haz_reg;
@@ -442,6 +441,11 @@ module NLC_controller(
   reg [31:0] ch2_haz_reg;
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
+  
+  integer haz_cnt;
+  
+  always@(posedge adder_srdyo) begin//TODO: solve conflict with normalization
+    case 
   
   /* Normalization multiplier output, main loop input */
   integer order = 5;
@@ -472,30 +476,9 @@ module NLC_controller(
   
   
   always@(*) begin // TODO: find some way to trigger this
+    next_adder_input_2 <= multiplier_output
     case(order)
-       4: begin
-             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
-             case(ch)
-               0: next_adder_input_1 <= ch0_coeff_5; 
-               1: next_adder_input_1 <= ch1_coeff_5;
-               2: next_adder_input_1 <= ch2_coeff_5; 
-               3: next_adder_input_1 <= ch3_coeff_5;
-               4: next_adder_input_1 <= ch4_coeff_5; 
-               5: next_adder_input_1 <= ch5_coeff_5;
-               6: next_adder_input_1 <= ch6_coeff_5; 
-               7: next_adder_input_1 <= ch7_coeff_5;
-               8: next_adder_input_1 <= ch8_coeff_5; 
-               9: next_adder_input_1 <= ch9_coeff_5;
-               10: next_adder_input_1 <= ch10_coeff_5; 
-               11: next_adder_input_1 <= ch11_coeff_5;
-               12: next_adder_input_1 <= ch12_coeff_5; 
-               13: next_adder_input_1 <= ch13_coeff_5;
-               14: next_adder_input_1 <= ch14_coeff_5; 
-               15: next_adder_input_1 <= ch15_coeff_5;
-             endcase
-           end
-        3: begin
-             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+        5: begin
              case(ch)
                0: next_adder_input_1 <= ch0_coeff_4; 
                1: next_adder_input_1 <= ch1_coeff_4;
@@ -515,8 +498,7 @@ module NLC_controller(
                15: next_adder_input_1 <= ch15_coeff_4;
              endcase
            end
-        2: begin
-             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+        4: begin
              case(ch)
                0: next_adder_input_1 <= ch0_coeff_3; 
                1: next_adder_input_1 <= ch1_coeff_3;
@@ -536,8 +518,7 @@ module NLC_controller(
                15: next_adder_input_1 <= ch15_coeff_3;
              endcase
            end
-        1: begin
-             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+        3: begin
              case(ch)
                0: next_adder_input_1 <= ch0_coeff_2; 
                1: next_adder_input_1 <= ch1_coeff_2;
@@ -557,8 +538,7 @@ module NLC_controller(
                15: next_adder_input_1 <= ch15_coeff_2;
              endcase
            end
-        0: begin
-             next_adder_input_2 <= adder_output; // FIXME: may not be aligned correctly
+        2: begin
              case(ch)
                0: next_adder_input_1 <= ch0_coeff_1; 
                1: next_adder_input_1 <= ch1_coeff_1;
@@ -577,6 +557,26 @@ module NLC_controller(
                14: next_adder_input_1 <= ch14_coeff_1; 
                15: next_adder_input_1 <= ch15_coeff_1;
              endcase 
+           end
+           1: begin
+             case(ch)
+               0: next_adder_input_1 <= ch0_coeff_0; 
+               1: next_adder_input_1 <= ch1_coeff_0;
+               2: next_adder_input_1 <= ch2_coeff_0; 
+               3: next_adder_input_1 <= ch3_coeff_0;
+               4: next_adder_input_1 <= ch4_coeff_0; 
+               5: next_adder_input_1 <= ch5_coeff_0;
+               6: next_adder_input_1 <= ch6_coeff_0; 
+               7: next_adder_input_1 <= ch7_coeff_0;
+               8: next_adder_input_1 <= ch8_coeff_0; 
+               9: next_adder_input_1 <= ch9_coeff_0;
+               10: next_adder_input_1 <= ch10_coeff_0; 
+               11: next_adder_input_1 <= ch11_coeff_0;
+               12: next_adder_input_1 <= ch12_coeff_0; 
+               13: next_adder_input_1 <= ch13_coeff_0;
+               14: next_adder_input_1 <= ch14_coeff_0; 
+               15: next_adder_input_1 <= ch15_coeff_0;
+             endcase
            end
     endcase
   end
