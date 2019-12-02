@@ -366,9 +366,10 @@ module NLC_opt(
   
   // Instantiate controller
   NLC_controller control(.clk(clk),.rst(reset),.srdyi_i(add_srdyi),.srdyo_o(add_srdyo),
-  .conv_input(xi_fp_to_smc),.conv_output(x_smc),.conv_srdyi(smc_srdyi),.conv_srdyo(smc_srdyo),
+  .conv_1_input(xi_fp_to_smc),.conv_1_output(x_smc),.conv_1_srdyi(smc_srdyi),.conv_1_srdyo(smc_srdyo),
   .multiplier_input_1(mul_xi),.multiplier_input_2(mul_yi),.multiplier_output(mul_zo),.multiplier_srdyi(add_srdyi),.multiplier_srdyo(add_srdyo),
   .adder_input_1(add_xi),.adder_input_2(add_yi),.adder_output(add_zo),.adder_srdyi(add_srdyi),.adder_srdyo(add_srdyo),
+  .conv_2_input(x_fp),.conv_2_output(xo_smc_to_fp),.conv_2_srdyi(fp_srdyo),.conv_2_srdyo(fp_srdyi)
   .ch15_x_lin(ch15_x_lin),.ch15_x_adc(ch15_x_adc),.ch15_recip_stdev(ch15_recip_stdev),.ch15_neg_mean(ch15_neg_mean),.ch15_coeff_5(ch15_coeff_5),.ch15_coeff_4(ch15_coeff_4),.ch15_coeff_3(ch15_coeff_3),.ch15_coeff_2(ch15_coeff_2),.ch15_coeff_1(ch15_coeff_1),.ch15_coeff_0(ch15_coeff_0),
   .ch14_x_lin(ch14_x_lin),.ch14_x_adc(ch14_x_adc),.ch14_recip_stdev(ch14_recip_stdev),.ch14_neg_mean(ch14_neg_mean),.ch14_coeff_5(ch14_coeff_5),.ch14_coeff_4(ch14_coeff_4),.ch14_coeff_3(ch14_coeff_3),.ch14_coeff_2(ch14_coeff_2),.ch14_coeff_1(ch14_coeff_1),.ch14_coeff_0(ch14_coeff_0),
   .ch13_x_lin(ch13_x_lin),.ch13_x_adc(ch13_x_adc),.ch13_recip_stdev(ch13_recip_stdev),.ch13_neg_mean(ch13_neg_mean),.ch13_coeff_5(ch13_coeff_5),.ch13_coeff_4(ch13_coeff_4),.ch13_coeff_3(ch13_coeff_3),.ch13_coeff_2(ch13_coeff_2),.ch13_coeff_1(ch13_coeff_1),.ch13_coeff_0(ch13_coeff_0),
