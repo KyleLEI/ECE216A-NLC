@@ -8,11 +8,11 @@ module NLC_controller(
   	//input wire [1:0]operation_mode_i, 
 	//input wire [20:0] x_ref_i,
   
-  /* Data format converter */
-  output reg [20:0] conv_input,
-  input reg [31:0] conv_output,
-  output reg conv_srdyi,
-  input wire conv_srdyo,
+  /* FP-to-SMC converter */
+  output reg [20:0] conv_1_input,
+  input reg [31:0] conv_1_output,
+  output reg conv_1_srdyi,
+  input wire conv_1_srdyo,
   
 
   /* Multiplier */
@@ -28,6 +28,12 @@ module NLC_controller(
   input wire [31:0] adder_output,
   output reg adder_srdyi,
   input wire adder_srdyo,
+  
+  /* SMC-to-FP converter */
+  output reg [31:0] conv_2_input,
+  input reg [20:0] conv_2_output,
+  output reg conv_2_srdyi,
+  input wire conv_2_srdyo,
   
   //IO ports for ch15
 	output wire [20:0] ch15_x_lin,
@@ -221,9 +227,9 @@ module NLC_controller(
 	input wire [31:0] ch0_coeff_1,
 	input wire [31:0] ch0_coeff_0
 	);
-	/* Converter */
-  reg [20:0] next_conv_input;
-  reg next_conv_srdyi;
+	/* FP-to-SMC Converter */
+  reg [20:0] next_conv_1_input;
+  reg next_conv_1_srdyi;
   
 	/* Multiplier */
   reg [31:0] next_mul_input_1;
@@ -258,8 +264,8 @@ module NLC_controller(
       clk_cnt = 0;
     end
     else begin
-      conv_srdyi <= next_conv_srdyi;
-      conv_input <= next_conv_input;
+      conv_1_srdyi <= next_conv_1_srdyi;
+      conv_1_input <= next_conv_1_input;
       adder_srdyi <= next_adder_srdyi;
       adder_input_1 <= next_adder_input_1;
       adder_input_2 <= next_adder_input_2;
@@ -272,29 +278,29 @@ module NLC_controller(
 	
   always@(posedge srdyi) begin
     start_conv <= 1;
-    next_conv_srdyi <= 1;
+    next_conv_1_srdyi <= 1;
   end
   
   always@(*) begin // FIXME: cluster these unsafe methods
     case(conv_cnt)
-      0: next_conv_input <= ch0_x_adc;
-      1: next_conv_input <= ch1_x_adc;
-      2: next_conv_input <= ch2_x_adc;
-      3: next_conv_input <= ch3_x_adc;
-      4: next_conv_input <= ch4_x_adc;
-      5: next_conv_input <= ch5_x_adc;
-      6: next_conv_input <= ch6_x_adc;
-      7: next_conv_input <= ch7_x_adc;
-      8: next_conv_input <= ch8_x_adc;
-      9: next_conv_input <= ch9_x_adc;
-     10: next_conv_input <= ch10_x_adc;
-     11: next_conv_input <= ch11_x_adc;
-     12: next_conv_input <= ch12_x_adc;
-     13: next_conv_input <= ch13_x_adc;
-     14: next_conv_input <= ch14_x_adc;
-     15: next_conv_input <= ch15_x_adc;
+      0: next_conv_1_input <= ch0_x_adc;
+      1: next_conv_1_input <= ch1_x_adc;
+      2: next_conv_1_input <= ch2_x_adc;
+      3: next_conv_1_input <= ch3_x_adc;
+      4: next_conv_1_input <= ch4_x_adc;
+      5: next_conv_1_input <= ch5_x_adc;
+      6: next_conv_1_input <= ch6_x_adc;
+      7: next_conv_1_input <= ch7_x_adc;
+      8: next_conv_1_input <= ch8_x_adc;
+      9: next_conv_1_input <= ch9_x_adc;
+     10: next_conv_1_input <= ch10_x_adc;
+     11: next_conv_1_input <= ch11_x_adc;
+     12: next_conv_1_input <= ch12_x_adc;
+     13: next_conv_1_input <= ch13_x_adc;
+     14: next_conv_1_input <= ch14_x_adc;
+     15: next_conv_1_input <= ch15_x_adc;
      16: begin
-           next_conv_srdyi <= 0; // stop the conversion
+           next_conv_1_srdyi <= 0; // stop the conversion
            start_conv <= 0;
            conv_cnt = 0;
          end
@@ -304,13 +310,13 @@ module NLC_controller(
   always@(posedge clk) if(start_conv) conv_cnt <= conv_cnt + 1;
   
 
-  always@(posedge conv_srdyo) begin
+  always@(posedge conv_1_srdyo) begin
     start_normalize_add <= 1;
     next_adder_srdyi <= 1;
   end
   
   always@(*) begin
-    next_adder_input_1 <= conv_output;
+    next_adder_input_1 <= conv_1_output;
     case(norm_add_cnt)
       0: next_adder_input_2 <= ch0_neg_mean;
       1: next_adder_input_2 <= ch1_neg_mean;
@@ -423,6 +429,8 @@ module NLC_controller(
     endcase
   end
   
+  always@(posedge clk) if(start_store_norm) store_cnt <= store_cnt + 1;  
+  
   /* Handle structural hazard */
   
   reg [31:0] ch15_haz_reg;
@@ -442,10 +450,31 @@ module NLC_controller(
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
   
+  reg start_hazard_handling;
   integer haz_cnt;
   
   always@(posedge adder_srdyo) begin//TODO: solve conflict with normalization
-    case 
+    case(haz_cnt) begin
+      0: ch0_haz_reg <= adder_output;
+      1: ch1_haz_reg <= adder_output;
+      2: ch2_haz_reg <= adder_output;
+      3: ch3_haz_reg <= adder_output;
+      4: ch4_haz_reg <= adder_output;
+      5: ch5_haz_reg <= adder_output;
+      6: ch6_haz_reg <= adder_output;
+      7: ch7_haz_reg <= adder_output;
+      8: ch8_haz_reg <= adder_output;
+      9: ch9_haz_reg <= adder_output;
+      10: ch10_haz_reg <= adder_output;
+      11: ch11_haz_reg <= adder_output;
+      12: ch12_haz_reg <= adder_output;
+      13: ch13_haz_reg <= adder_output;
+      14: ch14_haz_reg <= adder_output;
+      15: ch15_haz_reg <= adder_output;
+    endcase
+  end
+  
+  always@(posedge clk) if(start_hazard_handling) haz_cnt <= haz_cnt + 1;  
   
   /* Normalization multiplier output, main loop input */
   integer order = 5;
