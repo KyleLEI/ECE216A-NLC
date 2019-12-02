@@ -429,9 +429,11 @@ module NLC_controller(
   always@(posedge norm_mul_complete) begin
     case(order)
        5: begin
-             next_mul_input_2 <= multiplier_output; // FIXME: may not be aligned correctly
              case(ch)
-               0: next_mul_input_1 <= ch0_coeff_5; 
+               0: begin
+                  next_mul_input_1 <= ch0_coeff_5; 
+                  next_mul_input_2 <= ch0_haz_reg;
+                end
                1: next_mul_input_1 <= ch1_coeff_5;
                2: next_mul_input_1 <= ch2_coeff_5; 
                3: next_mul_input_1 <= ch3_coeff_5;
