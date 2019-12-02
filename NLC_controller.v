@@ -235,25 +235,6 @@ module NLC_controller(
   reg [31:0] next_adder_input_2;
   reg next_adder_srdyi;
   
-  /* IO */
-  reg [31:0] ch15_x_smc;
-  reg [31:0] ch14_x_smc;
-  reg [31:0] ch13_x_smc;
-  reg [31:0] ch12_x_smc;
-  reg [31:0] ch11_x_smc;
-  reg [31:0] ch10_x_smc;
-  reg [31:0] ch9_x_smc;
-  reg [31:0] ch8_x_smc;
-  reg [31:0] ch7_x_smc;
-  reg [31:0] ch6_x_smc;
-  reg [31:0] ch5_x_smc;
-  reg [31:0] ch4_x_smc;
-  reg [31:0] ch3_x_smc;
-  reg [31:0] ch2_x_smc;
-  reg [31:0] ch1_x_smc;
-  reg [31:0] ch0_x_smc;
-  
-  
   /* Converter input, feed one per cycle */
   reg start_conv = 0;
 	integer conv_cnt = 0;
@@ -390,6 +371,55 @@ module NLC_controller(
   end
   
   always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
+  
+  
+  /* Handle data hazard between normalizer multiplier and main loop multiplier */
+  reg start_haz_handling;
+  integer haz_cnt;
+  
+  reg [31:0] ch15_haz_reg;
+  reg [31:0] ch14_haz_reg;
+  reg [31:0] ch13_haz_reg;
+  reg [31:0] ch12_haz_reg;
+  reg [31:0] ch11_haz_reg;
+  reg [31:0] ch10_haz_reg;
+  reg [31:0] ch9_haz_reg;
+  reg [31:0] ch8_haz_reg;
+  reg [31:0] ch7_haz_reg;
+  reg [31:0] ch6_haz_reg;
+  reg [31:0] ch5_haz_reg;
+  reg [31:0] ch4_haz_reg;
+  reg [31:0] ch3_haz_reg;
+  reg [31:0] ch2_haz_reg;
+  reg [31:0] ch1_haz_reg;
+  reg [31:0] ch0_haz_reg;
+  
+  always@(posedge mul_srdyo) begin
+    start_haz_handling <= 1;
+  end
+    
+  
+  /* Store multiplier results in registers for future use */
+  always@(*) begin
+    case(haz_cnt)
+      0: ch0_haz_reg <= multiplier_output;
+      1: next_mul_input_2 <= ch1_recip_stdev;
+      2: next_mul_input_2 <= ch2_recip_stdev;
+      3: next_mul_input_2 <= ch3_recip_stdev;
+      4: next_mul_input_2 <= ch4_recip_stdev;
+      5: next_mul_input_2 <= ch5_recip_stdev;
+      6: next_mul_input_2 <= ch6_recip_stdev;
+      7: next_mul_input_2 <= ch7_recip_stdev;
+      8: next_mul_input_2 <= ch8_recip_stdev;
+      9: next_mul_input_2 <= ch9_recip_stdev;
+      10: next_mul_input_2 <= ch10_recip_stdev;
+      11: next_mul_input_2 <= ch11_recip_stdev;
+      12: next_mul_input_2 <= ch12_recip_stdev;
+      13: next_mul_input_2 <= ch13_recip_stdev;
+      14: next_mul_input_2 <= ch14_recip_stdev;
+      15: next_mul_input_2 <= ch15_recip_stdev;
+    endcase
+  end
   
   /* Normalization multiplier output, main loop input */
   integer order = 5;
