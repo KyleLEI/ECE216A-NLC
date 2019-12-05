@@ -37,8 +37,8 @@ module NLC_controller(
   
   //IO ports for ch15
 	output reg [20:0] ch15_x_lin,
-	input wire [20:0] ch15_x_adc, 
-	input wire [31:0] ch15_recip_stdev,
+	input wire [20:0] ch15_x_adc_in, 
+	input wire [31:0] ch15_recip_stdev_in, //TODO: add "in" to inputs
 	input wire [31:0] ch15_neg_mean,
 	input wire [31:0] ch15_coeff_5,
 	input wire [31:0] ch15_coeff_4,
@@ -268,8 +268,185 @@ module NLC_controller(
   reg [31:0] ch2_adc_reg;
   reg [31:0] ch1_adc_reg;
   reg [31:0] ch0_adc_reg;
+  
+    //IO ports for ch15
+	 reg [20:0] ch15_x_adc, 
+	 reg [31:0] ch15_recip_stdev,
+	 reg [31:0] ch15_neg_mean,
+	 reg [31:0] ch15_coeff_5,
+	 reg [31:0] ch15_coeff_4,
+	 reg [31:0] ch15_coeff_3,
+	 reg [31:0] ch15_coeff_2,
+	 reg [31:0] ch15_coeff_1,
+	 reg [31:0] ch15_coeff_0,
+
+	//IO ports for ch14
+	 reg [20:0] ch14_x_adc,
+	 reg [31:0] ch14_recip_stdev,
+	 reg [31:0] ch14_neg_mean,
+	 reg [31:0] ch14_coeff_5,
+	 reg [31:0] ch14_coeff_4,
+	 reg [31:0] ch14_coeff_3,
+	 reg [31:0] ch14_coeff_2,
+	 reg [31:0] ch14_coeff_1,
+	 reg [31:0] ch14_coeff_0,
+
+	//IO ports for ch13
+	 reg [20:0] ch13_x_adc,
+	 reg [31:0] ch13_recip_stdev,
+	 reg [31:0] ch13_neg_mean,
+	 reg [31:0] ch13_coeff_5,
+	 reg [31:0] ch13_coeff_4,
+	 reg [31:0] ch13_coeff_3,
+	 reg [31:0] ch13_coeff_2,
+	 reg [31:0] ch13_coeff_1,
+	 reg [31:0] ch13_coeff_0,
+
+	//IO ports for ch12
+	output reg [20:0] ch12_x_lin,
+	 reg [20:0] ch12_x_adc,
+	 reg [31:0] ch12_recip_stdev,
+	 reg [31:0] ch12_neg_mean,
+	 reg [31:0] ch12_coeff_5,
+	 reg [31:0] ch12_coeff_4,
+	 reg [31:0] ch12_coeff_3,
+	 reg [31:0] ch12_coeff_2,
+	 reg [31:0] ch12_coeff_1,
+	 reg [31:0] ch12_coeff_0,
+
+	//IO ports for ch11
+	 reg [20:0] ch11_x_adc,
+	 reg [31:0] ch11_recip_stdev,
+	 reg [31:0] ch11_neg_mean,
+	 reg [31:0] ch11_coeff_5,
+	 reg [31:0] ch11_coeff_4,
+	 reg [31:0] ch11_coeff_3,
+	 reg [31:0] ch11_coeff_2,
+	 reg [31:0] ch11_coeff_1,
+	 reg [31:0] ch11_coeff_0,
+
+	//IO ports for ch10
+	 reg [20:0] ch10_x_adc,
+	 reg [31:0] ch10_recip_stdev,
+	 reg [31:0] ch10_neg_mean,
+	 reg [31:0] ch10_coeff_5,
+	 reg [31:0] ch10_coeff_4,
+	 reg [31:0] ch10_coeff_3,
+	 reg [31:0] ch10_coeff_2,
+	 reg [31:0] ch10_coeff_1,
+	 reg [31:0] ch10_coeff_0,
+
+	//IO ports for ch5
+	 reg [20:0] ch9_x_adc,
+	 reg [31:0] ch9_recip_stdev,
+	 reg [31:0] ch9_neg_mean,
+	 reg [31:0] ch9_coeff_5,
+	 reg [31:0] ch9_coeff_4,
+	 reg [31:0] ch9_coeff_3,
+	 reg [31:0] ch9_coeff_2,
+	 reg [31:0] ch9_coeff_1,
+	 reg [31:0] ch9_coeff_0,
+
+	//IO ports for ch8
+	 reg [20:0] ch8_x_adc,
+	 reg [31:0] ch8_recip_stdev,
+	 reg [31:0] ch8_neg_mean,
+	 wire [31:0] ch8_coeff_5,
+	 wire [31:0] ch8_coeff_4,
+	 wire [31:0] ch8_coeff_3,
+	 wire [31:0] ch8_coeff_2,
+	 wire [31:0] ch8_coeff_1,
+	 wire [31:0] ch8_coeff_0,
+
+	//IO ports for ch7
+	 wire [20:0] ch7_x_adc,
+	 wire [31:0] ch7_recip_stdev,
+	 wire [31:0] ch7_neg_mean,
+	 wire [31:0] ch7_coeff_5,
+	 wire [31:0] ch7_coeff_4,
+	 wire [31:0] ch7_coeff_3,
+	 wire [31:0] ch7_coeff_2,
+	 wire [31:0] ch7_coeff_1,
+	 wire [31:0] ch7_coeff_0,
+
+	//IO ports for ch6
+	 wire [20:0] ch6_x_adc,
+	 wire [31:0] ch6_recip_stdev,
+	 wire [31:0] ch6_neg_mean,
+	 wire [31:0] ch6_coeff_5,
+	 wire [31:0] ch6_coeff_4,
+	 wire [31:0] ch6_coeff_3,
+	 wire [31:0] ch6_coeff_2,
+	 wire [31:0] ch6_coeff_1,
+	 wire [31:0] ch6_coeff_0,
 	
-  always@(posedge srdyi) begin
+	//IO ports for ch5
+	 wire [20:0] ch5_x_adc,
+	 wire [31:0] ch5_recip_stdev,
+	 wire [31:0] ch5_neg_mean,
+	 wire [31:0] ch5_coeff_5,
+	 wire [31:0] ch5_coeff_4,
+	 wire [31:0] ch5_coeff_3,
+	 wire [31:0] ch5_coeff_2,
+	 wire [31:0] ch5_coeff_1,
+	 wire [31:0] ch5_coeff_0,
+	
+	//IO ports for ch4
+	 wire [20:0] ch4_x_adc,
+	 wire [31:0] ch4_recip_stdev,
+	 wire [31:0] ch4_neg_mean,
+	 wire [31:0] ch4_coeff_5,
+	 wire [31:0] ch4_coeff_4,
+	 wire [31:0] ch4_coeff_3,
+	 wire [31:0] ch4_coeff_2,
+	 wire [31:0] ch4_coeff_1,
+	 wire [31:0] ch4_coeff_0,
+	
+	//IO ports for ch3
+	 wire [20:0] ch3_x_adc,
+	 wire [31:0] ch3_recip_stdev,
+	 wire [31:0] ch3_neg_mean,
+	 wire [31:0] ch3_coeff_5,
+	 wire [31:0] ch3_coeff_4,
+	 wire [31:0] ch3_coeff_3,
+	 wire [31:0] ch3_coeff_2,
+	 wire [31:0] ch3_coeff_1,
+	 wire [31:0] ch3_coeff_0,
+	
+	//IO ports for ch2
+	 wire [20:0] ch2_x_adc,
+	 wire [31:0] ch2_recip_stdev,
+	 wire [31:0] ch2_neg_mean,
+	 wire [31:0] ch2_coeff_5,
+	 wire [31:0] ch2_coeff_4,
+	 wire [31:0] ch2_coeff_3,
+	 wire [31:0] ch2_coeff_2,
+	 wire [31:0] ch2_coeff_1,
+	 wire [31:0] ch2_coeff_0,
+
+	//IO ports for ch1
+	 wire [20:0] ch1_x_adc,
+	 wire [31:0] ch1_recip_stdev,
+	 wire [31:0] ch1_neg_mean,
+	 wire [31:0] ch1_coeff_5,
+	 wire [31:0] ch1_coeff_4,
+	 wire [31:0] ch1_coeff_3,
+	 wire [31:0] ch1_coeff_2,
+	 wire [31:0] ch1_coeff_1,
+	 wire [31:0] ch1_coeff_0,
+	
+	//IO ports for ch0
+	 wire [20:0] ch0_x_adc,
+	 wire [31:0] ch0_recip_stdev,
+	 wire [31:0] ch0_neg_mean,
+	 wire [31:0] ch0_coeff_5,
+	 wire [31:0] ch0_coeff_4,
+	 wire [31:0] ch0_coeff_3,
+	 wire [31:0] ch0_coeff_2,
+	 wire [31:0] ch0_coeff_1,
+	 wire [31:0] ch0_coeff_0
+	
+  always@(posedge srdyi) begin // TODO: store all data
     start_conv <= 1;
     ch0_adc_reg <= ch0_x_adc;
     ch1_adc_reg <= ch1_x_adc;
@@ -358,8 +535,10 @@ module NLC_controller(
   reg norm_complete = 0;
   
   always@(posedge adder_srdyo) begin
+    if(start_normalize_add) begin
     start_normalize_mul <= 1;
     multiplier_srdyi <= 1;
+  end
   end
   
   always@(*) begin
@@ -464,7 +643,7 @@ module NLC_controller(
   reg [31:0] ch0_haz_reg;
   
   reg start_hazard_handling = 0;
-  integer haz_cnt;
+  integer haz_cnt = 0;
   
   always@(posedge adder_srdyo) begin
   if(start_main_loop) begin
