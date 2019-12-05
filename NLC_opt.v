@@ -298,28 +298,28 @@ module NLC_opt(
   
   // Convert to smc
   wire [31:0] x_smc;
-  reg [20:0] xi_fp_to_smc;
+  wire [20:0] xi_fp_to_smc;
   wire smc_srdyo;
-  reg smc_srdyi;
+  wire smc_srdyi;
   
   // Convert to fp
-  reg [31:0] x_fp;
+  wire [31:0] x_fp;
   wire [20:0] xo_smc_to_fp;
   wire fp_srdyo;
   reg fp_srdyi;
   
   // Multiplier
-  reg [31:0] mul_xi;
-  reg [31:0] mul_yi; 
-  reg [31:0] mul_zo; // from controller
-  reg mul_srdyi; 
+  wire [31:0] mul_xi;
+  wire [31:0] mul_yi; 
+  wire [31:0] mul_zo; // from controller
+  wire mul_srdyi; 
   wire mul_srdyo;
   
   // Adder
-  reg [31:0] add_xi;
-  reg [31:0] add_yi; 
-  reg [31:0] add_zo; // from controller
-  reg add_srdyi; 
+  wire [31:0] add_xi;
+  wire [31:0] add_yi; 
+  wire [31:0] add_zo; // from controller
+  wire add_srdyi; 
   wire add_srdyo;
   
   //Convert input x_adc to smc
@@ -357,9 +357,9 @@ module NLC_opt(
   smc_float_adder add(
 	      .clk(clk),
 	      .GlobalReset(reset),
-	      .x_i_porty(mul_xi),
-	      .y_i_porty(mul_yi),
-	      .z_o_portx(mul_zo),
+	      .x_i_porty(add_xi),
+	      .y_i_porty(add_yi),
+	      .z_o_portx(add_zo),
 	      .srdyo_o(add_srdyo),
 	      .srdyi_i(add_srdyi)
   );
