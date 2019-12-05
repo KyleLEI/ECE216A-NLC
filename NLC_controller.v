@@ -36,7 +36,7 @@ module NLC_controller(
   input wire conv_2_srdyo,
   
   //IO ports for ch15
-	output wire [20:0] ch15_x_lin,
+	output reg [20:0] ch15_x_lin,
 	input wire [20:0] ch15_x_adc, 
 	input wire [31:0] ch15_recip_stdev,
 	input wire [31:0] ch15_neg_mean,
@@ -48,7 +48,7 @@ module NLC_controller(
 	input wire [31:0] ch15_coeff_0,
 
 	//IO ports for ch14
-	output wire [20:0] ch14_x_lin,
+	output reg [20:0] ch14_x_lin,
 	input wire [20:0] ch14_x_adc,
 	input wire [31:0] ch14_recip_stdev,
 	input wire [31:0] ch14_neg_mean,
@@ -60,7 +60,7 @@ module NLC_controller(
 	input wire [31:0] ch14_coeff_0,
 
 	//IO ports for ch13
-	output wire [20:0] ch13_x_lin,
+	output reg [20:0] ch13_x_lin,
 	input wire [20:0] ch13_x_adc,
 	input wire [31:0] ch13_recip_stdev,
 	input wire [31:0] ch13_neg_mean,
@@ -72,7 +72,7 @@ module NLC_controller(
 	input wire [31:0] ch13_coeff_0,
 
 	//IO ports for ch12
-	output wire [20:0] ch12_x_lin,
+	output reg [20:0] ch12_x_lin,
 	input wire [20:0] ch12_x_adc,
 	input wire [31:0] ch12_recip_stdev,
 	input wire [31:0] ch12_neg_mean,
@@ -84,7 +84,7 @@ module NLC_controller(
 	input wire [31:0] ch12_coeff_0,
 
 	//IO ports for ch11
-	output wire [20:0] ch11_x_lin,
+	output reg [20:0] ch11_x_lin,
 	input wire [20:0] ch11_x_adc,
 	input wire [31:0] ch11_recip_stdev,
 	input wire [31:0] ch11_neg_mean,
@@ -96,7 +96,7 @@ module NLC_controller(
 	input wire [31:0] ch11_coeff_0,
 
 	//IO ports for ch10
-	output wire [20:0] ch10_x_lin,
+	output reg [20:0] ch10_x_lin,
 	input wire [20:0] ch10_x_adc,
 	input wire [31:0] ch10_recip_stdev,
 	input wire [31:0] ch10_neg_mean,
@@ -108,7 +108,7 @@ module NLC_controller(
 	input wire [31:0] ch10_coeff_0,
 
 	//IO ports for ch5
-	output wire [20:0] ch9_x_lin,
+	output reg [20:0] ch9_x_lin,
 	input wire [20:0] ch9_x_adc,
 	input wire [31:0] ch9_recip_stdev,
 	input wire [31:0] ch9_neg_mean,
@@ -120,7 +120,7 @@ module NLC_controller(
 	input wire [31:0] ch9_coeff_0,
 
 	//IO ports for ch8
-	output wire [20:0] ch8_x_lin,
+	output reg [20:0] ch8_x_lin,
 	input wire [20:0] ch8_x_adc,
 	input wire [31:0] ch8_recip_stdev,
 	input wire [31:0] ch8_neg_mean,
@@ -132,7 +132,7 @@ module NLC_controller(
 	input wire [31:0] ch8_coeff_0,
 
 	//IO ports for ch7
-	output wire [20:0] ch7_x_lin,
+	output reg [20:0] ch7_x_lin,
 	input wire [20:0] ch7_x_adc,
 	input wire [31:0] ch7_recip_stdev,
 	input wire [31:0] ch7_neg_mean,
@@ -144,7 +144,7 @@ module NLC_controller(
 	input wire [31:0] ch7_coeff_0,
 
 	//IO ports for ch6
-	output wire [20:0] ch6_x_lin,
+	output reg [20:0] ch6_x_lin,
 	input wire [20:0] ch6_x_adc,
 	input wire [31:0] ch6_recip_stdev,
 	input wire [31:0] ch6_neg_mean,
@@ -156,7 +156,7 @@ module NLC_controller(
 	input wire [31:0] ch6_coeff_0,
 	
 	//IO ports for ch5
-	output wire [20:0] ch5_x_lin, 
+	output reg [20:0] ch5_x_lin, 
 	input wire [20:0] ch5_x_adc,
 	input wire [31:0] ch5_recip_stdev,
 	input wire [31:0] ch5_neg_mean,
@@ -168,7 +168,7 @@ module NLC_controller(
 	input wire [31:0] ch5_coeff_0,
 	
 	//IO ports for ch4
-	output wire [20:0] ch4_x_lin, 
+	output reg [20:0] ch4_x_lin, 
 	input wire [20:0] ch4_x_adc,
 	input wire [31:0] ch4_recip_stdev,
 	input wire [31:0] ch4_neg_mean,
@@ -180,7 +180,7 @@ module NLC_controller(
 	input wire [31:0] ch4_coeff_0,
 	
 	//IO ports for ch3
-	output wire [20:0] ch3_x_lin, 
+	output reg [20:0] ch3_x_lin, 
 	input wire [20:0] ch3_x_adc,
 	input wire [31:0] ch3_recip_stdev,
 	input wire [31:0] ch3_neg_mean,
@@ -192,7 +192,7 @@ module NLC_controller(
 	input wire [31:0] ch3_coeff_0,
 	
 	//IO ports for ch2
-	output wire [20:0] ch2_x_lin, 
+	output reg [20:0] ch2_x_lin, 
 	input wire [20:0] ch2_x_adc,
 	input wire [31:0] ch2_recip_stdev,
 	input wire [31:0] ch2_neg_mean,
@@ -204,7 +204,7 @@ module NLC_controller(
 	input wire [31:0] ch2_coeff_0,
 
 	//IO ports for ch1
-	output wire [20:0] ch1_x_lin, 
+	output reg [20:0] ch1_x_lin, 
 	input wire [20:0] ch1_x_adc,
 	input wire [31:0] ch1_recip_stdev,
 	input wire [31:0] ch1_neg_mean,
@@ -216,7 +216,7 @@ module NLC_controller(
 	input wire [31:0] ch1_coeff_0,
 	
 	//IO ports for ch0
-	output wire [20:0] ch0_x_lin, 
+	output reg [20:0] ch0_x_lin, 
 	input wire [20:0] ch0_x_adc,
 	input wire [31:0] ch0_recip_stdev,
 	input wire [31:0] ch0_neg_mean,
@@ -402,7 +402,7 @@ module NLC_controller(
   integer store_cnt;
   
   
-  always@(posedge mul_srdyo) begin
+  always@(posedge multiplier_srdyo) begin
     start_store_norm <= 1;
   end
     
@@ -454,7 +454,7 @@ module NLC_controller(
   integer haz_cnt;
   
   always@(posedge adder_srdyo) begin//TODO: solve conflict with normalization
-    case(haz_cnt) begin
+    case(haz_cnt)
       0: ch0_haz_reg <= adder_output;
       1: ch1_haz_reg <= adder_output;
       2: ch2_haz_reg <= adder_output;
@@ -623,7 +623,7 @@ module NLC_controller(
   
   
   always@(*) begin // TODO: find some way to trigger this
-    next_adder_input_2 <= multiplier_output
+    next_adder_input_2 <= multiplier_output;
     case(order)
         5: begin
              case(ch)
@@ -762,6 +762,7 @@ module NLC_controller(
       13: ch13_x_lin <= conv_2_output;
       14: ch14_x_lin <= conv_2_output;
       15: ch15_x_lin <= conv_2_output;
+    endcase
   end
 
 endmodule 

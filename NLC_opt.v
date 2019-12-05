@@ -369,7 +369,7 @@ module NLC_opt(
   .conv_1_input(xi_fp_to_smc),.conv_1_output(x_smc),.conv_1_srdyi(smc_srdyi),.conv_1_srdyo(smc_srdyo),
   .multiplier_input_1(mul_xi),.multiplier_input_2(mul_yi),.multiplier_output(mul_zo),.multiplier_srdyi(add_srdyi),.multiplier_srdyo(add_srdyo),
   .adder_input_1(add_xi),.adder_input_2(add_yi),.adder_output(add_zo),.adder_srdyi(add_srdyi),.adder_srdyo(add_srdyo),
-  .conv_2_input(x_fp),.conv_2_output(xo_smc_to_fp),.conv_2_srdyi(fp_srdyo),.conv_2_srdyo(fp_srdyi)
+  .conv_2_input(x_fp),.conv_2_output(xo_smc_to_fp),.conv_2_srdyi(fp_srdyo),.conv_2_srdyo(fp_srdyi),
   .ch15_x_lin(ch15_x_lin),.ch15_x_adc(ch15_x_adc),.ch15_recip_stdev(ch15_recip_stdev),.ch15_neg_mean(ch15_neg_mean),.ch15_coeff_5(ch15_coeff_5),.ch15_coeff_4(ch15_coeff_4),.ch15_coeff_3(ch15_coeff_3),.ch15_coeff_2(ch15_coeff_2),.ch15_coeff_1(ch15_coeff_1),.ch15_coeff_0(ch15_coeff_0),
   .ch14_x_lin(ch14_x_lin),.ch14_x_adc(ch14_x_adc),.ch14_recip_stdev(ch14_recip_stdev),.ch14_neg_mean(ch14_neg_mean),.ch14_coeff_5(ch14_coeff_5),.ch14_coeff_4(ch14_coeff_4),.ch14_coeff_3(ch14_coeff_3),.ch14_coeff_2(ch14_coeff_2),.ch14_coeff_1(ch14_coeff_1),.ch14_coeff_0(ch14_coeff_0),
   .ch13_x_lin(ch13_x_lin),.ch13_x_adc(ch13_x_adc),.ch13_recip_stdev(ch13_recip_stdev),.ch13_neg_mean(ch13_neg_mean),.ch13_coeff_5(ch13_coeff_5),.ch13_coeff_4(ch13_coeff_4),.ch13_coeff_3(ch13_coeff_3),.ch13_coeff_2(ch13_coeff_2),.ch13_coeff_1(ch13_coeff_1),.ch13_coeff_0(ch13_coeff_0),
@@ -385,10 +385,8 @@ module NLC_opt(
   .ch3_x_lin(ch3_x_lin),.ch3_x_adc(ch3_x_adc),.ch3_recip_stdev(ch3_recip_stdev),.ch3_neg_mean(ch3_neg_mean),.ch3_coeff_5(ch3_coeff_5),.ch3_coeff_4(ch3_coeff_4),.ch3_coeff_3(ch3_coeff_3),.ch3_coeff_2(ch3_coeff_2),.ch3_coeff_1(ch3_coeff_1),.ch3_coeff_0(ch3_coeff_0),
   .ch2_x_lin(ch2_x_lin),.ch2_x_adc(ch2_x_adc),.ch2_recip_stdev(ch2_recip_stdev),.ch2_neg_mean(ch2_neg_mean),.ch2_coeff_5(ch2_coeff_5),.ch2_coeff_4(ch2_coeff_4),.ch2_coeff_3(ch2_coeff_3),.ch2_coeff_2(ch2_coeff_2),.ch2_coeff_1(ch2_coeff_1),.ch2_coeff_0(ch2_coeff_0),
   .ch1_x_lin(ch1_x_lin),.ch1_x_adc(ch1_x_adc),.ch1_recip_stdev(ch1_recip_stdev),.ch1_neg_mean(ch1_neg_mean),.ch1_coeff_5(ch1_coeff_5),.ch1_coeff_4(ch1_coeff_4),.ch1_coeff_3(ch1_coeff_3),.ch1_coeff_2(ch1_coeff_2),.ch1_coeff_1(ch1_coeff_1),.ch1_coeff_0(ch1_coeff_0),
-  .ch0_x_lin(ch0_x_lin),.ch0_x_adc(ch0_x_adc),.ch0_recip_stdev(ch0_recip_stdev),.ch0_neg_mean(ch0_neg_mean),.ch0_coeff_5(ch0_coeff_5),.ch0_coeff_4(ch0_coeff_4),.ch0_coeff_3(ch0_coeff_3),.ch0_coeff_2(ch0_coeff_2),.ch0_coeff_1(ch0_coeff_1),.ch0_coeff_0(ch0_coeff_0),            
+  .ch0_x_lin(ch0_x_lin),.ch0_x_adc(ch0_x_adc),.ch0_recip_stdev(ch0_recip_stdev),.ch0_neg_mean(ch0_neg_mean),.ch0_coeff_5(ch0_coeff_5),.ch0_coeff_4(ch0_coeff_4),.ch0_coeff_3(ch0_coeff_3),.ch0_coeff_2(ch0_coeff_2),.ch0_coeff_1(ch0_coeff_1),.ch0_coeff_0(ch0_coeff_0)            
   );
-  
-  always@(posedge )
 
 
 endmodule
