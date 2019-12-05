@@ -252,29 +252,46 @@ module NLC_controller(
     end
   end
   
+  reg [31:0] ch15_adc_reg;
+  reg [31:0] ch14_adc_reg;
+  reg [31:0] ch13_adc_reg;
+  reg [31:0] ch12_adc_reg;
+  reg [31:0] ch11_adc_reg;
+  reg [31:0] ch10_adc_reg;
+  reg [31:0] ch9_adc_reg;
+  reg [31:0] ch8_adc_reg;
+  reg [31:0] ch7_adc_reg;
+  reg [31:0] ch6_adc_reg;
+  reg [31:0] ch5_adc_reg;
+  reg [31:0] ch4_adc_reg;
+  reg [31:0] ch3_adc_reg;
+  reg [31:0] ch2_adc_reg;
+  reg [31:0] ch1_adc_reg;
+  reg [31:0] ch0_adc_reg;
 	
   always@(posedge srdyi) begin
     start_conv <= 1;
+    ch0_adc_reg <= ch0_x_adc;
   end
   
   always@(*) begin
     case(conv_cnt)
-      0: conv_1_input <= ch0_x_adc;
-      1: conv_1_input <= ch1_x_adc;
-      2: conv_1_input <= ch2_x_adc;
-      3: conv_1_input <= ch3_x_adc;
-      4: conv_1_input <= ch4_x_adc;
-      5: conv_1_input <= ch5_x_adc;
-      6: conv_1_input <= ch6_x_adc;
-      7: conv_1_input <= ch7_x_adc;
-      8: conv_1_input <= ch8_x_adc;
-      9: conv_1_input <= ch9_x_adc;
-     10: conv_1_input <= ch10_x_adc;
-     11: conv_1_input <= ch11_x_adc;
-     12: conv_1_input <= ch12_x_adc;
-     13: conv_1_input <= ch13_x_adc;
-     14: conv_1_input <= ch14_x_adc;
-     15: conv_1_input <= ch15_x_adc;
+      0: conv_1_input <= ch0_adc_reg;
+      1: conv_1_input <= ch1_adc_reg;
+      2: conv_1_input <= ch2_adc_reg;
+      3: conv_1_input <= ch3_adc_reg;
+      4: conv_1_input <= ch4_adc_reg;
+      5: conv_1_input <= ch5_adc_reg;
+      6: conv_1_input <= ch6_adc_reg;
+      7: conv_1_input <= ch7_adc_reg;
+      8: conv_1_input <= ch8_adc_reg;
+      9: conv_1_input <= ch9_adc_reg;
+     10: conv_1_input <= ch10_adc_reg;
+     11: conv_1_input <= ch11_adc_reg;
+     12: conv_1_input <= ch12_adc_reg;
+     13: conv_1_input <= ch13_adc_reg;
+     14: conv_1_input <= ch14_adc_reg;
+     15: conv_1_input <= ch15_adc_reg;
      default: begin
            start_conv <= 0;
            conv_cnt = 0;
