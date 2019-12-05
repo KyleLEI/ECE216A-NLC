@@ -10,7 +10,7 @@ module NLC_controller(
   
   /* FP-to-SMC converter */
   output reg [20:0] conv_1_input,
-  input reg [31:0] conv_1_output,
+  input wire [31:0] conv_1_output,
   output reg conv_1_srdyi,
   input wire conv_1_srdyo,
   
@@ -18,7 +18,7 @@ module NLC_controller(
   /* Multiplier */
   output reg [31:0] multiplier_input_1,
   output reg [31:0] multiplier_input_2, // a_5 at first, adder_input next
-  input reg [31:0] multiplier_output,
+  input wire [31:0] multiplier_output,
   output reg multiplier_srdyi,
   input wire multiplier_srdyo,
   
@@ -31,7 +31,7 @@ module NLC_controller(
   
   /* SMC-to-FP converter */
   output reg [31:0] conv_2_input,
-  input reg [20:0] conv_2_output,
+  input wire [20:0] conv_2_output,
   output reg conv_2_srdyi,
   input wire conv_2_srdyo,
   
@@ -228,34 +228,66 @@ module NLC_controller(
 	input wire [31:0] ch0_coeff_0_in
 	);
   
-  /* Converter input, feed one per cycle */
+  /* Input conversion */
   reg start_conv = 0;
 	integer conv_cnt = 0;
 	
-	/* Converter output, normalization adder input */
+	/* Normalization Addition */
   integer norm_add_cnt = 0;
   reg start_normalize_add = 0;
   
-  /* Normalization adder output, normalization multiplier input */
+  /* Normalization multiplication */
   integer norm_mul_cnt = 0;
   reg start_normalize_mul = 0;
   
+  /* Normalization output storage */
+  reg start_store_norm = 0;
+  integer store_cnt = 0;
+  
+  /* Main computation loop */
+  reg start_main_loop_mul = 0;
+  reg start_main_loop_add = 0;
+  integer order_mul = 5; 
+  integer ch_mul = 0;
+  integer order_add = 5; 
+  integer ch_add = 0;
+  
+  /* Structural hazard handling */
+  reg start_hazard_handling = 0;
+  integer haz_cnt = 0;
+  
+  /* Output conversion */
+  reg start_output_conv = 0;
+  integer output_conv_cnt = 0;
   
   integer clk_cnt = 0;
   always@(posedge clk) begin
     if(rst) begin
-      conv_cnt = 0;
-      norm_add_cnt = 0;
-      norm_mul_cnt = 0;
-      $display("Reset");
-      clk_cnt = 0;
+      // set output to 0
+      //srdyo <= 0;
+      // initialize counters
+      conv_cnt <= 0;
+      norm_add_cnt <= 0;
+      norm_mul_cnt <= 0;
+      order_mul <= 5;
+      clk_cnt <= 0;
+      haz_cnt <= 0;
+      output_conv_cnt = 0;
+      // set internal flags to 0
+      start_conv <= 0;
+      start_normalize_add = 0;
+      start_normalize_mul = 0;
+      start_store_norm = 0;
+      start_main_loop_mul = 0;
+      start_main_loop_add = 0;
+      // set internal signals to 0
       adder_srdyi <= 0;
       multiplier_srdyi <= 0;
-      conv_1_srdyi <= 0;
-      conv_2_srdyi <= 0;
-      srdyo <= 1;
+      //conv_1_srdyi <= 0;
+      //conv_2_srdyi <= 0;
+      
     end
-    clk_cnt = clk_cnt + 1;
+    clk_cnt <= clk_cnt + 1;
   end
   
   reg [31:0] ch15_adc_reg;
@@ -418,6 +450,20 @@ module NLC_controller(
 	 reg [31:0] ch0_coeff_2;
 	 reg [31:0] ch0_coeff_1;
 	 reg [31:0] ch0_coeff_0;
+	 
+	 reg [31:0] adder_input_1_norm;
+	 reg [31:0] adder_input_2_norm;
+	 reg [31:0] adder_input_1_main;
+	 reg [31:0] adder_input_2_main;
+	 
+	 reg [31:0] mul_input_1_norm;
+	 reg [31:0] mul_input_2_norm;
+	 reg [31:0] mul_input_1_main;
+	 reg [31:0] mul_input_2_main;
+	 
+	 /* Multiplier Input */
+	 always@(*) begin
+	   end
 	
   always@(posedge srdyi) begin
     conv_1_srdyi <= 1;
@@ -647,9 +693,6 @@ module NLC_controller(
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
   
   /* Normalization adder output; normalization multiplier input */
-  /*integer norm_mul_cnt = 0;
-  reg start_normalize_mul = 0;*/
-  reg norm_complete = 0;
   
   always@(posedge adder_srdyo) begin
     if(start_normalize_add) begin
@@ -660,7 +703,7 @@ module NLC_controller(
   
   always@(*) begin
     if(start_normalize_mul) begin
-    multiplier_input_1 = adder_output;
+        multiplier_input_1 <= adder_output;
     case(norm_mul_cnt)
       0: multiplier_input_2 <= ch0_recip_stdev;
       1: multiplier_input_2 <= ch1_recip_stdev;
@@ -703,18 +746,10 @@ module NLC_controller(
   reg [31:0] ch1_norm;
   reg [31:0] ch0_norm;
   
-  
-  reg start_store_norm = 0;
-  integer store_cnt = 0;
-  
-  
   always@(posedge multiplier_srdyo) begin
     if(start_normalize_mul) start_store_norm <= 1;
   end
     
-  
-  reg start_main_loop_mul = 0;
-  reg start_main_loop_add = 0;
   /* Store multiplier results in registers for future use */
   always@(*) begin
     case(store_cnt)
@@ -760,9 +795,6 @@ module NLC_controller(
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
   
-  reg start_hazard_handling = 0;
-  integer haz_cnt = 0;
-  
   always@(posedge adder_srdyo)
     if(start_main_loop_add) start_hazard_handling <= 1;
   
@@ -795,10 +827,6 @@ module NLC_controller(
   end
   
   /* Normalization multiplier output, main loop input */
-  integer order_mul = 5; 
-  integer ch_mul = 0;
-    integer order_add = 5; 
-  integer ch_add = 0;
   
   /* Multiplication */
  always@(*) begin
@@ -832,7 +860,7 @@ module NLC_controller(
         6: begin 
             multiplier_input_1 <= ch6_coeff_5;
             multiplier_input_2 = ch6_norm;
-            start_main_loop_add <= 1;
+            start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
            end
         7: begin 
@@ -944,8 +972,6 @@ module NLC_controller(
   end
   end
   
-  reg start_output_conv = 0;
-  
   always@(*) begin // TODO: find some way to trigger this
   if(start_main_loop_add) begin
     adder_input_2 <= multiplier_output;
@@ -1043,7 +1069,7 @@ module NLC_controller(
                8: adder_input_1 <= ch8_coeff_0; 
                9: begin
                   adder_input_1 <= ch9_coeff_0;
-                  start_output_conv<= 1;
+                  start_output_conv<= 1; // start final conversion
                   conv_2_srdyi <= 1;
                 end
                10: adder_input_1 <= ch10_coeff_0; 
@@ -1083,9 +1109,6 @@ module NLC_controller(
  end
   
   /* Convert back to FP - output */
-  
-  integer output_conv_cnt = 0;
-  
   always@(posedge start_output_conv) begin
     conv_2_input <= adder_output;
     conv_2_srdyi <= 1;
