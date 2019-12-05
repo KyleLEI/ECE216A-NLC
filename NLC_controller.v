@@ -272,6 +272,21 @@ module NLC_controller(
   always@(posedge srdyi) begin
     start_conv <= 1;
     ch0_adc_reg <= ch0_x_adc;
+    ch1_adc_reg <= ch1_x_adc;
+    ch2_adc_reg <= ch2_x_adc;
+    ch3_adc_reg <= ch3_x_adc;
+    ch4_adc_reg <= ch4_x_adc;
+    ch5_adc_reg <= ch5_x_adc;
+    ch6_adc_reg <= ch6_x_adc;
+    ch7_adc_reg <= ch7_x_adc;
+    ch8_adc_reg <= ch8_x_adc;
+    ch9_adc_reg <= ch9_x_adc;
+    ch10_adc_reg <= ch10_x_adc;
+    ch11_adc_reg <= ch11_x_adc;
+    ch12_adc_reg <= ch12_x_adc;
+    ch13_adc_reg <= ch13_x_adc;
+    ch14_adc_reg <= ch14_x_adc;
+    ch15_adc_reg <= ch15_x_adc;
   end
   
   always@(*) begin
