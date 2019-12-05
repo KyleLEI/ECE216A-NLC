@@ -8,7 +8,7 @@ module NLC_opt(
 
 	//Input valid and output read signal(one for all 16ch)
 	input wire srdyi,
-	output reg srdyo,
+	output wire srdyo,
 
 	//Calibration control and reference ADC input
 	//00 Fit the ADC with external coefficients feed with the ADC reading

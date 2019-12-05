@@ -331,6 +331,7 @@ module NLC_controller(
   end
   
   always@(*) begin
+    if(start_normalize_mul) begin
     multiplier_input_1 = adder_output;
     case(norm_mul_cnt)
       0: multiplier_input_2 <= ch0_recip_stdev;
@@ -352,8 +353,9 @@ module NLC_controller(
       default: start_normalize_mul <= 0;
     endcase
   end
+  end
   
-  
+  always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
   
   /* Store all normalized x */
   reg [31:0] ch15_norm;
@@ -374,16 +376,16 @@ module NLC_controller(
   reg [31:0] ch0_norm;
   
   
-  reg start_store_norm;
-  integer store_cnt;
+  reg start_store_norm = 0;
+  integer store_cnt = 0;
   
   
   always@(posedge multiplier_srdyo) begin
-    start_store_norm <= 1;
+    if(start_normalize_mul) start_store_norm <= 1;
   end
     
   
-  reg start_main_loop;
+  reg start_main_loop = 0;
   /* Store multiplier results in registers for future use */
   always@(*) begin
     case(store_cnt)
@@ -429,7 +431,7 @@ module NLC_controller(
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
   
-  reg start_hazard_handling;
+  reg start_hazard_handling = 0;
   integer haz_cnt;
   
   always@(posedge adder_srdyo) begin
@@ -462,7 +464,8 @@ module NLC_controller(
   integer ch = 0;
   
   /* Multiplication */
- always@(posedge start_main_loop) begin
+ always@(*) begin
+   if(start_main_loop) begin
     if(order == 5) begin
       case(ch)
         0: begin 
@@ -600,10 +603,12 @@ module NLC_controller(
       endcase
     end
   end
+  end
   
   reg start_output_conv = 0;
   
   always@(*) begin // TODO: find some way to trigger this
+  if(start_main_loop) begin
     adder_input_2 <= multiplier_output;
     case(order)
         5: begin
@@ -699,7 +704,7 @@ module NLC_controller(
                8: adder_input_1 <= ch8_coeff_0; 
                9: begin
                   adder_input_1 <= ch9_coeff_0;
-                  start_output_conv <= 1;
+                  start_output_conv<= 1;
                   conv_2_srdyi <= 1;
                 end
                10: adder_input_1 <= ch10_coeff_0; 
@@ -712,6 +717,7 @@ module NLC_controller(
            end
     endcase
   end
+  end
   
   always@(posedge clk) begin
     if(start_main_loop) begin
@@ -720,15 +726,15 @@ module NLC_controller(
         order = order - 1;
         ch = 0;
       end
-      if(order < 1) begin // STOP multiplier
-        multiplier_srdyi = 0;
+      if(order == 0) begin // STOP multiplier
+        start_main_loop <= 0;
       end
     end
  end
   
   /* Convert back to FP - output */
   
-  integer output_conv_cnt;
+  integer output_conv_cnt = 0;
   
   always@(*) begin
     case(output_conv_cnt)
@@ -748,7 +754,7 @@ module NLC_controller(
       13: ch13_x_lin <= conv_2_output;
       14: ch14_x_lin <= conv_2_output;
       15: ch15_x_lin <= conv_2_output;
-      16: begin
+      18: begin
         srdyo <= 1;
         start_output_conv <= 0;
       end
