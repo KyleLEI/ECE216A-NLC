@@ -269,201 +269,327 @@ module NLC_controller(
   reg [31:0] ch1_adc_reg;
   reg [31:0] ch0_adc_reg;
   
-    //IO ports for ch15
-	 reg [20:0] ch15_x_adc, 
-	 reg [31:0] ch15_recip_stdev,
-	 reg [31:0] ch15_neg_mean,
-	 reg [31:0] ch15_coeff_5,
-	 reg [31:0] ch15_coeff_4,
-	 reg [31:0] ch15_coeff_3,
-	 reg [31:0] ch15_coeff_2,
-	 reg [31:0] ch15_coeff_1,
-	 reg [31:0] ch15_coeff_0,
+	 reg [20:0] ch15_x_adc; 
+	 reg [31:0] ch15_recip_stdev;
+	 reg [31:0] ch15_neg_mean;
+	 reg [31:0] ch15_coeff_5;
+	 reg [31:0] ch15_coeff_4;
+	 reg [31:0] ch15_coeff_3;
+	 reg [31:0] ch15_coeff_2;
+	 reg [31:0] ch15_coeff_1;
+	 reg [31:0] ch15_coeff_0;
 
-	//IO ports for ch14
-	 reg [20:0] ch14_x_adc,
-	 reg [31:0] ch14_recip_stdev,
-	 reg [31:0] ch14_neg_mean,
-	 reg [31:0] ch14_coeff_5,
-	 reg [31:0] ch14_coeff_4,
-	 reg [31:0] ch14_coeff_3,
-	 reg [31:0] ch14_coeff_2,
-	 reg [31:0] ch14_coeff_1,
-	 reg [31:0] ch14_coeff_0,
+	 reg [20:0] ch14_x_adc;
+	 reg [31:0] ch14_recip_stdev;
+	 reg [31:0] ch14_neg_mean;
+	 reg [31:0] ch14_coeff_5;
+	 reg [31:0] ch14_coeff_4;
+	 reg [31:0] ch14_coeff_3;
+	 reg [31:0] ch14_coeff_2;
+	 reg [31:0] ch14_coeff_1;
+	 reg [31:0] ch14_coeff_0;
 
-	//IO ports for ch13
-	 reg [20:0] ch13_x_adc,
-	 reg [31:0] ch13_recip_stdev,
-	 reg [31:0] ch13_neg_mean,
-	 reg [31:0] ch13_coeff_5,
-	 reg [31:0] ch13_coeff_4,
-	 reg [31:0] ch13_coeff_3,
-	 reg [31:0] ch13_coeff_2,
-	 reg [31:0] ch13_coeff_1,
-	 reg [31:0] ch13_coeff_0,
+	 reg [20:0] ch13_x_adc;
+	 reg [31:0] ch13_recip_stdev;
+	 reg [31:0] ch13_neg_mean;
+	 reg [31:0] ch13_coeff_5;
+	 reg [31:0] ch13_coeff_4;
+	 reg [31:0] ch13_coeff_3;
+	 reg [31:0] ch13_coeff_2;
+	 reg [31:0] ch13_coeff_1;
+	 reg [31:0] ch13_coeff_0;
 
-	//IO ports for ch12
-	output reg [20:0] ch12_x_lin,
-	 reg [20:0] ch12_x_adc,
-	 reg [31:0] ch12_recip_stdev,
-	 reg [31:0] ch12_neg_mean,
-	 reg [31:0] ch12_coeff_5,
-	 reg [31:0] ch12_coeff_4,
-	 reg [31:0] ch12_coeff_3,
-	 reg [31:0] ch12_coeff_2,
-	 reg [31:0] ch12_coeff_1,
-	 reg [31:0] ch12_coeff_0,
+	 reg [20:0] ch12_x_adc;
+	 reg [31:0] ch12_recip_stdev;
+	 reg [31:0] ch12_neg_mean;
+	 reg [31:0] ch12_coeff_5;
+	 reg [31:0] ch12_coeff_4;
+	 reg [31:0] ch12_coeff_3;
+	 reg [31:0] ch12_coeff_2;
+	 reg [31:0] ch12_coeff_1;
+	 reg [31:0] ch12_coeff_0;
 
-	//IO ports for ch11
-	 reg [20:0] ch11_x_adc,
-	 reg [31:0] ch11_recip_stdev,
-	 reg [31:0] ch11_neg_mean,
-	 reg [31:0] ch11_coeff_5,
-	 reg [31:0] ch11_coeff_4,
-	 reg [31:0] ch11_coeff_3,
-	 reg [31:0] ch11_coeff_2,
-	 reg [31:0] ch11_coeff_1,
-	 reg [31:0] ch11_coeff_0,
+	 reg [20:0] ch11_x_adc;
+	 reg [31:0] ch11_recip_stdev;
+	 reg [31:0] ch11_neg_mean;
+	 reg [31:0] ch11_coeff_5;
+	 reg [31:0] ch11_coeff_4;
+	 reg [31:0] ch11_coeff_3;
+	 reg [31:0] ch11_coeff_2;
+	 reg [31:0] ch11_coeff_1;
+	 reg [31:0] ch11_coeff_0;
 
-	//IO ports for ch10
-	 reg [20:0] ch10_x_adc,
-	 reg [31:0] ch10_recip_stdev,
-	 reg [31:0] ch10_neg_mean,
-	 reg [31:0] ch10_coeff_5,
-	 reg [31:0] ch10_coeff_4,
-	 reg [31:0] ch10_coeff_3,
-	 reg [31:0] ch10_coeff_2,
-	 reg [31:0] ch10_coeff_1,
-	 reg [31:0] ch10_coeff_0,
+	 reg [20:0] ch10_x_adc;
+	 reg [31:0] ch10_recip_stdev;
+	 reg [31:0] ch10_neg_mean;
+	 reg [31:0] ch10_coeff_5;
+	 reg [31:0] ch10_coeff_4;
+	 reg [31:0] ch10_coeff_3;
+	 reg [31:0] ch10_coeff_2;
+	 reg [31:0] ch10_coeff_1;
+	 reg [31:0] ch10_coeff_0;
 
-	//IO ports for ch5
-	 reg [20:0] ch9_x_adc,
-	 reg [31:0] ch9_recip_stdev,
-	 reg [31:0] ch9_neg_mean,
-	 reg [31:0] ch9_coeff_5,
-	 reg [31:0] ch9_coeff_4,
-	 reg [31:0] ch9_coeff_3,
-	 reg [31:0] ch9_coeff_2,
-	 reg [31:0] ch9_coeff_1,
-	 reg [31:0] ch9_coeff_0,
+	 reg [20:0] ch9_x_adc;
+	 reg [31:0] ch9_recip_stdev;
+	 reg [31:0] ch9_neg_mean;
+	 reg [31:0] ch9_coeff_5;
+	 reg [31:0] ch9_coeff_4;
+	 reg [31:0] ch9_coeff_3;
+	 reg [31:0] ch9_coeff_2;
+	 reg [31:0] ch9_coeff_1;
+	 reg [31:0] ch9_coeff_0;
 
-	//IO ports for ch8
-	 reg [20:0] ch8_x_adc,
-	 reg [31:0] ch8_recip_stdev,
-	 reg [31:0] ch8_neg_mean,
-	 wire [31:0] ch8_coeff_5,
-	 wire [31:0] ch8_coeff_4,
-	 wire [31:0] ch8_coeff_3,
-	 wire [31:0] ch8_coeff_2,
-	 wire [31:0] ch8_coeff_1,
-	 wire [31:0] ch8_coeff_0,
+	 reg [20:0] ch8_x_adc;
+	 reg [31:0] ch8_recip_stdev;
+	 reg [31:0] ch8_neg_mean;
+	 reg [31:0] ch8_coeff_5;
+	 reg [31:0] ch8_coeff_4;
+	 reg [31:0] ch8_coeff_3;
+	 reg [31:0] ch8_coeff_2;
+	 reg [31:0] ch8_coeff_1;
+	 reg [31:0] ch8_coeff_0;
 
-	//IO ports for ch7
-	 wire [20:0] ch7_x_adc,
-	 wire [31:0] ch7_recip_stdev,
-	 wire [31:0] ch7_neg_mean,
-	 wire [31:0] ch7_coeff_5,
-	 wire [31:0] ch7_coeff_4,
-	 wire [31:0] ch7_coeff_3,
-	 wire [31:0] ch7_coeff_2,
-	 wire [31:0] ch7_coeff_1,
-	 wire [31:0] ch7_coeff_0,
+	 reg [20:0] ch7_x_adc;
+	 reg [31:0] ch7_recip_stdev;
+	 reg [31:0] ch7_neg_mean;
+	 reg [31:0] ch7_coeff_5;
+	 reg [31:0] ch7_coeff_4;
+	 reg [31:0] ch7_coeff_3;
+	 reg [31:0] ch7_coeff_2;
+	 reg [31:0] ch7_coeff_1;
+	 reg [31:0] ch7_coeff_0;
 
-	//IO ports for ch6
-	 wire [20:0] ch6_x_adc,
-	 wire [31:0] ch6_recip_stdev,
-	 wire [31:0] ch6_neg_mean,
-	 wire [31:0] ch6_coeff_5,
-	 wire [31:0] ch6_coeff_4,
-	 wire [31:0] ch6_coeff_3,
-	 wire [31:0] ch6_coeff_2,
-	 wire [31:0] ch6_coeff_1,
-	 wire [31:0] ch6_coeff_0,
+	 reg [20:0] ch6_x_adc;
+	 reg [31:0] ch6_recip_stdev;
+	 reg [31:0] ch6_neg_mean;
+	 reg [31:0] ch6_coeff_5;
+	 reg [31:0] ch6_coeff_4;
+	 reg [31:0] ch6_coeff_3;
+	 reg [31:0] ch6_coeff_2;
+	 reg [31:0] ch6_coeff_1;
+	 reg [31:0] ch6_coeff_0;
 	
-	//IO ports for ch5
-	 wire [20:0] ch5_x_adc,
-	 wire [31:0] ch5_recip_stdev,
-	 wire [31:0] ch5_neg_mean,
-	 wire [31:0] ch5_coeff_5,
-	 wire [31:0] ch5_coeff_4,
-	 wire [31:0] ch5_coeff_3,
-	 wire [31:0] ch5_coeff_2,
-	 wire [31:0] ch5_coeff_1,
-	 wire [31:0] ch5_coeff_0,
+	 reg [20:0] ch5_x_adc;
+	 reg [31:0] ch5_recip_stdev;
+	 reg [31:0] ch5_neg_mean;
+	 reg [31:0] ch5_coeff_5;
+	 reg [31:0] ch5_coeff_4;
+	 reg [31:0] ch5_coeff_3;
+	 reg [31:0] ch5_coeff_2;
+	 reg [31:0] ch5_coeff_1;
+	 reg [31:0] ch5_coeff_0;
 	
-	//IO ports for ch4
-	 wire [20:0] ch4_x_adc,
-	 wire [31:0] ch4_recip_stdev,
-	 wire [31:0] ch4_neg_mean,
-	 wire [31:0] ch4_coeff_5,
-	 wire [31:0] ch4_coeff_4,
-	 wire [31:0] ch4_coeff_3,
-	 wire [31:0] ch4_coeff_2,
-	 wire [31:0] ch4_coeff_1,
-	 wire [31:0] ch4_coeff_0,
+	 reg [20:0] ch4_x_adc;
+	 reg [31:0] ch4_recip_stdev;
+	 reg [31:0] ch4_neg_mean;
+	 reg [31:0] ch4_coeff_5;
+	 reg [31:0] ch4_coeff_4;
+	 reg [31:0] ch4_coeff_3;
+	 reg [31:0] ch4_coeff_2;
+	 reg [31:0] ch4_coeff_1;
+	 reg [31:0] ch4_coeff_0;
 	
-	//IO ports for ch3
-	 wire [20:0] ch3_x_adc,
-	 wire [31:0] ch3_recip_stdev,
-	 wire [31:0] ch3_neg_mean,
-	 wire [31:0] ch3_coeff_5,
-	 wire [31:0] ch3_coeff_4,
-	 wire [31:0] ch3_coeff_3,
-	 wire [31:0] ch3_coeff_2,
-	 wire [31:0] ch3_coeff_1,
-	 wire [31:0] ch3_coeff_0,
+	 reg [20:0] ch3_x_adc;
+	 reg [31:0] ch3_recip_stdev;
+	 reg [31:0] ch3_neg_mean;
+	 reg [31:0] ch3_coeff_5;
+	 reg [31:0] ch3_coeff_4;
+	 reg [31:0] ch3_coeff_3;
+	 reg [31:0] ch3_coeff_2;
+	 reg [31:0] ch3_coeff_1;
+	 reg [31:0] ch3_coeff_0;
 	
-	//IO ports for ch2
-	 wire [20:0] ch2_x_adc,
-	 wire [31:0] ch2_recip_stdev,
-	 wire [31:0] ch2_neg_mean,
-	 wire [31:0] ch2_coeff_5,
-	 wire [31:0] ch2_coeff_4,
-	 wire [31:0] ch2_coeff_3,
-	 wire [31:0] ch2_coeff_2,
-	 wire [31:0] ch2_coeff_1,
-	 wire [31:0] ch2_coeff_0,
+	 reg [20:0] ch2_x_adc;
+	 reg [31:0] ch2_recip_stdev;
+	 reg [31:0] ch2_neg_mean;
+	 reg [31:0] ch2_coeff_5;
+	 reg [31:0] ch2_coeff_4;
+	 reg [31:0] ch2_coeff_3;
+	 reg [31:0] ch2_coeff_2;
+	 reg [31:0] ch2_coeff_1;
+	 reg [31:0] ch2_coeff_0;
 
-	//IO ports for ch1
-	 wire [20:0] ch1_x_adc,
-	 wire [31:0] ch1_recip_stdev,
-	 wire [31:0] ch1_neg_mean,
-	 wire [31:0] ch1_coeff_5,
-	 wire [31:0] ch1_coeff_4,
-	 wire [31:0] ch1_coeff_3,
-	 wire [31:0] ch1_coeff_2,
-	 wire [31:0] ch1_coeff_1,
-	 wire [31:0] ch1_coeff_0,
+	 reg [20:0] ch1_x_adc;
+	 reg [31:0] ch1_recip_stdev;
+	 reg [31:0] ch1_neg_mean;
+	 reg [31:0] ch1_coeff_5;
+	 reg [31:0] ch1_coeff_4;
+	 reg [31:0] ch1_coeff_3;
+	 reg [31:0] ch1_coeff_2;
+	 reg [31:0] ch1_coeff_1;
+	 reg [31:0] ch1_coeff_0;
 	
-	//IO ports for ch0
-	 wire [20:0] ch0_x_adc,
-	 wire [31:0] ch0_recip_stdev,
-	 wire [31:0] ch0_neg_mean,
-	 wire [31:0] ch0_coeff_5,
-	 wire [31:0] ch0_coeff_4,
-	 wire [31:0] ch0_coeff_3,
-	 wire [31:0] ch0_coeff_2,
-	 wire [31:0] ch0_coeff_1,
-	 wire [31:0] ch0_coeff_0
+	 reg [20:0] ch0_x_adc;
+	 reg [31:0] ch0_recip_stdev;
+	 reg [31:0] ch0_neg_mean;
+	 reg [31:0] ch0_coeff_5;
+	 reg [31:0] ch0_coeff_4;
+	 reg [31:0] ch0_coeff_3;
+	 reg [31:0] ch0_coeff_2;
+	 reg [31:0] ch0_coeff_1;
+	 reg [31:0] ch0_coeff_0;
 	
   always@(posedge srdyi) begin // TODO: store all data
     start_conv <= 1;
     ch0_adc_reg <= ch0_x_adc;
+    ch0_recip_stdev<=ch0_recip_stdev_in;
+    ch0_neg_mean <= ch0_neg_mean_in;
+    ch0_coeff_5 <= ch0_coeff_5_in;
+    ch0_coeff_4 <= ch0_coeff_4_in;
+    ch0_coeff_3 <= ch0_coeff_3_in;
+    ch0_coeff_2 <= ch0_coeff_2_in;
+    ch0_coeff_1 <= ch0_coeff_1_in;
+    ch0_coeff_0 <= ch0_coeff_0_in;
+    
     ch1_adc_reg <= ch1_x_adc;
+    ch1_recip_stdev<=ch1_recip_stdev_in;
+    ch1_neg_mean <= ch1_neg_mean_in;
+    ch1_coeff_5 <= ch1_coeff_5_in;
+    ch1_coeff_4 <= ch1_coeff_4_in;
+    ch1_coeff_3 <= ch1_coeff_3_in;
+    ch1_coeff_2 <= ch1_coeff_2_in;
+    ch1_coeff_1 <= ch1_coeff_1_in;
+    ch1_coeff_0 <= ch1_coeff_0_in;
+    
     ch2_adc_reg <= ch2_x_adc;
+    ch2_recip_stdev<=ch2_recip_stdev_in;
+    ch2_neg_mean <= ch2_neg_mean_in;
+    ch2_coeff_5 <= ch2_coeff_5_in;
+    ch2_coeff_4 <= ch2_coeff_4_in;
+    ch2_coeff_3 <= ch2_coeff_3_in;
+    ch2_coeff_2 <= ch2_coeff_2_in;
+    ch2_coeff_1 <= ch2_coeff_1_in;
+    ch2_coeff_0 <= ch2_coeff_0_in;
+    
     ch3_adc_reg <= ch3_x_adc;
+    ch3_recip_stdev<=ch3_recip_stdev_in;
+    ch3_neg_mean <= ch3_neg_mean_in;
+    ch3_coeff_5 <= ch3_coeff_5_in;
+    ch3_coeff_4 <= ch3_coeff_4_in;
+    ch3_coeff_3 <= ch3_coeff_3_in;
+    ch3_coeff_2 <= ch3_coeff_2_in;
+    ch3_coeff_1 <= ch3_coeff_1_in;
+    ch3_coeff_0 <= ch3_coeff_0_in;
+    
     ch4_adc_reg <= ch4_x_adc;
+    ch4_recip_stdev<=ch4_recip_stdev_in;
+    ch4_neg_mean <= ch4_neg_mean_in;
+    ch4_coeff_5 <= ch4_coeff_5_in;
+    ch4_coeff_4 <= ch4_coeff_4_in;
+    ch4_coeff_3 <= ch4_coeff_3_in;
+    ch4_coeff_2 <= ch4_coeff_2_in;
+    ch4_coeff_1 <= ch4_coeff_1_in;
+    ch4_coeff_0 <= ch4_coeff_0_in;
+    
     ch5_adc_reg <= ch5_x_adc;
+    ch5_recip_stdev<=ch5_recip_stdev_in;
+    ch5_neg_mean <= ch5_neg_mean_in;
+    ch5_coeff_5 <= ch5_coeff_5_in;
+    ch5_coeff_4 <= ch5_coeff_4_in;
+    ch5_coeff_3 <= ch5_coeff_3_in;
+    ch5_coeff_2 <= ch5_coeff_2_in;
+    ch5_coeff_1 <= ch5_coeff_1_in;
+    ch5_coeff_0 <= ch5_coeff_0_in;
+    
     ch6_adc_reg <= ch6_x_adc;
+    ch6_recip_stdev<=ch6_recip_stdev_in;
+    ch6_neg_mean <= ch6_neg_mean_in;
+    ch6_coeff_5 <= ch6_coeff_5_in;
+    ch6_coeff_4 <= ch6_coeff_4_in;
+    ch6_coeff_3 <= ch6_coeff_3_in;
+    ch6_coeff_2 <= ch6_coeff_2_in;
+    ch6_coeff_1 <= ch6_coeff_1_in;
+    ch6_coeff_0 <= ch6_coeff_0_in;
+    
     ch7_adc_reg <= ch7_x_adc;
+    ch7_recip_stdev<=ch7_recip_stdev_in;
+    ch7_neg_mean <= ch7_neg_mean_in;
+    ch7_coeff_5 <= ch7_coeff_5_in;
+    ch7_coeff_4 <= ch7_coeff_4_in;
+    ch7_coeff_3 <= ch7_coeff_3_in;
+    ch7_coeff_2 <= ch7_coeff_2_in;
+    ch7_coeff_1 <= ch7_coeff_1_in;
+    ch7_coeff_0 <= ch7_coeff_0_in;
+    
     ch8_adc_reg <= ch8_x_adc;
+    ch8_recip_stdev<=ch8_recip_stdev_in;
+    ch8_neg_mean <= ch8_neg_mean_in;
+    ch8_coeff_5 <= ch8_coeff_5_in;
+    ch8_coeff_4 <= ch8_coeff_4_in;
+    ch8_coeff_3 <= ch8_coeff_3_in;
+    ch8_coeff_2 <= ch8_coeff_2_in;
+    ch8_coeff_1 <= ch8_coeff_1_in;
+    ch8_coeff_0 <= ch8_coeff_0_in;
+    
     ch9_adc_reg <= ch9_x_adc;
+    ch9_recip_stdev<=ch9_recip_stdev_in;
+    ch9_neg_mean <= ch9_neg_mean_in;
+    ch9_coeff_5 <= ch9_coeff_5_in;
+    ch9_coeff_4 <= ch9_coeff_4_in;
+    ch9_coeff_3 <= ch9_coeff_3_in;
+    ch9_coeff_2 <= ch9_coeff_2_in;
+    ch9_coeff_1 <= ch9_coeff_1_in;
+    ch9_coeff_0 <= ch9_coeff_0_in;
+    
     ch10_adc_reg <= ch10_x_adc;
+    ch10_recip_stdev<=ch10_recip_stdev_in;
+    ch10_neg_mean <= ch10_neg_mean_in;
+    ch10_coeff_5 <= ch10_coeff_5_in;
+    ch10_coeff_4 <= ch10_coeff_4_in;
+    ch10_coeff_3 <= ch10_coeff_3_in;
+    ch10_coeff_2 <= ch10_coeff_2_in;
+    ch10_coeff_1 <= ch10_coeff_1_in;
+    ch10_coeff_0 <= ch10_coeff_0_in;
+    
     ch11_adc_reg <= ch11_x_adc;
+    ch11_recip_stdev<=ch11_recip_stdev_in;
+    ch11_neg_mean <= ch11_neg_mean_in;
+    ch11_coeff_5 <= ch11_coeff_5_in;
+    ch11_coeff_4 <= ch11_coeff_4_in;
+    ch11_coeff_3 <= ch11_coeff_3_in;
+    ch11_coeff_2 <= ch11_coeff_2_in;
+    ch11_coeff_1 <= ch11_coeff_1_in;
+    ch11_coeff_0 <= ch11_coeff_0_in;
+    
     ch12_adc_reg <= ch12_x_adc;
+    ch12_recip_stdev<=ch12_recip_stdev_in;
+    ch12_neg_mean <= ch12_neg_mean_in;
+    ch12_coeff_5 <= ch12_coeff_5_in;
+    ch12_coeff_4 <= ch12_coeff_4_in;
+    ch12_coeff_3 <= ch12_coeff_3_in;
+    ch12_coeff_2 <= ch12_coeff_2_in;
+    ch12_coeff_1 <= ch12_coeff_1_in;
+    ch12_coeff_0 <= ch12_coeff_0_in;
+    
     ch13_adc_reg <= ch13_x_adc;
+    ch13_recip_stdev<=ch13_recip_stdev_in;
+    ch13_neg_mean <= ch13_neg_mean_in;
+    ch13_coeff_5 <= ch13_coeff_5_in;
+    ch13_coeff_4 <= ch13_coeff_4_in;
+    ch13_coeff_3 <= ch13_coeff_3_in;
+    ch13_coeff_2 <= ch13_coeff_2_in;
+    ch13_coeff_1 <= ch13_coeff_1_in;
+    ch13_coeff_0 <= ch13_coeff_0_in;
+    
     ch14_adc_reg <= ch14_x_adc;
+    ch14_recip_stdev<=ch14_recip_stdev_in;
+    ch14_neg_mean <= ch14_neg_mean_in;
+    ch14_coeff_5 <= ch14_coeff_5_in;
+    ch14_coeff_4 <= ch14_coeff_4_in;
+    ch14_coeff_3 <= ch14_coeff_3_in;
+    ch14_coeff_2 <= ch14_coeff_2_in;
+    ch14_coeff_1 <= ch14_coeff_1_in;
+    ch14_coeff_0 <= ch14_coeff_0_in;
+    
     ch15_adc_reg <= ch15_x_adc;
+    ch15_recip_stdev<=ch15_recip_stdev_in;
+    ch15_neg_mean <= ch15_neg_mean_in;
+    ch15_coeff_5 <= ch15_coeff_5_in;
+    ch15_coeff_4 <= ch15_coeff_4_in;
+    ch15_coeff_3 <= ch15_coeff_3_in;
+    ch15_coeff_2 <= ch15_coeff_2_in;
+    ch15_coeff_1 <= ch15_coeff_1_in;
+    ch15_coeff_0 <= ch15_coeff_0_in;
   end
   
   always@(*) begin
@@ -529,7 +655,7 @@ module NLC_controller(
   
   always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
   
-  /* Normalization adder output, normalization multiplier input */
+  /* Normalization adder output; normalization multiplier input */
   /*integer norm_mul_cnt = 0;
   reg start_normalize_mul = 0;*/
   reg norm_complete = 0;
