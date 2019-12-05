@@ -269,7 +269,6 @@ module NLC_controller(
   reg [31:0] ch1_adc_reg;
   reg [31:0] ch0_adc_reg;
   
-	 reg [20:0] ch15_x_adc; 
 	 reg [31:0] ch15_recip_stdev;
 	 reg [31:0] ch15_neg_mean;
 	 reg [31:0] ch15_coeff_5;
@@ -279,7 +278,6 @@ module NLC_controller(
 	 reg [31:0] ch15_coeff_1;
 	 reg [31:0] ch15_coeff_0;
 
-	 reg [20:0] ch14_x_adc;
 	 reg [31:0] ch14_recip_stdev;
 	 reg [31:0] ch14_neg_mean;
 	 reg [31:0] ch14_coeff_5;
@@ -289,7 +287,6 @@ module NLC_controller(
 	 reg [31:0] ch14_coeff_1;
 	 reg [31:0] ch14_coeff_0;
 
-	 reg [20:0] ch13_x_adc;
 	 reg [31:0] ch13_recip_stdev;
 	 reg [31:0] ch13_neg_mean;
 	 reg [31:0] ch13_coeff_5;
@@ -299,7 +296,6 @@ module NLC_controller(
 	 reg [31:0] ch13_coeff_1;
 	 reg [31:0] ch13_coeff_0;
 
-	 reg [20:0] ch12_x_adc;
 	 reg [31:0] ch12_recip_stdev;
 	 reg [31:0] ch12_neg_mean;
 	 reg [31:0] ch12_coeff_5;
@@ -309,7 +305,6 @@ module NLC_controller(
 	 reg [31:0] ch12_coeff_1;
 	 reg [31:0] ch12_coeff_0;
 
-	 reg [20:0] ch11_x_adc;
 	 reg [31:0] ch11_recip_stdev;
 	 reg [31:0] ch11_neg_mean;
 	 reg [31:0] ch11_coeff_5;
@@ -319,7 +314,6 @@ module NLC_controller(
 	 reg [31:0] ch11_coeff_1;
 	 reg [31:0] ch11_coeff_0;
 
-	 reg [20:0] ch10_x_adc;
 	 reg [31:0] ch10_recip_stdev;
 	 reg [31:0] ch10_neg_mean;
 	 reg [31:0] ch10_coeff_5;
@@ -329,7 +323,6 @@ module NLC_controller(
 	 reg [31:0] ch10_coeff_1;
 	 reg [31:0] ch10_coeff_0;
 
-	 reg [20:0] ch9_x_adc;
 	 reg [31:0] ch9_recip_stdev;
 	 reg [31:0] ch9_neg_mean;
 	 reg [31:0] ch9_coeff_5;
@@ -339,7 +332,6 @@ module NLC_controller(
 	 reg [31:0] ch9_coeff_1;
 	 reg [31:0] ch9_coeff_0;
 
-	 reg [20:0] ch8_x_adc;
 	 reg [31:0] ch8_recip_stdev;
 	 reg [31:0] ch8_neg_mean;
 	 reg [31:0] ch8_coeff_5;
@@ -349,7 +341,6 @@ module NLC_controller(
 	 reg [31:0] ch8_coeff_1;
 	 reg [31:0] ch8_coeff_0;
 
-	 reg [20:0] ch7_x_adc;
 	 reg [31:0] ch7_recip_stdev;
 	 reg [31:0] ch7_neg_mean;
 	 reg [31:0] ch7_coeff_5;
@@ -359,7 +350,6 @@ module NLC_controller(
 	 reg [31:0] ch7_coeff_1;
 	 reg [31:0] ch7_coeff_0;
 
-	 reg [20:0] ch6_x_adc;
 	 reg [31:0] ch6_recip_stdev;
 	 reg [31:0] ch6_neg_mean;
 	 reg [31:0] ch6_coeff_5;
@@ -369,7 +359,6 @@ module NLC_controller(
 	 reg [31:0] ch6_coeff_1;
 	 reg [31:0] ch6_coeff_0;
 	
-	 reg [20:0] ch5_x_adc;
 	 reg [31:0] ch5_recip_stdev;
 	 reg [31:0] ch5_neg_mean;
 	 reg [31:0] ch5_coeff_5;
@@ -379,7 +368,6 @@ module NLC_controller(
 	 reg [31:0] ch5_coeff_1;
 	 reg [31:0] ch5_coeff_0;
 	
-	 reg [20:0] ch4_x_adc;
 	 reg [31:0] ch4_recip_stdev;
 	 reg [31:0] ch4_neg_mean;
 	 reg [31:0] ch4_coeff_5;
@@ -389,7 +377,6 @@ module NLC_controller(
 	 reg [31:0] ch4_coeff_1;
 	 reg [31:0] ch4_coeff_0;
 	
-	 reg [20:0] ch3_x_adc;
 	 reg [31:0] ch3_recip_stdev;
 	 reg [31:0] ch3_neg_mean;
 	 reg [31:0] ch3_coeff_5;
@@ -399,7 +386,6 @@ module NLC_controller(
 	 reg [31:0] ch3_coeff_1;
 	 reg [31:0] ch3_coeff_0;
 	
-	 reg [20:0] ch2_x_adc;
 	 reg [31:0] ch2_recip_stdev;
 	 reg [31:0] ch2_neg_mean;
 	 reg [31:0] ch2_coeff_5;
@@ -409,7 +395,6 @@ module NLC_controller(
 	 reg [31:0] ch2_coeff_1;
 	 reg [31:0] ch2_coeff_0;
 
-	 reg [20:0] ch1_x_adc;
 	 reg [31:0] ch1_recip_stdev;
 	 reg [31:0] ch1_neg_mean;
 	 reg [31:0] ch1_coeff_5;
@@ -419,7 +404,6 @@ module NLC_controller(
 	 reg [31:0] ch1_coeff_1;
 	 reg [31:0] ch1_coeff_0;
 	
-	 reg [20:0] ch0_x_adc;
 	 reg [31:0] ch0_recip_stdev;
 	 reg [31:0] ch0_neg_mean;
 	 reg [31:0] ch0_coeff_5;
@@ -429,9 +413,10 @@ module NLC_controller(
 	 reg [31:0] ch0_coeff_1;
 	 reg [31:0] ch0_coeff_0;
 	
-  always@(posedge srdyi) begin // TODO: store all data
+  always@(posedge srdyi) begin
+    conv_1_srdyi <= 1;
     start_conv <= 1;
-    ch0_adc_reg <= ch0_x_adc;
+    ch0_adc_reg <= ch0_x_adc_in;
     ch0_recip_stdev<=ch0_recip_stdev_in;
     ch0_neg_mean <= ch0_neg_mean_in;
     ch0_coeff_5 <= ch0_coeff_5_in;
@@ -441,7 +426,7 @@ module NLC_controller(
     ch0_coeff_1 <= ch0_coeff_1_in;
     ch0_coeff_0 <= ch0_coeff_0_in;
     
-    ch1_adc_reg <= ch1_x_adc;
+    ch1_adc_reg <= ch1_x_adc_in;
     ch1_recip_stdev<=ch1_recip_stdev_in;
     ch1_neg_mean <= ch1_neg_mean_in;
     ch1_coeff_5 <= ch1_coeff_5_in;
@@ -451,7 +436,7 @@ module NLC_controller(
     ch1_coeff_1 <= ch1_coeff_1_in;
     ch1_coeff_0 <= ch1_coeff_0_in;
     
-    ch2_adc_reg <= ch2_x_adc;
+    ch2_adc_reg <= ch2_x_adc_in;
     ch2_recip_stdev<=ch2_recip_stdev_in;
     ch2_neg_mean <= ch2_neg_mean_in;
     ch2_coeff_5 <= ch2_coeff_5_in;
@@ -461,7 +446,7 @@ module NLC_controller(
     ch2_coeff_1 <= ch2_coeff_1_in;
     ch2_coeff_0 <= ch2_coeff_0_in;
     
-    ch3_adc_reg <= ch3_x_adc;
+    ch3_adc_reg <= ch3_x_adc_in;
     ch3_recip_stdev<=ch3_recip_stdev_in;
     ch3_neg_mean <= ch3_neg_mean_in;
     ch3_coeff_5 <= ch3_coeff_5_in;
@@ -471,7 +456,7 @@ module NLC_controller(
     ch3_coeff_1 <= ch3_coeff_1_in;
     ch3_coeff_0 <= ch3_coeff_0_in;
     
-    ch4_adc_reg <= ch4_x_adc;
+    ch4_adc_reg <= ch4_x_adc_in;
     ch4_recip_stdev<=ch4_recip_stdev_in;
     ch4_neg_mean <= ch4_neg_mean_in;
     ch4_coeff_5 <= ch4_coeff_5_in;
@@ -481,7 +466,7 @@ module NLC_controller(
     ch4_coeff_1 <= ch4_coeff_1_in;
     ch4_coeff_0 <= ch4_coeff_0_in;
     
-    ch5_adc_reg <= ch5_x_adc;
+    ch5_adc_reg <= ch5_x_adc_in;
     ch5_recip_stdev<=ch5_recip_stdev_in;
     ch5_neg_mean <= ch5_neg_mean_in;
     ch5_coeff_5 <= ch5_coeff_5_in;
@@ -491,7 +476,7 @@ module NLC_controller(
     ch5_coeff_1 <= ch5_coeff_1_in;
     ch5_coeff_0 <= ch5_coeff_0_in;
     
-    ch6_adc_reg <= ch6_x_adc;
+    ch6_adc_reg <= ch6_x_adc_in;
     ch6_recip_stdev<=ch6_recip_stdev_in;
     ch6_neg_mean <= ch6_neg_mean_in;
     ch6_coeff_5 <= ch6_coeff_5_in;
@@ -501,7 +486,7 @@ module NLC_controller(
     ch6_coeff_1 <= ch6_coeff_1_in;
     ch6_coeff_0 <= ch6_coeff_0_in;
     
-    ch7_adc_reg <= ch7_x_adc;
+    ch7_adc_reg <= ch7_x_adc_in;
     ch7_recip_stdev<=ch7_recip_stdev_in;
     ch7_neg_mean <= ch7_neg_mean_in;
     ch7_coeff_5 <= ch7_coeff_5_in;
@@ -511,7 +496,7 @@ module NLC_controller(
     ch7_coeff_1 <= ch7_coeff_1_in;
     ch7_coeff_0 <= ch7_coeff_0_in;
     
-    ch8_adc_reg <= ch8_x_adc;
+    ch8_adc_reg <= ch8_x_adc_in;
     ch8_recip_stdev<=ch8_recip_stdev_in;
     ch8_neg_mean <= ch8_neg_mean_in;
     ch8_coeff_5 <= ch8_coeff_5_in;
@@ -521,7 +506,7 @@ module NLC_controller(
     ch8_coeff_1 <= ch8_coeff_1_in;
     ch8_coeff_0 <= ch8_coeff_0_in;
     
-    ch9_adc_reg <= ch9_x_adc;
+    ch9_adc_reg <= ch9_x_adc_in;
     ch9_recip_stdev<=ch9_recip_stdev_in;
     ch9_neg_mean <= ch9_neg_mean_in;
     ch9_coeff_5 <= ch9_coeff_5_in;
@@ -531,7 +516,7 @@ module NLC_controller(
     ch9_coeff_1 <= ch9_coeff_1_in;
     ch9_coeff_0 <= ch9_coeff_0_in;
     
-    ch10_adc_reg <= ch10_x_adc;
+    ch10_adc_reg <= ch10_x_adc_in;
     ch10_recip_stdev<=ch10_recip_stdev_in;
     ch10_neg_mean <= ch10_neg_mean_in;
     ch10_coeff_5 <= ch10_coeff_5_in;
@@ -541,7 +526,7 @@ module NLC_controller(
     ch10_coeff_1 <= ch10_coeff_1_in;
     ch10_coeff_0 <= ch10_coeff_0_in;
     
-    ch11_adc_reg <= ch11_x_adc;
+    ch11_adc_reg <= ch11_x_adc_in;
     ch11_recip_stdev<=ch11_recip_stdev_in;
     ch11_neg_mean <= ch11_neg_mean_in;
     ch11_coeff_5 <= ch11_coeff_5_in;
@@ -551,7 +536,7 @@ module NLC_controller(
     ch11_coeff_1 <= ch11_coeff_1_in;
     ch11_coeff_0 <= ch11_coeff_0_in;
     
-    ch12_adc_reg <= ch12_x_adc;
+    ch12_adc_reg <= ch12_x_adc_in;
     ch12_recip_stdev<=ch12_recip_stdev_in;
     ch12_neg_mean <= ch12_neg_mean_in;
     ch12_coeff_5 <= ch12_coeff_5_in;
@@ -561,7 +546,7 @@ module NLC_controller(
     ch12_coeff_1 <= ch12_coeff_1_in;
     ch12_coeff_0 <= ch12_coeff_0_in;
     
-    ch13_adc_reg <= ch13_x_adc;
+    ch13_adc_reg <= ch13_x_adc_in;
     ch13_recip_stdev<=ch13_recip_stdev_in;
     ch13_neg_mean <= ch13_neg_mean_in;
     ch13_coeff_5 <= ch13_coeff_5_in;
@@ -571,7 +556,7 @@ module NLC_controller(
     ch13_coeff_1 <= ch13_coeff_1_in;
     ch13_coeff_0 <= ch13_coeff_0_in;
     
-    ch14_adc_reg <= ch14_x_adc;
+    ch14_adc_reg <= ch14_x_adc_in;
     ch14_recip_stdev<=ch14_recip_stdev_in;
     ch14_neg_mean <= ch14_neg_mean_in;
     ch14_coeff_5 <= ch14_coeff_5_in;
@@ -581,7 +566,7 @@ module NLC_controller(
     ch14_coeff_1 <= ch14_coeff_1_in;
     ch14_coeff_0 <= ch14_coeff_0_in;
     
-    ch15_adc_reg <= ch15_x_adc;
+    ch15_adc_reg <= ch15_x_adc_in;
     ch15_recip_stdev<=ch15_recip_stdev_in;
     ch15_neg_mean <= ch15_neg_mean_in;
     ch15_coeff_5 <= ch15_coeff_5_in;
@@ -722,7 +707,8 @@ module NLC_controller(
   end
     
   
-  reg start_main_loop = 0;
+  reg start_main_loop_mul = 0;
+  reg start_main_loop_add = 0;
   /* Store multiplier results in registers for future use */
   always@(*) begin
     case(store_cnt)
@@ -742,7 +728,7 @@ module NLC_controller(
       13: ch13_norm <= multiplier_output;
       14: ch14_norm <= multiplier_output;
       15: ch15_norm <= multiplier_output;
-      16: start_main_loop <= 1;
+      16: start_main_loop_mul <= 1;
       default: start_store_norm <= 0;
     endcase
   end
@@ -772,7 +758,7 @@ module NLC_controller(
   integer haz_cnt = 0;
   
   always@(posedge adder_srdyo) begin
-  if(start_main_loop) begin
+  if(start_main_loop_add) begin
     case(haz_cnt)
       0: ch0_haz_reg <= adder_output;
       1: ch1_haz_reg <= adder_output;
@@ -794,17 +780,22 @@ module NLC_controller(
   end
   end
   
-  always@(posedge clk) if(start_hazard_handling) haz_cnt <= haz_cnt + 1;  
+  always@(posedge clk) begin 
+    if(start_hazard_handling) haz_cnt = haz_cnt + 1; 
+    if(haz_cnt>15) haz_cnt = 0; 
+  end
   
   /* Normalization multiplier output, main loop input */
-  integer order = 5; //TODO: to be initialized
-  integer ch = 0;
+  integer order_mul = 5; 
+  integer ch_mul = 0;
+    integer order_add = 5; 
+  integer ch_add = 0;
   
   /* Multiplication */
  always@(*) begin
-   if(start_main_loop) begin
-    if(order == 5) begin
-      case(ch)
+   if(start_main_loop_mul) begin
+    if(order_mul == 5) begin
+      case(ch_mul)
         0: begin 
             multiplier_input_1 <= ch0_coeff_5;
             multiplier_input_2 = ch0_norm;
@@ -828,6 +819,7 @@ module NLC_controller(
         5: begin 
             multiplier_input_1 <= ch5_coeff_5;
             multiplier_input_2 = ch5_norm;
+            start_main_loop_add <= 1;
            end
         6: begin 
             multiplier_input_1 <= ch6_coeff_5;
@@ -872,7 +864,7 @@ module NLC_controller(
       endcase
     end
     else begin
-      case(ch)
+      case(ch_mul)
         0: begin
             multiplier_input_1 <= ch0_haz_reg;
             multiplier_input_2 = ch0_norm;
@@ -945,11 +937,11 @@ module NLC_controller(
   reg start_output_conv = 0;
   
   always@(*) begin // TODO: find some way to trigger this
-  if(start_main_loop) begin
+  if(start_main_loop_add) begin
     adder_input_2 <= multiplier_output;
-    case(order)
+    case(order_add)
         5: begin
-             case(ch)
+             case(ch_add)
                0: adder_input_1 <= ch0_coeff_4; 
                1: adder_input_1 <= ch1_coeff_4;
                2: adder_input_1 <= ch2_coeff_4; 
@@ -969,7 +961,7 @@ module NLC_controller(
              endcase
            end
         4: begin
-             case(ch)
+             case(ch_add)
                0: adder_input_1 <= ch0_coeff_3; 
                1: adder_input_1 <= ch1_coeff_3;
                2: adder_input_1 <= ch2_coeff_3; 
@@ -989,7 +981,7 @@ module NLC_controller(
              endcase
            end
         3: begin
-             case(ch)
+             case(ch_add)
                0: adder_input_1 <= ch0_coeff_2; 
                1: adder_input_1 <= ch1_coeff_2;
                2: adder_input_1 <= ch2_coeff_2; 
@@ -1009,7 +1001,7 @@ module NLC_controller(
              endcase
            end
         2: begin
-             case(ch)
+             case(ch_add)
                0: adder_input_1 <= ch0_coeff_1; 
                1: adder_input_1 <= ch1_coeff_1;
                2: adder_input_1 <= ch2_coeff_1; 
@@ -1029,7 +1021,7 @@ module NLC_controller(
              endcase 
            end
            1: begin
-             case(ch)
+             case(ch_add)
                0: adder_input_1 <= ch0_coeff_0; 
                1: adder_input_1 <= ch1_coeff_0;
                2: adder_input_1 <= ch2_coeff_0; 
@@ -1057,14 +1049,25 @@ module NLC_controller(
   end
   
   always@(posedge clk) begin
-    if(start_main_loop) begin
-      ch = ch + 1;
-      if(ch > 15) begin
-        order = order - 1;
-        ch = 0;
+    if(start_main_loop_mul) begin
+      ch_mul = ch_mul + 1;
+      if(ch_mul > 15) begin
+        order_mul = order_mul - 1;
+        ch_mul = 0;
       end
-      if(order == 0) begin // STOP multiplier
-        start_main_loop <= 0;
+      if(order_mul == 0) begin // STOP multiplier
+        start_main_loop_mul <= 0;
+      end
+    end
+    
+    if(start_main_loop_add) begin
+      ch_add = ch_add + 1;
+      if(ch_add > 15) begin
+        order_add = order_add - 1;
+        ch_add = 0;
+      end
+      if(order_add == 0) begin // STOP multiplier
+        start_main_loop_add <= 0;
       end
     end
  end
