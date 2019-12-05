@@ -294,7 +294,7 @@ module NLC_opt(
 .neg_mean(ch0_neg_mean),.coeff_5(ch0_coeff_5),.coeff_4(ch0_coeff_4),.coeff_3(ch0_coeff_3),.coeff_2(ch0_coeff_2),.coeff_1(ch0_coeff_1),
 .coeff_0(ch0_coeff_0));*/
   
-  reg rst;
+  // reg rst;
   
   // Convert to smc
   wire [31:0] x_smc;
@@ -325,7 +325,7 @@ module NLC_opt(
   //Convert input x_adc to smc
   fp_to_smc_float conv_to_smc(
         .clk(clk),
-        .GlobalReset(rst),
+        .GlobalReset(reset),
         .y_o_portx(x_smc),
         .x_i(xi_fp_to_smc),
         .srdyo_o(smc_srdyo),
@@ -335,8 +335,8 @@ module NLC_opt(
   //Convert output x_lin to fp
   smc_float_to_fp conv_to_fp(
         .clk(clk),
-        .GlobalReset(rst),
-        .x_i_portx(x_fp),
+        .GlobalReset(reset),
+        .x_i_porty(x_fp),
         .y_o(xo_smc_to_fp),
         .srdyo_o(fp_srdyo),
         .srdyi_i(fp_srdyi)
@@ -345,7 +345,7 @@ module NLC_opt(
   // Instantiate multiplier
   smc_float_multiplier multiply(
 	      .clk(clk),
-	      .GlobalReset(rst),
+	      .GlobalReset(reset),
 	      .x_i_porty(mul_xi),
 	      .y_i_porty(mul_yi),
 	      .z_o_portx(mul_zo),
@@ -356,7 +356,7 @@ module NLC_opt(
   // Instantiate adder
   smc_float_adder add(
 	      .clk(clk),
-	      .GlobalReset(rst),
+	      .GlobalReset(reset),
 	      .x_i_porty(mul_xi),
 	      .y_i_porty(mul_yi),
 	      .z_o_portx(mul_zo),
@@ -365,7 +365,7 @@ module NLC_opt(
   );
   
   // Instantiate controller
-  NLC_controller control(.clk(clk),.rst(reset),.srdyi_i(add_srdyi),.srdyo_o(add_srdyo),
+  NLC_controller control(.clk(clk),.rst(reset),.srdyi(srdyi),.srdyo(srdyo),
   .conv_1_input(xi_fp_to_smc),.conv_1_output(x_smc),.conv_1_srdyi(smc_srdyi),.conv_1_srdyo(smc_srdyo),
   .multiplier_input_1(mul_xi),.multiplier_input_2(mul_yi),.multiplier_output(mul_zo),.multiplier_srdyi(add_srdyi),.multiplier_srdyo(add_srdyo),
   .adder_input_1(add_xi),.adder_input_2(add_yi),.adder_output(add_zo),.adder_srdyi(add_srdyi),.adder_srdyo(add_srdyo),
