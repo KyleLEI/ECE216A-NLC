@@ -241,7 +241,7 @@ module NLC_controller(
   reg start_normalize_mul = 0;
   
   
-  integer clk_cnt;
+  integer clk_cnt = 0;
   always@(posedge clk) begin
     if(rst) begin
       conv_cnt = 0;
@@ -249,7 +249,13 @@ module NLC_controller(
       norm_mul_cnt = 0;
       $display("Reset");
       clk_cnt = 0;
+      adder_srdyi <= 0;
+      multiplier_srdyi <= 0;
+      conv_1_srdyi <= 0;
+      conv_2_srdyi <= 0;
+      srdyo <= 1;
     end
+    clk_cnt = clk_cnt + 1;
   end
   
   reg [31:0] ch15_adc_reg;
@@ -757,8 +763,11 @@ module NLC_controller(
   reg start_hazard_handling = 0;
   integer haz_cnt = 0;
   
-  always@(posedge adder_srdyo) begin
-  if(start_main_loop_add) begin
+  always@(posedge adder_srdyo)
+    if(start_main_loop_add) start_hazard_handling <= 1;
+  
+  always@(*) begin
+  if(start_hazard_handling) begin
     case(haz_cnt)
       0: ch0_haz_reg <= adder_output;
       1: ch1_haz_reg <= adder_output;
@@ -819,11 +828,12 @@ module NLC_controller(
         5: begin 
             multiplier_input_1 <= ch5_coeff_5;
             multiplier_input_2 = ch5_norm;
-            start_main_loop_add <= 1;
            end
         6: begin 
             multiplier_input_1 <= ch6_coeff_5;
             multiplier_input_2 = ch6_norm;
+            start_main_loop_add <= 1;
+            adder_srdyi <= 1;
            end
         7: begin 
             multiplier_input_1 <= ch7_coeff_5;
@@ -1076,29 +1086,36 @@ module NLC_controller(
   
   integer output_conv_cnt = 0;
   
+  always@(posedge start_output_conv) begin
+    conv_2_input <= adder_output;
+    conv_2_srdyi <= 1;
+  end
+  
   always@(*) begin
+    if(start_output_conv) begin
     case(output_conv_cnt)
-      0: ch0_x_lin <= conv_2_output;
-      1: ch1_x_lin <= conv_2_output;
-      2: ch2_x_lin <= conv_2_output;
-      3: ch3_x_lin <= conv_2_output;
-      4: ch4_x_lin <= conv_2_output;
-      5: ch5_x_lin <= conv_2_output;
-      6: ch6_x_lin <= conv_2_output;
-      7: ch7_x_lin <= conv_2_output;
-      8: ch8_x_lin <= conv_2_output;
-      9: ch9_x_lin <= conv_2_output;
-      10: ch10_x_lin <= conv_2_output;
-      11: ch11_x_lin <= conv_2_output;
-      12: ch12_x_lin <= conv_2_output;
-      13: ch13_x_lin <= conv_2_output;
-      14: ch14_x_lin <= conv_2_output;
-      15: ch15_x_lin <= conv_2_output;
-      18: begin
+      3: ch0_x_lin <= conv_2_output;
+      4: ch1_x_lin <= conv_2_output;
+      5: ch2_x_lin <= conv_2_output;
+      6: ch3_x_lin <= conv_2_output;
+      7: ch4_x_lin <= conv_2_output;
+      8: ch5_x_lin <= conv_2_output;
+      9: ch6_x_lin <= conv_2_output;
+      10: ch7_x_lin <= conv_2_output;
+      11: ch8_x_lin <= conv_2_output;
+      12: ch9_x_lin <= conv_2_output;
+      13: ch10_x_lin <= conv_2_output;
+      14: ch11_x_lin <= conv_2_output;
+      15: ch12_x_lin <= conv_2_output;
+      16: ch13_x_lin <= conv_2_output;
+      17: ch14_x_lin <= conv_2_output;
+      18: ch15_x_lin <= conv_2_output;
+      19: begin
         srdyo <= 1;
         start_output_conv <= 0;
       end
     endcase
+  end
   end
   
   always@(posedge clk) if(start_output_conv) output_conv_cnt = output_conv_cnt + 1;
