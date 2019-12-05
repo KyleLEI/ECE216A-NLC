@@ -3,7 +3,7 @@ module NLC_controller(
   input wire rst,
   
   input wire srdyi,
-  output wire srdyo,
+  output reg srdyo,
   
   	//input wire [1:0]operation_mode_i, 
 	//input wire [20:0] x_ref_i,
