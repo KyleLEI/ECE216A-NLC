@@ -261,7 +261,6 @@ module NLC_controller(
   integer output_conv_cnt = 0;
   
   /* Next */
-  reg start_conv_next = 0;
   reg start_normalize_add_next = 0;
   reg start_normalize_mul_next = 0;
   reg start_store_norm_next = 0;
@@ -450,170 +449,6 @@ module NLC_controller(
 	   multiplier_input_1 <= start_normalize_mul ? multiplier_input_1_norm : multiplier_input_1_main;
 	   multiplier_input_2 <= start_normalize_mul ? multiplier_input_2_norm : multiplier_input_2_main;
 	 end
-	
-  always@(posedge srdyi) begin
-    conv_1_srdyi <= 1;
-    start_conv_next <= 1;
-    ch0_adc_reg <= ch0_x_adc_in;
-    ch0_recip_stdev<=ch0_recip_stdev_in;
-    ch0_neg_mean <= ch0_neg_mean_in;
-    ch0_coeff_5 <= ch0_coeff_5_in;
-    ch0_coeff_4 <= ch0_coeff_4_in;
-    ch0_coeff_3 <= ch0_coeff_3_in;
-    ch0_coeff_2 <= ch0_coeff_2_in;
-    ch0_coeff_1 <= ch0_coeff_1_in;
-    ch0_coeff_0 <= ch0_coeff_0_in;
-    
-    ch1_adc_reg <= ch1_x_adc_in;
-    ch1_recip_stdev<=ch1_recip_stdev_in;
-    ch1_neg_mean <= ch1_neg_mean_in;
-    ch1_coeff_5 <= ch1_coeff_5_in;
-    ch1_coeff_4 <= ch1_coeff_4_in;
-    ch1_coeff_3 <= ch1_coeff_3_in;
-    ch1_coeff_2 <= ch1_coeff_2_in;
-    ch1_coeff_1 <= ch1_coeff_1_in;
-    ch1_coeff_0 <= ch1_coeff_0_in;
-    
-    ch2_adc_reg <= ch2_x_adc_in;
-    ch2_recip_stdev<=ch2_recip_stdev_in;
-    ch2_neg_mean <= ch2_neg_mean_in;
-    ch2_coeff_5 <= ch2_coeff_5_in;
-    ch2_coeff_4 <= ch2_coeff_4_in;
-    ch2_coeff_3 <= ch2_coeff_3_in;
-    ch2_coeff_2 <= ch2_coeff_2_in;
-    ch2_coeff_1 <= ch2_coeff_1_in;
-    ch2_coeff_0 <= ch2_coeff_0_in;
-    
-    ch3_adc_reg <= ch3_x_adc_in;
-    ch3_recip_stdev<=ch3_recip_stdev_in;
-    ch3_neg_mean <= ch3_neg_mean_in;
-    ch3_coeff_5 <= ch3_coeff_5_in;
-    ch3_coeff_4 <= ch3_coeff_4_in;
-    ch3_coeff_3 <= ch3_coeff_3_in;
-    ch3_coeff_2 <= ch3_coeff_2_in;
-    ch3_coeff_1 <= ch3_coeff_1_in;
-    ch3_coeff_0 <= ch3_coeff_0_in;
-    
-    ch4_adc_reg <= ch4_x_adc_in;
-    ch4_recip_stdev<=ch4_recip_stdev_in;
-    ch4_neg_mean <= ch4_neg_mean_in;
-    ch4_coeff_5 <= ch4_coeff_5_in;
-    ch4_coeff_4 <= ch4_coeff_4_in;
-    ch4_coeff_3 <= ch4_coeff_3_in;
-    ch4_coeff_2 <= ch4_coeff_2_in;
-    ch4_coeff_1 <= ch4_coeff_1_in;
-    ch4_coeff_0 <= ch4_coeff_0_in;
-    
-    ch5_adc_reg <= ch5_x_adc_in;
-    ch5_recip_stdev<=ch5_recip_stdev_in;
-    ch5_neg_mean <= ch5_neg_mean_in;
-    ch5_coeff_5 <= ch5_coeff_5_in;
-    ch5_coeff_4 <= ch5_coeff_4_in;
-    ch5_coeff_3 <= ch5_coeff_3_in;
-    ch5_coeff_2 <= ch5_coeff_2_in;
-    ch5_coeff_1 <= ch5_coeff_1_in;
-    ch5_coeff_0 <= ch5_coeff_0_in;
-    
-    ch6_adc_reg <= ch6_x_adc_in;
-    ch6_recip_stdev<=ch6_recip_stdev_in;
-    ch6_neg_mean <= ch6_neg_mean_in;
-    ch6_coeff_5 <= ch6_coeff_5_in;
-    ch6_coeff_4 <= ch6_coeff_4_in;
-    ch6_coeff_3 <= ch6_coeff_3_in;
-    ch6_coeff_2 <= ch6_coeff_2_in;
-    ch6_coeff_1 <= ch6_coeff_1_in;
-    ch6_coeff_0 <= ch6_coeff_0_in;
-    
-    ch7_adc_reg <= ch7_x_adc_in;
-    ch7_recip_stdev<=ch7_recip_stdev_in;
-    ch7_neg_mean <= ch7_neg_mean_in;
-    ch7_coeff_5 <= ch7_coeff_5_in;
-    ch7_coeff_4 <= ch7_coeff_4_in;
-    ch7_coeff_3 <= ch7_coeff_3_in;
-    ch7_coeff_2 <= ch7_coeff_2_in;
-    ch7_coeff_1 <= ch7_coeff_1_in;
-    ch7_coeff_0 <= ch7_coeff_0_in;
-    
-    ch8_adc_reg <= ch8_x_adc_in;
-    ch8_recip_stdev<=ch8_recip_stdev_in;
-    ch8_neg_mean <= ch8_neg_mean_in;
-    ch8_coeff_5 <= ch8_coeff_5_in;
-    ch8_coeff_4 <= ch8_coeff_4_in;
-    ch8_coeff_3 <= ch8_coeff_3_in;
-    ch8_coeff_2 <= ch8_coeff_2_in;
-    ch8_coeff_1 <= ch8_coeff_1_in;
-    ch8_coeff_0 <= ch8_coeff_0_in;
-    
-    ch9_adc_reg <= ch9_x_adc_in;
-    ch9_recip_stdev<=ch9_recip_stdev_in;
-    ch9_neg_mean <= ch9_neg_mean_in;
-    ch9_coeff_5 <= ch9_coeff_5_in;
-    ch9_coeff_4 <= ch9_coeff_4_in;
-    ch9_coeff_3 <= ch9_coeff_3_in;
-    ch9_coeff_2 <= ch9_coeff_2_in;
-    ch9_coeff_1 <= ch9_coeff_1_in;
-    ch9_coeff_0 <= ch9_coeff_0_in;
-    
-    ch10_adc_reg <= ch10_x_adc_in;
-    ch10_recip_stdev<=ch10_recip_stdev_in;
-    ch10_neg_mean <= ch10_neg_mean_in;
-    ch10_coeff_5 <= ch10_coeff_5_in;
-    ch10_coeff_4 <= ch10_coeff_4_in;
-    ch10_coeff_3 <= ch10_coeff_3_in;
-    ch10_coeff_2 <= ch10_coeff_2_in;
-    ch10_coeff_1 <= ch10_coeff_1_in;
-    ch10_coeff_0 <= ch10_coeff_0_in;
-    
-    ch11_adc_reg <= ch11_x_adc_in;
-    ch11_recip_stdev<=ch11_recip_stdev_in;
-    ch11_neg_mean <= ch11_neg_mean_in;
-    ch11_coeff_5 <= ch11_coeff_5_in;
-    ch11_coeff_4 <= ch11_coeff_4_in;
-    ch11_coeff_3 <= ch11_coeff_3_in;
-    ch11_coeff_2 <= ch11_coeff_2_in;
-    ch11_coeff_1 <= ch11_coeff_1_in;
-    ch11_coeff_0 <= ch11_coeff_0_in;
-    
-    ch12_adc_reg <= ch12_x_adc_in;
-    ch12_recip_stdev<=ch12_recip_stdev_in;
-    ch12_neg_mean <= ch12_neg_mean_in;
-    ch12_coeff_5 <= ch12_coeff_5_in;
-    ch12_coeff_4 <= ch12_coeff_4_in;
-    ch12_coeff_3 <= ch12_coeff_3_in;
-    ch12_coeff_2 <= ch12_coeff_2_in;
-    ch12_coeff_1 <= ch12_coeff_1_in;
-    ch12_coeff_0 <= ch12_coeff_0_in;
-    
-    ch13_adc_reg <= ch13_x_adc_in;
-    ch13_recip_stdev<=ch13_recip_stdev_in;
-    ch13_neg_mean <= ch13_neg_mean_in;
-    ch13_coeff_5 <= ch13_coeff_5_in;
-    ch13_coeff_4 <= ch13_coeff_4_in;
-    ch13_coeff_3 <= ch13_coeff_3_in;
-    ch13_coeff_2 <= ch13_coeff_2_in;
-    ch13_coeff_1 <= ch13_coeff_1_in;
-    ch13_coeff_0 <= ch13_coeff_0_in;
-    
-    ch14_adc_reg <= ch14_x_adc_in;
-    ch14_recip_stdev<=ch14_recip_stdev_in;
-    ch14_neg_mean <= ch14_neg_mean_in;
-    ch14_coeff_5 <= ch14_coeff_5_in;
-    ch14_coeff_4 <= ch14_coeff_4_in;
-    ch14_coeff_3 <= ch14_coeff_3_in;
-    ch14_coeff_2 <= ch14_coeff_2_in;
-    ch14_coeff_1 <= ch14_coeff_1_in;
-    ch14_coeff_0 <= ch14_coeff_0_in;
-    
-    ch15_adc_reg <= ch15_x_adc_in;
-    ch15_recip_stdev<=ch15_recip_stdev_in;
-    ch15_neg_mean <= ch15_neg_mean_in;
-    ch15_coeff_5 <= ch15_coeff_5_in;
-    ch15_coeff_4 <= ch15_coeff_4_in;
-    ch15_coeff_3 <= ch15_coeff_3_in;
-    ch15_coeff_2 <= ch15_coeff_2_in;
-    ch15_coeff_1 <= ch15_coeff_1_in;
-    ch15_coeff_0 <= ch15_coeff_0_in;
-  end
   
   always@(*) begin
     case(conv_cnt)
@@ -633,16 +468,7 @@ module NLC_controller(
      13: conv_1_input <= ch13_adc_reg;
      14: conv_1_input <= ch14_adc_reg;
      15: conv_1_input <= ch15_adc_reg;
-     default: begin
-           start_conv_next <= 0;
-           conv_cnt = 0;
-         end
     endcase
-  end
-
-  always@(posedge conv_1_srdyo) begin
-    start_normalize_add <= 1;
-    adder_srdyi <= 1;
   end
   
   always@(*) begin
@@ -674,13 +500,6 @@ module NLC_controller(
   end
   
   /* Normalization adder output; normalization multiplier input */
-  
-  always@(posedge adder_srdyo) begin
-    if(start_normalize_add) begin
-    start_normalize_mul <= 1;
-    multiplier_srdyi <= 1;
-  end
-  end
   
   always@(*) begin
     if(start_normalize_mul) begin
@@ -1089,34 +908,31 @@ module NLC_controller(
   end
   end
   
-  always@(posedge clk) begin
+  always@(posedge clk) begin //TODO: move state changes here
     if(rst) begin
       // set output to 0
       //srdyo <= 0;
       // initialize counters
-      conv_cnt <= 0;
-      norm_add_cnt <= 0;
-      norm_mul_cnt <= 0;
-      order_mul <= 5;
-      clk_cnt <= 0;
-      haz_cnt <= 0;
-      output_conv_cnt <= 0;
+      //conv_cnt <= 0;
+      //norm_add_cnt <= 0;
+      //norm_mul_cnt <= 0;
+      //order_mul <= 5;
+      //clk_cnt <= 0;
+      //haz_cnt <= 0;
+      //output_conv_cnt <= 0;
       // set internal flags to 0
-      start_conv <= 0;
-      start_normalize_add <= 0;
-      start_normalize_mul <= 0;
-      start_store_norm <= 0;
-      start_main_loop_mul <= 0;
-      start_main_loop_add <= 0;
+      //start_conv <= 0;
+      //start_normalize_add <= 0;
+      //start_normalize_mul <= 0;
+      //start_store_norm <= 0;
+      //start_main_loop_mul <= 0;
+      //start_main_loop_add <= 0;
       // set internal signals to 0
       adder_srdyi <= 0;
       multiplier_srdyi <= 0;
-      //conv_1_srdyi <= 0;
-      //conv_2_srdyi <= 0;
+      conv_1_srdyi <= 0;
+      conv_2_srdyi <= 0;
       
-    end
-    else begin
-      start_conv <= start_conv_next;
     end
     
     if(start_conv) conv_cnt <= conv_cnt + 1;
@@ -1148,6 +964,188 @@ module NLC_controller(
     end
     
     if(start_output_conv) output_conv_cnt <= output_conv_cnt + 1;
+      
+    if(conv_cnt == 16) begin
+      start_conv <= 0;
+      conv_1_srdyi <= 0;
+    end
+    
+    if(conv_cnt == 2) begin
+      start_normalize_add <= 1;
+      adder_srdyi <= 1;
+    end
+    
+    if(norm_add_cnt==9) begin
+      if(start_normalize_add) begin
+        start_normalize_mul <= 1;
+        multiplier_srdyi <= 1;
+      end
+    end
+      
+      
+    if(srdyi) begin
+    conv_1_srdyi <= 1;
+    start_conv<=1;
+    ch0_adc_reg <= ch0_x_adc_in;
+    ch0_recip_stdev<=ch0_recip_stdev_in;
+    ch0_neg_mean <= ch0_neg_mean_in;
+    ch0_coeff_5 <= ch0_coeff_5_in;
+    ch0_coeff_4 <= ch0_coeff_4_in;
+    ch0_coeff_3 <= ch0_coeff_3_in;
+    ch0_coeff_2 <= ch0_coeff_2_in;
+    ch0_coeff_1 <= ch0_coeff_1_in;
+    ch0_coeff_0 <= ch0_coeff_0_in;
+    
+    ch1_adc_reg <= ch1_x_adc_in;
+    ch1_recip_stdev<=ch1_recip_stdev_in;
+    ch1_neg_mean <= ch1_neg_mean_in;
+    ch1_coeff_5 <= ch1_coeff_5_in;
+    ch1_coeff_4 <= ch1_coeff_4_in;
+    ch1_coeff_3 <= ch1_coeff_3_in;
+    ch1_coeff_2 <= ch1_coeff_2_in;
+    ch1_coeff_1 <= ch1_coeff_1_in;
+    ch1_coeff_0 <= ch1_coeff_0_in;
+    
+    ch2_adc_reg <= ch2_x_adc_in;
+    ch2_recip_stdev<=ch2_recip_stdev_in;
+    ch2_neg_mean <= ch2_neg_mean_in;
+    ch2_coeff_5 <= ch2_coeff_5_in;
+    ch2_coeff_4 <= ch2_coeff_4_in;
+    ch2_coeff_3 <= ch2_coeff_3_in;
+    ch2_coeff_2 <= ch2_coeff_2_in;
+    ch2_coeff_1 <= ch2_coeff_1_in;
+    ch2_coeff_0 <= ch2_coeff_0_in;
+    
+    ch3_adc_reg <= ch3_x_adc_in;
+    ch3_recip_stdev<=ch3_recip_stdev_in;
+    ch3_neg_mean <= ch3_neg_mean_in;
+    ch3_coeff_5 <= ch3_coeff_5_in;
+    ch3_coeff_4 <= ch3_coeff_4_in;
+    ch3_coeff_3 <= ch3_coeff_3_in;
+    ch3_coeff_2 <= ch3_coeff_2_in;
+    ch3_coeff_1 <= ch3_coeff_1_in;
+    ch3_coeff_0 <= ch3_coeff_0_in;
+    
+    ch4_adc_reg <= ch4_x_adc_in;
+    ch4_recip_stdev<=ch4_recip_stdev_in;
+    ch4_neg_mean <= ch4_neg_mean_in;
+    ch4_coeff_5 <= ch4_coeff_5_in;
+    ch4_coeff_4 <= ch4_coeff_4_in;
+    ch4_coeff_3 <= ch4_coeff_3_in;
+    ch4_coeff_2 <= ch4_coeff_2_in;
+    ch4_coeff_1 <= ch4_coeff_1_in;
+    ch4_coeff_0 <= ch4_coeff_0_in;
+    
+    ch5_adc_reg <= ch5_x_adc_in;
+    ch5_recip_stdev<=ch5_recip_stdev_in;
+    ch5_neg_mean <= ch5_neg_mean_in;
+    ch5_coeff_5 <= ch5_coeff_5_in;
+    ch5_coeff_4 <= ch5_coeff_4_in;
+    ch5_coeff_3 <= ch5_coeff_3_in;
+    ch5_coeff_2 <= ch5_coeff_2_in;
+    ch5_coeff_1 <= ch5_coeff_1_in;
+    ch5_coeff_0 <= ch5_coeff_0_in;
+    
+    ch6_adc_reg <= ch6_x_adc_in;
+    ch6_recip_stdev<=ch6_recip_stdev_in;
+    ch6_neg_mean <= ch6_neg_mean_in;
+    ch6_coeff_5 <= ch6_coeff_5_in;
+    ch6_coeff_4 <= ch6_coeff_4_in;
+    ch6_coeff_3 <= ch6_coeff_3_in;
+    ch6_coeff_2 <= ch6_coeff_2_in;
+    ch6_coeff_1 <= ch6_coeff_1_in;
+    ch6_coeff_0 <= ch6_coeff_0_in;
+    
+    ch7_adc_reg <= ch7_x_adc_in;
+    ch7_recip_stdev<=ch7_recip_stdev_in;
+    ch7_neg_mean <= ch7_neg_mean_in;
+    ch7_coeff_5 <= ch7_coeff_5_in;
+    ch7_coeff_4 <= ch7_coeff_4_in;
+    ch7_coeff_3 <= ch7_coeff_3_in;
+    ch7_coeff_2 <= ch7_coeff_2_in;
+    ch7_coeff_1 <= ch7_coeff_1_in;
+    ch7_coeff_0 <= ch7_coeff_0_in;
+    
+    ch8_adc_reg <= ch8_x_adc_in;
+    ch8_recip_stdev<=ch8_recip_stdev_in;
+    ch8_neg_mean <= ch8_neg_mean_in;
+    ch8_coeff_5 <= ch8_coeff_5_in;
+    ch8_coeff_4 <= ch8_coeff_4_in;
+    ch8_coeff_3 <= ch8_coeff_3_in;
+    ch8_coeff_2 <= ch8_coeff_2_in;
+    ch8_coeff_1 <= ch8_coeff_1_in;
+    ch8_coeff_0 <= ch8_coeff_0_in;
+    
+    ch9_adc_reg <= ch9_x_adc_in;
+    ch9_recip_stdev<=ch9_recip_stdev_in;
+    ch9_neg_mean <= ch9_neg_mean_in;
+    ch9_coeff_5 <= ch9_coeff_5_in;
+    ch9_coeff_4 <= ch9_coeff_4_in;
+    ch9_coeff_3 <= ch9_coeff_3_in;
+    ch9_coeff_2 <= ch9_coeff_2_in;
+    ch9_coeff_1 <= ch9_coeff_1_in;
+    ch9_coeff_0 <= ch9_coeff_0_in;
+    
+    ch10_adc_reg <= ch10_x_adc_in;
+    ch10_recip_stdev<=ch10_recip_stdev_in;
+    ch10_neg_mean <= ch10_neg_mean_in;
+    ch10_coeff_5 <= ch10_coeff_5_in;
+    ch10_coeff_4 <= ch10_coeff_4_in;
+    ch10_coeff_3 <= ch10_coeff_3_in;
+    ch10_coeff_2 <= ch10_coeff_2_in;
+    ch10_coeff_1 <= ch10_coeff_1_in;
+    ch10_coeff_0 <= ch10_coeff_0_in;
+    
+    ch11_adc_reg <= ch11_x_adc_in;
+    ch11_recip_stdev<=ch11_recip_stdev_in;
+    ch11_neg_mean <= ch11_neg_mean_in;
+    ch11_coeff_5 <= ch11_coeff_5_in;
+    ch11_coeff_4 <= ch11_coeff_4_in;
+    ch11_coeff_3 <= ch11_coeff_3_in;
+    ch11_coeff_2 <= ch11_coeff_2_in;
+    ch11_coeff_1 <= ch11_coeff_1_in;
+    ch11_coeff_0 <= ch11_coeff_0_in;
+    
+    ch12_adc_reg <= ch12_x_adc_in;
+    ch12_recip_stdev<=ch12_recip_stdev_in;
+    ch12_neg_mean <= ch12_neg_mean_in;
+    ch12_coeff_5 <= ch12_coeff_5_in;
+    ch12_coeff_4 <= ch12_coeff_4_in;
+    ch12_coeff_3 <= ch12_coeff_3_in;
+    ch12_coeff_2 <= ch12_coeff_2_in;
+    ch12_coeff_1 <= ch12_coeff_1_in;
+    ch12_coeff_0 <= ch12_coeff_0_in;
+    
+    ch13_adc_reg <= ch13_x_adc_in;
+    ch13_recip_stdev<=ch13_recip_stdev_in;
+    ch13_neg_mean <= ch13_neg_mean_in;
+    ch13_coeff_5 <= ch13_coeff_5_in;
+    ch13_coeff_4 <= ch13_coeff_4_in;
+    ch13_coeff_3 <= ch13_coeff_3_in;
+    ch13_coeff_2 <= ch13_coeff_2_in;
+    ch13_coeff_1 <= ch13_coeff_1_in;
+    ch13_coeff_0 <= ch13_coeff_0_in;
+    
+    ch14_adc_reg <= ch14_x_adc_in;
+    ch14_recip_stdev<=ch14_recip_stdev_in;
+    ch14_neg_mean <= ch14_neg_mean_in;
+    ch14_coeff_5 <= ch14_coeff_5_in;
+    ch14_coeff_4 <= ch14_coeff_4_in;
+    ch14_coeff_3 <= ch14_coeff_3_in;
+    ch14_coeff_2 <= ch14_coeff_2_in;
+    ch14_coeff_1 <= ch14_coeff_1_in;
+    ch14_coeff_0 <= ch14_coeff_0_in;
+    
+    ch15_adc_reg <= ch15_x_adc_in;
+    ch15_recip_stdev<=ch15_recip_stdev_in;
+    ch15_neg_mean <= ch15_neg_mean_in;
+    ch15_coeff_5 <= ch15_coeff_5_in;
+    ch15_coeff_4 <= ch15_coeff_4_in;
+    ch15_coeff_3 <= ch15_coeff_3_in;
+    ch15_coeff_2 <= ch15_coeff_2_in;
+    ch15_coeff_1 <= ch15_coeff_1_in;
+    ch15_coeff_0 <= ch15_coeff_0_in;
+  end
       
   end
 
