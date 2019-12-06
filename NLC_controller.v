@@ -461,9 +461,13 @@ module NLC_controller(
 	 reg [31:0] mul_input_1_main;
 	 reg [31:0] mul_input_2_main;
 	 
-	 /* Multiplier Input */
+	 /* Multiplier and Adder Input */
 	 always@(*) begin
-	   end
+	   adder_input_1 <= start_norm_add ? adder_input_1_norm : adder_input_1_main;
+	   adder_input_2 <= start_norm_add ? adder_input_2_norm : adder_input_2_main;
+	   multiplier_input_1 <= start_norm_mul ? mul_input_1_norm : mul_input_1_main;
+	   multiplier_input_2 <= start_norm_mul ? mul_input_2_norm : mul_input_2_main;
+	 end
 	
   always@(posedge srdyi) begin
     conv_1_srdyi <= 1;
