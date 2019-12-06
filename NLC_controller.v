@@ -230,37 +230,35 @@ module NLC_controller(
   
   /* Input conversion */
   reg start_conv = 0;
-	integer conv_cnt = 0;
+	reg[5:0] conv_cnt = 0;
 	
 	/* Normalization Addition */
-  integer norm_add_cnt = 0;
+  reg[5:0] norm_add_cnt = 0;
   reg start_normalize_add = 0;
   
   /* Normalization multiplication */
-  integer norm_mul_cnt = 0;
+  reg[5:0] norm_mul_cnt = 0;
   reg start_normalize_mul = 0;
   
   /* Normalization output storage */
   reg start_store_norm = 0;
-  integer store_cnt = 0;
+  reg[5:0] store_cnt = 0;
   
   /* Main computation loop */
   reg start_main_loop_mul = 0;
   reg start_main_loop_add = 0;
-  integer order_mul = 5; 
-  integer ch_mul = 0;
-  integer order_add = 5; 
-  integer ch_add = 0;
+  reg[5:0] order_mul = 5; 
+  reg[5:0] ch_mul = 0;
+  reg[5:0] order_add = 5; 
+  reg[5:0] ch_add = 0;
   
   /* Structural hazard handling */
   reg start_hazard_handling = 0;
-  integer haz_cnt = 0;
+  reg[5:0] haz_cnt = 0;
   
   /* Output conversion */
   reg start_output_conv = 0;
-  integer output_conv_cnt = 0;
-  
-  integer clk_cnt = 0;
+  reg[5:0] output_conv_cnt = 0;
   
   reg [31:0] ch15_adc_reg;
   reg [31:0] ch14_adc_reg;
@@ -854,6 +852,7 @@ module NLC_controller(
   end
   
   always@(*) begin
+    conv_2_input <= adder_output;
     if(start_output_conv) begin
     case(output_conv_cnt)
       3: ch0_x_lin <= conv_2_output;
@@ -885,7 +884,6 @@ module NLC_controller(
       norm_add_cnt = 0;
       norm_mul_cnt = 0;
       order_mul <= 5;
-      clk_cnt <= 0;
       haz_cnt = 0;
       output_conv_cnt <= 0;
       // set internal flags to 0
@@ -967,13 +965,10 @@ module NLC_controller(
     if(order_add==5&&ch_add==8) //hack
       start_hazard_handling <= 1;
       
-    if(order_add==1&&ch_add==9) begin
+    if(order_add==1&&ch_add==8) begin //hack
       start_output_conv <= 1;
       conv_2_srdyi <= 1;
     end
-    
-    if(start_output_conv)
-      conv_2_input <= adder_output;
       
     if(order_mul==5&&ch_mul==5)begin //hack
             start_main_loop_add <= 1; // start adder
