@@ -456,10 +456,10 @@ module NLC_controller(
 	 reg [31:0] adder_input_1_main;
 	 reg [31:0] adder_input_2_main;
 	 
-	 reg [31:0] mul_input_1_norm;
-	 reg [31:0] mul_input_2_norm;
-	 reg [31:0] mul_input_1_main;
-	 reg [31:0] mul_input_2_main;
+	 reg [31:0] multiplier_input_1_norm;
+	 reg [31:0] multiplier_input_2_norm;
+	 reg [31:0] multiplier_input_1_main;
+	 reg [31:0] multiplier_input_2_main;
 	 
 	 /* Multiplier Input */
 	 always@(*) begin
@@ -664,24 +664,24 @@ module NLC_controller(
   
   always@(*) begin
     if(start_normalize_add) begin
-      adder_input_1 <= conv_1_output;
+      adder_input_1_norm <= conv_1_output;
       case(norm_add_cnt)
-        0: adder_input_2 <= ch0_neg_mean;
-        1: adder_input_2 <= ch1_neg_mean;
-        2: adder_input_2 <= ch2_neg_mean;
-        3: adder_input_2 <= ch3_neg_mean;
-        4: adder_input_2 <= ch4_neg_mean;
-        5: adder_input_2 <= ch5_neg_mean;
-        6: adder_input_2 <= ch6_neg_mean;
-        7: adder_input_2 <= ch7_neg_mean;
-        8: adder_input_2 <= ch8_neg_mean;
-        9: adder_input_2 <= ch9_neg_mean;
-        10: adder_input_2 <= ch10_neg_mean;
-        11: adder_input_2 <= ch11_neg_mean;
-        12: adder_input_2 <= ch12_neg_mean;
-        13: adder_input_2 <= ch13_neg_mean;
-        14: adder_input_2 <= ch14_neg_mean;
-        15: adder_input_2 <= ch15_neg_mean;
+        0: adder_input_2_norm <= ch0_neg_mean;
+        1: adder_input_2_norm <= ch1_neg_mean;
+        2: adder_input_2_norm <= ch2_neg_mean;
+        3: adder_input_2_norm <= ch3_neg_mean;
+        4: adder_input_2_norm <= ch4_neg_mean;
+        5: adder_input_2_norm <= ch5_neg_mean;
+        6: adder_input_2_norm <= ch6_neg_mean;
+        7: adder_input_2_norm <= ch7_neg_mean;
+        8: adder_input_2_norm <= ch8_neg_mean;
+        9: adder_input_2_norm <= ch9_neg_mean;
+        10: adder_input_2_norm <= ch10_neg_mean;
+        11: adder_input_2_norm <= ch11_neg_mean;
+        12: adder_input_2_norm <= ch12_neg_mean;
+        13: adder_input_2_norm <= ch13_neg_mean;
+        14: adder_input_2_norm <= ch14_neg_mean;
+        15: adder_input_2_norm <= ch15_neg_mean;
         default: begin
             start_normalize_add <= 0;
             adder_srdyi <= 0;
@@ -703,24 +703,24 @@ module NLC_controller(
   
   always@(*) begin
     if(start_normalize_mul) begin
-        multiplier_input_1 <= adder_output;
+        multiplier_input_1_norm <= adder_output;
     case(norm_mul_cnt)
-      0: multiplier_input_2 <= ch0_recip_stdev;
-      1: multiplier_input_2 <= ch1_recip_stdev;
-      2: multiplier_input_2 <= ch2_recip_stdev;
-      3: multiplier_input_2 <= ch3_recip_stdev;
-      4: multiplier_input_2 <= ch4_recip_stdev;
-      5: multiplier_input_2 <= ch5_recip_stdev;
-      6: multiplier_input_2 <= ch6_recip_stdev;
-      7: multiplier_input_2 <= ch7_recip_stdev;
-      8: multiplier_input_2 <= ch8_recip_stdev;
-      9: multiplier_input_2 <= ch9_recip_stdev;
-      10: multiplier_input_2 <= ch10_recip_stdev;
-      11: multiplier_input_2 <= ch11_recip_stdev;
-      12: multiplier_input_2 <= ch12_recip_stdev;
-      13: multiplier_input_2 <= ch13_recip_stdev;
-      14: multiplier_input_2 <= ch14_recip_stdev;
-      15: multiplier_input_2 <= ch15_recip_stdev;
+      0: multiplier_input_2_norm <= ch0_recip_stdev;
+      1: multiplier_input_2_norm <= ch1_recip_stdev;
+      2: multiplier_input_2_norm <= ch2_recip_stdev;
+      3: multiplier_input_2_norm <= ch3_recip_stdev;
+      4: multiplier_input_2_norm <= ch4_recip_stdev;
+      5: multiplier_input_2_norm <= ch5_recip_stdev;
+      6: multiplier_input_2_norm <= ch6_recip_stdev;
+      7: multiplier_input_2_norm <= ch7_recip_stdev;
+      8: multiplier_input_2_norm <= ch8_recip_stdev;
+      9: multiplier_input_2_norm <= ch9_recip_stdev;
+      10: multiplier_input_2_norm <= ch10_recip_stdev;
+      11: multiplier_input_2_norm <= ch11_recip_stdev;
+      12: multiplier_input_2_norm <= ch12_recip_stdev;
+      13: multiplier_input_2_norm <= ch13_recip_stdev;
+      14: multiplier_input_2_norm <= ch14_recip_stdev;
+      15: multiplier_input_2_norm <= ch15_recip_stdev;
       default: start_normalize_mul <= 0;
     endcase
   end
@@ -834,138 +834,138 @@ module NLC_controller(
     if(order_mul == 5) begin
       case(ch_mul)
         0: begin 
-            multiplier_input_1 <= ch0_coeff_5;
-            multiplier_input_2 = ch0_norm;
+            multiplier_input_1_main <= ch0_coeff_5;
+            multiplier_input_2_main = ch0_norm;
            end
         1: begin 
-            multiplier_input_1 <= ch1_coeff_5;
-            multiplier_input_2 = ch1_norm;
+            multiplier_input_1_main <= ch1_coeff_5;
+            multiplier_input_2_main = ch1_norm;
            end
         2: begin 
-            multiplier_input_1 <= ch2_coeff_5;
-            multiplier_input_2 = ch2_norm;
+            multiplier_input_1_main <= ch2_coeff_5;
+            multiplier_input_2_main = ch2_norm;
            end
         3: begin 
-            multiplier_input_1 <= ch3_coeff_5;
-            multiplier_input_2 = ch3_norm;
+            multiplier_input_1_main <= ch3_coeff_5;
+            multiplier_input_2_main = ch3_norm;
            end
         4: begin 
-            multiplier_input_1 <= ch4_coeff_5;
-            multiplier_input_2 = ch4_norm;
+            multiplier_input_1_main <= ch4_coeff_5;
+            multiplier_input_2_main = ch4_norm;
            end
         5: begin 
-            multiplier_input_1 <= ch5_coeff_5;
-            multiplier_input_2 = ch5_norm;
+            multiplier_input_1_main <= ch5_coeff_5;
+            multiplier_input_2_main = ch5_norm;
            end
         6: begin 
-            multiplier_input_1 <= ch6_coeff_5;
-            multiplier_input_2 = ch6_norm;
+            multiplier_input_1_main <= ch6_coeff_5;
+            multiplier_input_2_main = ch6_norm;
             start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
            end
         7: begin 
-            multiplier_input_1 <= ch7_coeff_5;
-            multiplier_input_2 = ch7_norm;
+            multiplier_input_1_main <= ch7_coeff_5;
+            multiplier_input_2_main = ch7_norm;
            end
         8: begin 
-            multiplier_input_1 <= ch8_coeff_5;
-            multiplier_input_2 = ch8_norm;
+            multiplier_input_1_main <= ch8_coeff_5;
+            multiplier_input_2_main = ch8_norm;
            end
         9: begin 
-            multiplier_input_1 <= ch9_coeff_5;
-            multiplier_input_2 = ch9_norm;
+            multiplier_input_1_main <= ch9_coeff_5;
+            multiplier_input_2_main = ch9_norm;
            end
         10: begin 
-             multiplier_input_1 <= ch10_coeff_5;
-             multiplier_input_2 = ch10_norm;
+             multiplier_input_1_main <= ch10_coeff_5;
+             multiplier_input_2_main = ch10_norm;
             end
         11: begin 
-             multiplier_input_1 <= ch11_coeff_5;
-             multiplier_input_2 = ch11_norm;
+             multiplier_input_1_main <= ch11_coeff_5;
+             multiplier_input_2_main = ch11_norm;
             end
         12: begin 
-             multiplier_input_1 <= ch12_coeff_5;
-             multiplier_input_2 = ch12_norm;
+             multiplier_input_1_main <= ch12_coeff_5;
+             multiplier_input_2_main = ch12_norm;
             end
         13: begin 
-             multiplier_input_1 <= ch13_coeff_5;
-             multiplier_input_2 = ch13_norm;
+             multiplier_input_1_main <= ch13_coeff_5;
+             multiplier_input_2_main = ch13_norm;
             end
         14: begin 
-             multiplier_input_1 <= ch14_coeff_5;
-             multiplier_input_2 = ch14_norm;
+             multiplier_input_1_main <= ch14_coeff_5;
+             multiplier_input_2_main = ch14_norm;
             end
         15: begin 
-             multiplier_input_1 <= ch15_coeff_5;
-             multiplier_input_2 = ch15_norm;
+             multiplier_input_1_main <= ch15_coeff_5;
+             multiplier_input_2_main = ch15_norm;
             end
       endcase
     end
     else begin
       case(ch_mul)
         0: begin
-            multiplier_input_1 <= ch0_haz_reg;
-            multiplier_input_2 = ch0_norm;
+            multiplier_input_1_main <= ch0_haz_reg;
+            multiplier_input_2_main = ch0_norm;
            end
         1: begin
-            multiplier_input_1 <= ch1_haz_reg;
-            multiplier_input_2 = ch1_norm;
+            multiplier_input_1_main <= ch1_haz_reg;
+            multiplier_input_2_main = ch1_norm;
            end
         2: begin
-            multiplier_input_1 <= ch2_haz_reg;
-            multiplier_input_2 = ch2_norm;
+            multiplier_input_1_main <= ch2_haz_reg;
+            multiplier_input_2_main = ch2_norm;
            end
         3: begin
-            multiplier_input_1 <= ch3_haz_reg;
-            multiplier_input_2 = ch3_norm;
+            multiplier_input_1_main <= ch3_haz_reg;
+            multiplier_input_2_main = ch3_norm;
            end
         4: begin
-            multiplier_input_1 <= ch4_haz_reg;
-            multiplier_input_2 = ch4_norm;
+            multiplier_input_1_main <= ch4_haz_reg;
+            multiplier_input_2_main = ch4_norm;
            end
         5: begin
-            multiplier_input_1 <= ch5_haz_reg;
-            multiplier_input_2 = ch5_norm;
+            multiplier_input_1_main <= ch5_haz_reg;
+            multiplier_input_2_main = ch5_norm;
            end
         6: begin
-            multiplier_input_1 <= ch6_haz_reg;
-            multiplier_input_2 = ch6_norm;
+            multiplier_input_1_main <= ch6_haz_reg;
+            multiplier_input_2_main = ch6_norm;
            end
         7: begin
-            multiplier_input_1 <= ch7_haz_reg;
-            multiplier_input_2 = ch7_norm;
+            multiplier_input_1_main <= ch7_haz_reg;
+            multiplier_input_2_main = ch7_norm;
            end
         8: begin
-            multiplier_input_1 <= ch8_haz_reg;
-            multiplier_input_2 = ch8_norm;
+            multiplier_input_1_main <= ch8_haz_reg;
+            multiplier_input_2_main = ch8_norm;
            end
         9: begin
-            multiplier_input_1 <= ch9_haz_reg;
-            multiplier_input_2 = ch9_norm;
+            multiplier_input_1_main <= ch9_haz_reg;
+            multiplier_input_2_main = ch9_norm;
            end
         10: begin
-             multiplier_input_1 <= ch10_haz_reg;
-             multiplier_input_2 = ch10_norm;
+             multiplier_input_1_main <= ch10_haz_reg;
+             multiplier_input_2_main = ch10_norm;
             end
         11: begin
-             multiplier_input_1 <= ch11_haz_reg;
-             multiplier_input_2 = ch11_norm;
+             multiplier_input_1_main <= ch11_haz_reg;
+             multiplier_input_2_main = ch11_norm;
             end
         12: begin
-             multiplier_input_1 <= ch12_haz_reg;
-             multiplier_input_2 = ch12_norm;
+             multiplier_input_1_main <= ch12_haz_reg;
+             multiplier_input_2_main = ch12_norm;
             end
         13: begin
-             multiplier_input_1 <= ch13_haz_reg;
-             multiplier_input_2 = ch13_norm;
+             multiplier_input_1_main <= ch13_haz_reg;
+             multiplier_input_2_main = ch13_norm;
             end
         14: begin
-             multiplier_input_1 <= ch14_haz_reg;
-             multiplier_input_2 = ch14_norm;
+             multiplier_input_1_main <= ch14_haz_reg;
+             multiplier_input_2_main = ch14_norm;
             end
         15: begin
-             multiplier_input_1 <= ch15_haz_reg;
-             multiplier_input_2 = ch15_norm;
+             multiplier_input_1_main <= ch15_haz_reg;
+             multiplier_input_2_main = ch15_norm;
             end
       endcase
     end
@@ -974,110 +974,110 @@ module NLC_controller(
   
   always@(*) begin // TODO: find some way to trigger this
   if(start_main_loop_add) begin
-    adder_input_2 <= multiplier_output;
+    adder_input_2_main <= multiplier_output;
     case(order_add)
         5: begin
              case(ch_add)
-               0: adder_input_1 <= ch0_coeff_4; 
-               1: adder_input_1 <= ch1_coeff_4;
-               2: adder_input_1 <= ch2_coeff_4; 
-               3: adder_input_1 <= ch3_coeff_4;
-               4: adder_input_1 <= ch4_coeff_4; 
-               5: adder_input_1 <= ch5_coeff_4;
-               6: adder_input_1 <= ch6_coeff_4; 
-               7: adder_input_1 <= ch7_coeff_4;
-               8: adder_input_1 <= ch8_coeff_4; 
-               9: adder_input_1 <= ch9_coeff_4;
-               10: adder_input_1 <= ch10_coeff_4; 
-               11: adder_input_1 <= ch11_coeff_4;
-               12: adder_input_1 <= ch12_coeff_4; 
-               13: adder_input_1 <= ch13_coeff_4;
-               14: adder_input_1 <= ch14_coeff_4; 
-               15: adder_input_1 <= ch15_coeff_4;
+               0: adder_input_1_main <= ch0_coeff_4; 
+               1: adder_input_1_main <= ch1_coeff_4;
+               2: adder_input_1_main <= ch2_coeff_4; 
+               3: adder_input_1_main <= ch3_coeff_4;
+               4: adder_input_1_main <= ch4_coeff_4; 
+               5: adder_input_1_main <= ch5_coeff_4;
+               6: adder_input_1_main <= ch6_coeff_4; 
+               7: adder_input_1_main <= ch7_coeff_4;
+               8: adder_input_1_main <= ch8_coeff_4; 
+               9: adder_input_1_main <= ch9_coeff_4;
+               10: adder_input_1_main <= ch10_coeff_4; 
+               11: adder_input_1_main <= ch11_coeff_4;
+               12: adder_input_1_main <= ch12_coeff_4; 
+               13: adder_input_1_main <= ch13_coeff_4;
+               14: adder_input_1_main <= ch14_coeff_4; 
+               15: adder_input_1_main <= ch15_coeff_4;
              endcase
            end
         4: begin
              case(ch_add)
-               0: adder_input_1 <= ch0_coeff_3; 
-               1: adder_input_1 <= ch1_coeff_3;
-               2: adder_input_1 <= ch2_coeff_3; 
-               3: adder_input_1 <= ch3_coeff_3;
-               4: adder_input_1 <= ch4_coeff_3; 
-               5: adder_input_1 <= ch5_coeff_3;
-               6: adder_input_1 <= ch6_coeff_3; 
-               7: adder_input_1 <= ch7_coeff_3;
-               8: adder_input_1 <= ch8_coeff_3; 
-               9: adder_input_1 <= ch9_coeff_3;
-               10: adder_input_1 <= ch10_coeff_3; 
-               11: adder_input_1 <= ch11_coeff_3;
-               12: adder_input_1 <= ch12_coeff_3; 
-               13: adder_input_1 <= ch13_coeff_3;
-               14: adder_input_1 <= ch14_coeff_3; 
-               15: adder_input_1 <= ch15_coeff_3;
+               0: adder_input_1_main <= ch0_coeff_3; 
+               1: adder_input_1_main <= ch1_coeff_3;
+               2: adder_input_1_main <= ch2_coeff_3; 
+               3: adder_input_1_main <= ch3_coeff_3;
+               4: adder_input_1_main <= ch4_coeff_3; 
+               5: adder_input_1_main <= ch5_coeff_3;
+               6: adder_input_1_main <= ch6_coeff_3; 
+               7: adder_input_1_main <= ch7_coeff_3;
+               8: adder_input_1_main <= ch8_coeff_3; 
+               9: adder_input_1_main <= ch9_coeff_3;
+               10: adder_input_1_main <= ch10_coeff_3; 
+               11: adder_input_1_main <= ch11_coeff_3;
+               12: adder_input_1_main <= ch12_coeff_3; 
+               13: adder_input_1_main <= ch13_coeff_3;
+               14: adder_input_1_main <= ch14_coeff_3; 
+               15: adder_input_1_main <= ch15_coeff_3;
              endcase
            end
         3: begin
              case(ch_add)
-               0: adder_input_1 <= ch0_coeff_2; 
-               1: adder_input_1 <= ch1_coeff_2;
-               2: adder_input_1 <= ch2_coeff_2; 
-               3: adder_input_1 <= ch3_coeff_2;
-               4: adder_input_1 <= ch4_coeff_2; 
-               5: adder_input_1 <= ch5_coeff_2;
-               6: adder_input_1 <= ch6_coeff_2; 
-               7: adder_input_1 <= ch7_coeff_2;
-               8: adder_input_1 <= ch8_coeff_2; 
-               9: adder_input_1 <= ch9_coeff_2;
-               10: adder_input_1 <= ch10_coeff_2; 
-               11: adder_input_1 <= ch11_coeff_2;
-               12: adder_input_1 <= ch12_coeff_2; 
-               13: adder_input_1 <= ch13_coeff_2;
-               14: adder_input_1 <= ch14_coeff_2; 
-               15: adder_input_1 <= ch15_coeff_2;
+               0: adder_input_1_main <= ch0_coeff_2; 
+               1: adder_input_1_main <= ch1_coeff_2;
+               2: adder_input_1_main <= ch2_coeff_2; 
+               3: adder_input_1_main <= ch3_coeff_2;
+               4: adder_input_1_main <= ch4_coeff_2; 
+               5: adder_input_1_main <= ch5_coeff_2;
+               6: adder_input_1_main <= ch6_coeff_2; 
+               7: adder_input_1_main <= ch7_coeff_2;
+               8: adder_input_1_main <= ch8_coeff_2; 
+               9: adder_input_1_main <= ch9_coeff_2;
+               10: adder_input_1_main <= ch10_coeff_2; 
+               11: adder_input_1_main <= ch11_coeff_2;
+               12: adder_input_1_main <= ch12_coeff_2; 
+               13: adder_input_1_main <= ch13_coeff_2;
+               14: adder_input_1_main <= ch14_coeff_2; 
+               15: adder_input_1_main <= ch15_coeff_2;
              endcase
            end
         2: begin
              case(ch_add)
-               0: adder_input_1 <= ch0_coeff_1; 
-               1: adder_input_1 <= ch1_coeff_1;
-               2: adder_input_1 <= ch2_coeff_1; 
-               3: adder_input_1 <= ch3_coeff_1;
-               4: adder_input_1 <= ch4_coeff_1; 
-               5: adder_input_1 <= ch5_coeff_1;
-               6: adder_input_1 <= ch6_coeff_1;
-               7: adder_input_1 <= ch7_coeff_1;
-               8: adder_input_1 <= ch8_coeff_1; 
-               9: adder_input_1 <= ch9_coeff_1;
-               10: adder_input_1 <= ch10_coeff_1; 
-               11: adder_input_1 <= ch11_coeff_1;
-               12: adder_input_1 <= ch12_coeff_1; 
-               13: adder_input_1 <= ch13_coeff_1;
-               14: adder_input_1 <= ch14_coeff_1; 
-               15: adder_input_1 <= ch15_coeff_1;
+               0: adder_input_1_main <= ch0_coeff_1; 
+               1: adder_input_1_main <= ch1_coeff_1;
+               2: adder_input_1_main <= ch2_coeff_1; 
+               3: adder_input_1_main <= ch3_coeff_1;
+               4: adder_input_1_main <= ch4_coeff_1; 
+               5: adder_input_1_main <= ch5_coeff_1;
+               6: adder_input_1_main <= ch6_coeff_1;
+               7: adder_input_1_main <= ch7_coeff_1;
+               8: adder_input_1_main <= ch8_coeff_1; 
+               9: adder_input_1_main <= ch9_coeff_1;
+               10: adder_input_1_main <= ch10_coeff_1; 
+               11: adder_input_1_main <= ch11_coeff_1;
+               12: adder_input_1_main <= ch12_coeff_1; 
+               13: adder_input_1_main <= ch13_coeff_1;
+               14: adder_input_1_main <= ch14_coeff_1; 
+               15: adder_input_1_main <= ch15_coeff_1;
              endcase 
            end
            1: begin
              case(ch_add)
-               0: adder_input_1 <= ch0_coeff_0; 
-               1: adder_input_1 <= ch1_coeff_0;
-               2: adder_input_1 <= ch2_coeff_0; 
-               3: adder_input_1 <= ch3_coeff_0;
-               4: adder_input_1 <= ch4_coeff_0; 
-               5: adder_input_1 <= ch5_coeff_0;
-               6: adder_input_1 <= ch6_coeff_0; 
-               7: adder_input_1 <= ch7_coeff_0;
-               8: adder_input_1 <= ch8_coeff_0; 
+               0: adder_input_1_main <= ch0_coeff_0; 
+               1: adder_input_1_main <= ch1_coeff_0;
+               2: adder_input_1_main <= ch2_coeff_0; 
+               3: adder_input_1_main <= ch3_coeff_0;
+               4: adder_input_1_main <= ch4_coeff_0; 
+               5: adder_input_1_main <= ch5_coeff_0;
+               6: adder_input_1_main <= ch6_coeff_0; 
+               7: adder_input_1_main <= ch7_coeff_0;
+               8: adder_input_1_main <= ch8_coeff_0; 
                9: begin
-                  adder_input_1 <= ch9_coeff_0;
+                  adder_input_1_main <= ch9_coeff_0;
                   start_output_conv<= 1; // start final conversion
                   conv_2_srdyi <= 1;
                 end
-               10: adder_input_1 <= ch10_coeff_0; 
-               11: adder_input_1 <= ch11_coeff_0;
-               12: adder_input_1 <= ch12_coeff_0; 
-               13: adder_input_1 <= ch13_coeff_0;
-               14: adder_input_1 <= ch14_coeff_0; 
-               15: adder_input_1 <= ch15_coeff_0;
+               10: adder_input_1_main <= ch10_coeff_0; 
+               11: adder_input_1_main <= ch11_coeff_0;
+               12: adder_input_1_main <= ch12_coeff_0; 
+               13: adder_input_1_main <= ch13_coeff_0;
+               14: adder_input_1_main <= ch14_coeff_0; 
+               15: adder_input_1_main <= ch15_coeff_0;
              endcase
            end
     endcase
