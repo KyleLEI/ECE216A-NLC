@@ -969,13 +969,13 @@ module NLC_controller(
       
     if(order_add==1&&ch_add==9) begin
       start_output_conv <= 1;
-      conv_2_input <= adder_output;
       conv_2_srdyi <= 1;
     end
     
-
+    if(start_output_conv)
+      conv_2_input <= adder_output;
       
-    if(order_mul==5&&ch_mul==6)begin
+    if(order_mul==5&&ch_mul==5)begin //hack
             start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
           end
