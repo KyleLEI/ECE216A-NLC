@@ -260,15 +260,6 @@ module NLC_controller(
   reg start_output_conv = 0;
   integer output_conv_cnt = 0;
   
-  /* Next */
-  reg start_normalize_add_next = 0;
-  reg start_normalize_mul_next = 0;
-  reg start_store_norm_next = 0;
-  reg start_main_loop_mul_next = 0;
-  reg start_main_loop_add_next = 0;
-  reg start_hazard_handling_next = 0;
-  reg start_output_conv_next = 0;
-  
   integer clk_cnt = 0;
   
   reg [31:0] ch15_adc_reg;
@@ -888,22 +879,22 @@ module NLC_controller(
   always@(posedge clk) begin //TODO: move state changes here
     if(rst) begin
       // set output to 0
-      //srdyo <= 0;
+      srdyo <= 0;
       // initialize counters
-      //conv_cnt <= 0;
-      //norm_add_cnt <= 0;
-      //norm_mul_cnt <= 0;
-      //order_mul <= 5;
-      //clk_cnt <= 0;
-      //haz_cnt <= 0;
-      //output_conv_cnt <= 0;
+      conv_cnt <= 0;
+      norm_add_cnt <= 0;
+      norm_mul_cnt <= 0;
+      order_mul <= 5;
+      clk_cnt <= 0;
+      haz_cnt <= 0;
+      output_conv_cnt <= 0;
       // set internal flags to 0
-      //start_conv <= 0;
-      //start_normalize_add <= 0;
-      //start_normalize_mul <= 0;
-      //start_store_norm <= 0;
-      //start_main_loop_mul <= 0;
-      //start_main_loop_add <= 0;
+      start_conv <= 0;
+      start_normalize_add <= 0;
+      start_normalize_mul <= 0;
+      start_store_norm <= 0;
+      start_main_loop_mul <= 0;
+      start_main_loop_add <= 0;
       // set internal signals to 0
       adder_srdyi <= 0;
       multiplier_srdyi <= 0;
@@ -917,10 +908,10 @@ module NLC_controller(
     if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
     if(start_store_norm) store_cnt <= store_cnt + 1;  
     if(start_hazard_handling) haz_cnt <= haz_cnt + 1; 
-    if(haz_cnt>15) haz_cnt <= 0; 
+    if(haz_cnt == 15) haz_cnt <= 0; 
       if(start_main_loop_mul) begin
       ch_mul <= ch_mul + 1;
-      if(ch_mul > 15) begin
+      if(ch_mul == 15) begin
         order_mul <= order_mul - 1;
         ch_mul <= 0;
       end
@@ -931,7 +922,7 @@ module NLC_controller(
     
     if(start_main_loop_add) begin
       ch_add <= ch_add + 1;
-      if(ch_add > 15) begin
+      if(ch_add == 15) begin
         order_add <= order_add - 1;
         ch_add <= 0;
       end
