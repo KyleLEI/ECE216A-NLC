@@ -230,35 +230,35 @@ module NLC_controller(
   
   /* Input conversion */
   reg start_conv = 0;
-	reg[5:0] conv_cnt = 0;
+	reg[4:0] conv_cnt = 0;
 	
 	/* Normalization Addition */
-  reg[5:0] norm_add_cnt = 0;
+  reg[4:0] norm_add_cnt = 0;
   reg start_normalize_add = 0;
   
   /* Normalization multiplication */
-  reg[5:0] norm_mul_cnt = 0;
+  reg[4:0] norm_mul_cnt = 0;
   reg start_normalize_mul = 0;
   
   /* Normalization output storage */
   reg start_store_norm = 0;
-  reg[5:0] store_cnt = 0;
+  reg[4:0] store_cnt = 0;
   
   /* Main computation loop */
   reg start_main_loop_mul = 0;
   reg start_main_loop_add = 0;
-  reg[5:0] order_mul = 5; 
-  reg[5:0] ch_mul = 0;
-  reg[5:0] order_add = 5; 
-  reg[5:0] ch_add = 0;
+  reg[2:0] order_mul = 5; 
+  reg[3:0] ch_mul = 0;
+  reg[2:0] order_add = 5; 
+  reg[3:0] ch_add = 0;
   
   /* Structural hazard handling */
   reg start_hazard_handling = 0;
-  reg[5:0] haz_cnt = 0;
+  reg[4:0] haz_cnt = 0;
   
   /* Output conversion */
   reg start_output_conv = 0;
-  reg[5:0] output_conv_cnt = 0;
+  reg[4:0] output_conv_cnt = 0;
   
   reg [31:0] ch15_adc_reg;
   reg [31:0] ch14_adc_reg;
@@ -884,6 +884,9 @@ module NLC_controller(
       norm_add_cnt = 0;
       norm_mul_cnt = 0;
       order_mul <= 5;
+      ch_mul <= 0;
+      order_add <= 5;
+      ch_add <= 0;
       haz_cnt = 0;
       output_conv_cnt <= 0;
       // set internal flags to 0
@@ -911,7 +914,7 @@ module NLC_controller(
       ch_mul <= ch_mul + 1;
       if(ch_mul == 15) begin
         order_mul <= order_mul - 1;
-        ch_mul <= 0;
+        //ch_mul <= 0;
       end
       if(order_mul == 0) begin // STOP multiplier
         start_main_loop_mul <= 0;
@@ -922,7 +925,7 @@ module NLC_controller(
       ch_add <= ch_add + 1;
       if(ch_add == 15) begin
         order_add <= order_add - 1;
-        ch_add <= 0;
+        //ch_add <= 0;
       end
       if(order_add == 0) begin // STOP multiplier
         start_main_loop_add <= 0;
