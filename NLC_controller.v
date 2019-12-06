@@ -903,11 +903,11 @@ module NLC_controller(
       
     end
     
-    if(start_conv) conv_cnt <= conv_cnt + 1;
-    if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
-    if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
-    if(start_store_norm) store_cnt <= store_cnt + 1;  
-    if(start_hazard_handling) haz_cnt <= haz_cnt + 1; 
+    if(start_conv) conv_cnt = conv_cnt + 1;
+    if(start_normalize_add) norm_add_cnt = norm_add_cnt + 1;
+    if(start_normalize_mul) norm_mul_cnt = norm_mul_cnt + 1;
+    if(start_store_norm) store_cnt = store_cnt + 1;  
+    if(start_hazard_handling) haz_cnt = haz_cnt + 1; 
     if(haz_cnt == 15) haz_cnt <= 0; 
       if(start_main_loop_mul) begin
       ch_mul <= ch_mul + 1;
@@ -934,12 +934,12 @@ module NLC_controller(
     if(start_output_conv) output_conv_cnt <= output_conv_cnt + 1;
       
       //TODO: hardcode for now, to be fixed later
-    if(conv_cnt == 16) begin
+    if(conv_cnt == 15) begin
       start_conv <= 0;
       conv_1_srdyi <= 0;
     end
     
-    if(conv_cnt == 2) begin
+    if(conv_cnt == 1) begin
       start_normalize_add <= 1;
       adder_srdyi <= 1;
     end
@@ -972,7 +972,7 @@ module NLC_controller(
       start_store_norm <= 0;
     end
       
-    if(order_mul==5&&ch_mul==6)begin
+    if(order_mul==5&&ch_mul==9)begin
       
             start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
