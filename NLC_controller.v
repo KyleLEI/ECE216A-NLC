@@ -957,28 +957,29 @@ module NLC_controller(
       start_store_norm <= 1;
     if(norm_mul_cnt == 16)
       start_normalize_mul <= 0;
+      
+    if(store_cnt == 15) begin
+      start_main_loop_mul <= 1;
+      start_store_norm <= 0;
+    end
     
-    if(order_add==5&&ch_add==9)
+    if(order_add==5&&ch_add==8)
       start_hazard_handling <= 1;
       
     if(order_add==1&&ch_add==9) begin
       start_output_conv <= 1;
       conv_2_input <= adder_output;
-    conv_2_srdyi <= 1;
+      conv_2_srdyi <= 1;
     end
     
-    if(store_cnt == 16) begin
-      start_main_loop_mul <= 1;
-      start_store_norm <= 0;
-    end
+
       
-    if(order_mul==5&&ch_mul==9)begin
-      
+    if(order_mul==5&&ch_mul==5)begin
             start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
           end
           
-    if(output_conv_cnt==19) begin
+    if(output_conv_cnt==18) begin
         srdyo <= 1;
         start_output_conv <= 0;
       end
