@@ -934,12 +934,12 @@ module NLC_controller(
     if(start_output_conv) output_conv_cnt <= output_conv_cnt + 1;
       
       //TODO: hardcode for now, to be fixed later
-    if(conv_cnt == 15) begin
+    if(conv_cnt == 16) begin
       start_conv <= 0;
       conv_1_srdyi <= 0;
     end
     
-    if(conv_cnt == 1) begin
+    if(conv_cnt == 2) begin
       start_normalize_add <= 1;
       adder_srdyi <= 1;
     end
@@ -951,19 +951,20 @@ module NLC_controller(
       
     if(norm_add_cnt == 16)begin
             start_normalize_add <= 0;
-            adder_srdyi <= 0;
-    end
-    if(norm_mul_cnt == 6)
-      start_store_norm <= 1;
-    if(norm_mul_cnt == 16)
-      start_normalize_mul <= 0;
-      
-    if(store_cnt == 15) begin
-      start_main_loop_mul <= 1;
-      start_store_norm <= 0;
+            //adder_srdyi <= 0;
     end
     
-    if(order_add==5&&ch_add==8)
+    if(norm_mul_cnt == 6)
+      start_store_norm <= 1;
+    if(store_cnt == 16)
+      start_store_norm <= 0;
+      
+    if(norm_mul_cnt == 16) begin
+      start_main_loop_mul <= 1;
+      start_normalize_mul <= 0;
+    end
+    
+    if(order_add==5&&ch_add==8) //hack
       start_hazard_handling <= 1;
       
     if(order_add==1&&ch_add==9) begin
@@ -974,12 +975,12 @@ module NLC_controller(
     
 
       
-    if(order_mul==5&&ch_mul==5)begin
+    if(order_mul==5&&ch_mul==6)begin
             start_main_loop_add <= 1; // start adder
             adder_srdyi <= 1;
           end
           
-    if(output_conv_cnt==18) begin
+    if(output_conv_cnt==19) begin
         srdyo <= 1;
         start_output_conv <= 0;
       end
