@@ -260,35 +260,17 @@ module NLC_controller(
   reg start_output_conv = 0;
   integer output_conv_cnt = 0;
   
+  /* Next */
+  reg start_conv_next = 0;
+  reg start_normalize_add_next = 0;
+  reg start_normalize_mul_next = 0;
+  reg start_store_norm_next = 0;
+  reg start_main_loop_mul_next = 0;
+  reg start_main_loop_add_next = 0;
+  reg start_hazard_handling_next = 0;
+  reg start_output_conv_next = 0;
+  
   integer clk_cnt = 0;
-  always@(posedge clk) begin
-    if(rst) begin
-      // set output to 0
-      //srdyo <= 0;
-      // initialize counters
-      conv_cnt <= 0;
-      norm_add_cnt <= 0;
-      norm_mul_cnt <= 0;
-      order_mul <= 5;
-      clk_cnt <= 0;
-      haz_cnt <= 0;
-      output_conv_cnt = 0;
-      // set internal flags to 0
-      start_conv <= 0;
-      start_normalize_add = 0;
-      start_normalize_mul = 0;
-      start_store_norm = 0;
-      start_main_loop_mul = 0;
-      start_main_loop_add = 0;
-      // set internal signals to 0
-      adder_srdyi <= 0;
-      multiplier_srdyi <= 0;
-      //conv_1_srdyi <= 0;
-      //conv_2_srdyi <= 0;
-      
-    end
-    clk_cnt <= clk_cnt + 1;
-  end
   
   reg [31:0] ch15_adc_reg;
   reg [31:0] ch14_adc_reg;
@@ -463,15 +445,15 @@ module NLC_controller(
 	 
 	 /* Multiplier and Adder Input */
 	 always@(*) begin
-	   adder_input_1 <= start_norm_add ? adder_input_1_norm : adder_input_1_main;
-	   adder_input_2 <= start_norm_add ? adder_input_2_norm : adder_input_2_main;
-	   multiplier_input_1 <= start_norm_mul ? mul_input_1_norm : mul_input_1_main;
-	   multiplier_input_2 <= start_norm_mul ? mul_input_2_norm : mul_input_2_main;
+	   adder_input_1 <= start_normalize_add ? adder_input_1_norm : adder_input_1_main;
+	   adder_input_2 <= start_normalize_add ? adder_input_2_norm : adder_input_2_main;
+	   multiplier_input_1 <= start_normalize_mul ? multiplier_input_1_norm : multiplier_input_1_main;
+	   multiplier_input_2 <= start_normalize_mul ? multiplier_input_2_norm : multiplier_input_2_main;
 	 end
 	
   always@(posedge srdyi) begin
     conv_1_srdyi <= 1;
-    start_conv <= 1;
+    start_conv_next <= 1;
     ch0_adc_reg <= ch0_x_adc_in;
     ch0_recip_stdev<=ch0_recip_stdev_in;
     ch0_neg_mean <= ch0_neg_mean_in;
@@ -652,14 +634,11 @@ module NLC_controller(
      14: conv_1_input <= ch14_adc_reg;
      15: conv_1_input <= ch15_adc_reg;
      default: begin
-           start_conv <= 0;
+           start_conv_next <= 0;
            conv_cnt = 0;
          end
     endcase
   end
-  
-  always@(posedge clk) if(start_conv) conv_cnt <= conv_cnt + 1;
-  
 
   always@(posedge conv_1_srdyo) begin
     start_normalize_add <= 1;
@@ -694,8 +673,6 @@ module NLC_controller(
     end
   end
   
-  always@(posedge clk) if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
-  
   /* Normalization adder output; normalization multiplier input */
   
   always@(posedge adder_srdyo) begin
@@ -729,8 +706,6 @@ module NLC_controller(
     endcase
   end
   end
-  
-  always@(posedge clk) if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
   
   /* Store all normalized x */
   reg [31:0] ch15_norm;
@@ -778,8 +753,6 @@ module NLC_controller(
     endcase
   end
   
-  always@(posedge clk) if(start_store_norm) store_cnt <= store_cnt + 1;  
-  
   /* Handle structural hazard */
   
   reg [31:0] ch15_haz_reg;
@@ -823,11 +796,6 @@ module NLC_controller(
       15: ch15_haz_reg <= adder_output;
     endcase
   end
-  end
-  
-  always@(posedge clk) begin 
-    if(start_hazard_handling) haz_cnt = haz_cnt + 1; 
-    if(haz_cnt>15) haz_cnt = 0; 
   end
   
   /* Normalization multiplier output, main loop input */
@@ -1088,30 +1056,6 @@ module NLC_controller(
   end
   end
   
-  always@(posedge clk) begin
-    if(start_main_loop_mul) begin
-      ch_mul = ch_mul + 1;
-      if(ch_mul > 15) begin
-        order_mul = order_mul - 1;
-        ch_mul = 0;
-      end
-      if(order_mul == 0) begin // STOP multiplier
-        start_main_loop_mul <= 0;
-      end
-    end
-    
-    if(start_main_loop_add) begin
-      ch_add = ch_add + 1;
-      if(ch_add > 15) begin
-        order_add = order_add - 1;
-        ch_add = 0;
-      end
-      if(order_add == 0) begin // STOP multiplier
-        start_main_loop_add <= 0;
-      end
-    end
- end
-  
   /* Convert back to FP - output */
   always@(posedge start_output_conv) begin
     conv_2_input <= adder_output;
@@ -1145,7 +1089,67 @@ module NLC_controller(
   end
   end
   
-  always@(posedge clk) if(start_output_conv) output_conv_cnt = output_conv_cnt + 1;
+  always@(posedge clk) begin
+    if(rst) begin
+      // set output to 0
+      //srdyo <= 0;
+      // initialize counters
+      conv_cnt <= 0;
+      norm_add_cnt <= 0;
+      norm_mul_cnt <= 0;
+      order_mul <= 5;
+      clk_cnt <= 0;
+      haz_cnt <= 0;
+      output_conv_cnt <= 0;
+      // set internal flags to 0
+      start_conv <= 0;
+      start_normalize_add <= 0;
+      start_normalize_mul <= 0;
+      start_store_norm <= 0;
+      start_main_loop_mul <= 0;
+      start_main_loop_add <= 0;
+      // set internal signals to 0
+      adder_srdyi <= 0;
+      multiplier_srdyi <= 0;
+      //conv_1_srdyi <= 0;
+      //conv_2_srdyi <= 0;
+      
+    end
+    else begin
+      start_conv <= start_conv_next;
+    end
+    
+    if(start_conv) conv_cnt <= conv_cnt + 1;
+    if(start_normalize_add) norm_add_cnt <= norm_add_cnt + 1;
+    if(start_normalize_mul) norm_mul_cnt <= norm_mul_cnt + 1;
+    if(start_store_norm) store_cnt <= store_cnt + 1;  
+    if(start_hazard_handling) haz_cnt <= haz_cnt + 1; 
+    if(haz_cnt>15) haz_cnt <= 0; 
+      if(start_main_loop_mul) begin
+      ch_mul <= ch_mul + 1;
+      if(ch_mul > 15) begin
+        order_mul <= order_mul - 1;
+        ch_mul <= 0;
+      end
+      if(order_mul == 0) begin // STOP multiplier
+        start_main_loop_mul <= 0;
+      end
+    end
+    
+    if(start_main_loop_add) begin
+      ch_add <= ch_add + 1;
+      if(ch_add > 15) begin
+        order_add <= order_add - 1;
+        ch_add <= 0;
+      end
+      if(order_add == 0) begin // STOP multiplier
+        start_main_loop_add <= 0;
+      end
+    end
+    
+    if(start_output_conv) output_conv_cnt <= output_conv_cnt + 1;
+      
+  end
 
 endmodule 
 	
