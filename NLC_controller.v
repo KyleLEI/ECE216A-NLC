@@ -491,10 +491,6 @@ module NLC_controller(
         13: adder_input_2_norm <= ch13_neg_mean;
         14: adder_input_2_norm <= ch14_neg_mean;
         15: adder_input_2_norm <= ch15_neg_mean;
-        default: begin
-            start_normalize_add <= 0;
-            adder_srdyi <= 0;
-        end 
     endcase//TODO: turn off adder until needed in main loop
     end
   end
@@ -521,7 +517,6 @@ module NLC_controller(
       13: multiplier_input_2_norm <= ch13_recip_stdev;
       14: multiplier_input_2_norm <= ch14_recip_stdev;
       15: multiplier_input_2_norm <= ch15_recip_stdev;
-      default: start_normalize_mul <= 0;
     endcase
   end
   end
@@ -544,9 +539,7 @@ module NLC_controller(
   reg [31:0] ch1_norm;
   reg [31:0] ch0_norm;
   
-  always@(posedge multiplier_srdyo) begin
-    if(start_normalize_mul) start_store_norm <= 1;
-  end
+
     
   /* Store multiplier results in registers for future use */
   always@(*) begin
@@ -567,8 +560,6 @@ module NLC_controller(
       13: ch13_norm <= multiplier_output;
       14: ch14_norm <= multiplier_output;
       15: ch15_norm <= multiplier_output;
-      16: start_main_loop_mul <= 1;
-      default: start_store_norm <= 0;
     endcase
   end
   
@@ -590,10 +581,7 @@ module NLC_controller(
   reg [31:0] ch2_haz_reg;
   reg [31:0] ch1_haz_reg;
   reg [31:0] ch0_haz_reg;
-  
-  always@(posedge adder_srdyo)
-    if(start_main_loop_add) start_hazard_handling <= 1;
-  
+    
   always@(*) begin
   if(start_hazard_handling) begin
     case(haz_cnt)
@@ -651,8 +639,6 @@ module NLC_controller(
         6: begin 
             multiplier_input_1_main <= ch6_coeff_5;
             multiplier_input_2_main = ch6_norm;
-            start_main_loop_add <= 1; // start adder
-            adder_srdyi <= 1;
            end
         7: begin 
             multiplier_input_1_main <= ch7_coeff_5;
@@ -858,11 +844,7 @@ module NLC_controller(
                6: adder_input_1_main <= ch6_coeff_0; 
                7: adder_input_1_main <= ch7_coeff_0;
                8: adder_input_1_main <= ch8_coeff_0; 
-               9: begin
-                  adder_input_1_main <= ch9_coeff_0;
-                  start_output_conv<= 1; // start final conversion
-                  conv_2_srdyi <= 1;
-                end
+               9: adder_input_1_main <= ch9_coeff_0;
                10: adder_input_1_main <= ch10_coeff_0; 
                11: adder_input_1_main <= ch11_coeff_0;
                12: adder_input_1_main <= ch12_coeff_0; 
@@ -877,8 +859,7 @@ module NLC_controller(
   
   /* Convert back to FP - output */
   always@(posedge start_output_conv) begin
-    conv_2_input <= adder_output;
-    conv_2_srdyi <= 1;
+    
   end
   
   always@(*) begin
@@ -900,10 +881,6 @@ module NLC_controller(
       16: ch13_x_lin <= conv_2_output;
       17: ch14_x_lin <= conv_2_output;
       18: ch15_x_lin <= conv_2_output;
-      19: begin
-        srdyo <= 1;
-        start_output_conv <= 0;
-      end
     endcase
   end
   end
@@ -965,6 +942,7 @@ module NLC_controller(
     
     if(start_output_conv) output_conv_cnt <= output_conv_cnt + 1;
       
+      //TODO: hardcode for now, to be fixed later
     if(conv_cnt == 16) begin
       start_conv <= 0;
       conv_1_srdyi <= 0;
@@ -976,11 +954,43 @@ module NLC_controller(
     end
     
     if(norm_add_cnt==9) begin
-      if(start_normalize_add) begin
         start_normalize_mul <= 1;
         multiplier_srdyi <= 1;
-      end
     end
+      
+    if(norm_add_cnt == 16)begin
+            start_normalize_add <= 0;
+            adder_srdyi <= 0;
+    end
+    if(norm_mul_cnt == 6)
+      start_store_norm <= 1;
+    if(norm_mul_cnt == 16)
+      start_normalize_mul <= 0;
+    
+    if(order_add==5&&ch_add==9)
+      start_hazard_handling <= 1;
+      
+    if(order_add==1&&ch_add==9) begin
+      start_output_conv <= 1;
+      conv_2_input <= adder_output;
+    conv_2_srdyi <= 1;
+    end
+    
+    if(store_cnt == 16) begin
+      start_main_loop_mul <= 1;
+      start_store_norm <= 0;
+    end
+      
+    if(order_mul==5&&ch_mul==6)begin
+      
+            start_main_loop_add <= 1; // start adder
+            adder_srdyi <= 1;
+          end
+          
+    if(output_conv_cnt==19) begin
+        srdyo <= 1;
+        start_output_conv <= 0;
+      end
       
       
     if(srdyi) begin
