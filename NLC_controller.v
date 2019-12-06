@@ -881,12 +881,12 @@ module NLC_controller(
       // set output to 0
       srdyo <= 0;
       // initialize counters
-      conv_cnt <= 0;
-      norm_add_cnt <= 0;
-      norm_mul_cnt <= 0;
+      conv_cnt = 0;
+      norm_add_cnt = 0;
+      norm_mul_cnt = 0;
       order_mul <= 5;
       clk_cnt <= 0;
-      haz_cnt <= 0;
+      haz_cnt = 0;
       output_conv_cnt <= 0;
       // set internal flags to 0
       start_conv <= 0;
@@ -908,7 +908,7 @@ module NLC_controller(
     if(start_normalize_mul) norm_mul_cnt = norm_mul_cnt + 1;
     if(start_store_norm) store_cnt = store_cnt + 1;  
     if(start_hazard_handling) haz_cnt = haz_cnt + 1; 
-    if(haz_cnt == 16) haz_cnt <= 0; 
+    if(haz_cnt == 16) haz_cnt = 0; 
       if(start_main_loop_mul) begin
       ch_mul <= ch_mul + 1;
       if(ch_mul == 15) begin
