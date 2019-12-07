@@ -1146,6 +1146,30 @@ module NLC_controller(
     ch15_coeff_2 <= ch15_coeff_2_in;
     ch15_coeff_1 <= ch15_coeff_1_in;
     ch15_coeff_0 <= ch15_coeff_0_in;
+    
+    // reset all internal registers
+          // set output to 0
+      srdyo <= 0;
+      // initialize counters
+      conv_cnt = 0;
+      norm_add_cnt = 0;
+      norm_mul_cnt = 0;
+      order_mul <= 5;
+      ch_mul <= 0;
+      order_add <= 5;
+      ch_add <= 0;
+      haz_cnt = 0;
+      output_conv_cnt <= 0;
+      // set internal flags to 0
+      start_normalize_add <= 0;
+      start_normalize_mul <= 0;
+      start_store_norm <= 0;
+      start_main_loop_mul <= 0;
+      start_main_loop_add <= 0;
+      // set internal signals to 0
+      adder_srdyi <= 0;
+      multiplier_srdyi <= 0;
+      conv_2_srdyi <= 0;
   end
       
   end
